@@ -77,7 +77,7 @@ const routes = [
       {
         path:"",
         name: "SearchMain",
-        component: ()=> import("@/components/Search/SearchMain.vue")
+        component: ()=> import("@/components/Search/TypeSearch.vue")
       },
     ],
   },

@@ -1,18 +1,17 @@
 <template>
   <div class="mainfeed">
     <div class="logo">
-      <img alt="BEEN LOGO" src="/assets/logo.png">
+      <img alt="BEEN LOGO" src="@/assets/logo.png">
     </div>
+    <FeedList />
 
-    <div class="hex">
-      <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
-        <li class="infinite-list-item">{{ i }}</li>
-      </ul>
-    </div>
   </div>
 </template>
 
+
 <script>
+import FeedList from '@/components/Feed/FeedList.vue'
+
   export default {
     name: 'Feed',
     data () {
@@ -24,6 +23,9 @@
       load () {
         this.count += 2
       }
+    },
+    components: {
+      FeedList
     }
   }
 </script>
@@ -32,11 +34,8 @@
   .mainfeed {
     width: 375px;
     height: 812px;
-    background-color: #ffe8c4
+    background-color: #fffaf4;
+    margin: 0 auto;
   }
 
-  .hex {
-    width: 25%;
-    position: relative;
-  }
 </style>
