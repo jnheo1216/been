@@ -1,5 +1,7 @@
 <center><h2>삼성청년SW아카데미 공통프로젝트</h2></center>
 
+![image-20210729235008628](README.assets/image-20210729235008628.png)
+
 #### 1. 개요
 
 - #####  Travle Sharing SNS
@@ -33,20 +35,20 @@
 - ##### FrontEnd
 
   - 고석환
-    - 역할
+    - frontend 개발
   - 이화정
-    - 역할
+    - frontend 개발, 컨셉 디자인
   - 최서윤
-    - 역할
+    - frontend 개발
   - 허진녕
-    - 역할
+    - frontend 개발, JIRA
 
 - ##### BackEnd
 
   - 김선우
-    - 역할
+    - backend 전반
   - 임성환
-    - 역할
+    - 취업
 
 <br>
 
@@ -90,9 +92,33 @@
 
 <br>
 
-#### 5. 요구사항
+#### 5. 규칙
 
-<br>
+![image-20210729235108525](README.assets/image-20210729235108525.png)
 
-#### 6. 기능
+
+
+#### 6. ERD
+
+![image-20210729234821460](README.assets/image-20210729234821460.png)
+
+
+
+#### 7. storyline
+
+![image-20210729234902366](README.assets/image-20210729234902366.png)
+
+
+
+#### 8. WireFrame
+
+![image-20210729234924420](README.assets/image-20210729234924420.png)
+
+
+
+#### 9. 추가 예정 기능
+
+![image-20210729235717870](README.assets/image-20210729235717870.png)
+
+![image-20210729235732337](README.assets/image-20210729235732337.png)
 
