@@ -1,7 +1,9 @@
 <template>
-  <div>
-    대충 회원가입 성공
-    <router-link to="/login" class="link-info">대충 로그인 화면으로</router-link>
+  <div class="background">
+    <div>
+      회원가입 성공!
+    </div>
+    <router-link to="/login" class="link-info">로그인 화면으로</router-link>
   </div>
 </template>
 
@@ -13,5 +15,12 @@ export default {
 </script>
 
 <style>
+  .background {
+    width: 375px;
+    height: 812px;
+    text-align: center;
+    background-color: #FFFAF4;
+    margin:0 auto;
+  }
 
 </style>
