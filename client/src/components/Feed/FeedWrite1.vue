@@ -1,6 +1,6 @@
 <template>
 <div class="back">
-  <img src="../../assets/logobee.png" alt="logobee" width="120">
+  <img src="@/assets/image-logo.png" alt="logobee" width="120">
   <el-progress class="align-vertical" :percentage="percentage" :color="customColors" :format="format"></el-progress>
   <h3 class="head"> 지역과 여행 스타일을 선택해주세요</h3>
     <div class="block">
@@ -16,7 +16,7 @@
 
     <!--   버튼 wirte2로 넘어가는 버튼-->
     <button class="writebtn" @click="$router.push({name: 'Write2'})">
-      <img src="../../assets/klogo.png"  width="75" height="22" alt="#">
+      <img src="@/assets/text-logo-resize.png"  width="75" height="22" alt="#">
     </button>
 
   </div>
@@ -24,6 +24,7 @@
 
 <script>
 export default {
+  name: "FeedWrite1",
   components: {
 
   },

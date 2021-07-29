@@ -1,17 +1,13 @@
 <template>
-  <div>
-    <FeedWrite1> </FeedWrite1>
-  </div>
+  <router-view/>
 
 </template>
 
 <script>
 
-import FeedWrite1 from '@/components/Feed/FeedWrite1'
-
 export default {
+  name: "FeedWrite",
   components: {
-   FeedWrite1
   },
 }
 </script>

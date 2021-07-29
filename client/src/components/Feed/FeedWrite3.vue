@@ -1,6 +1,6 @@
 <template>
   <div class="back">
-    <img src="../../assets/logo.png" alt="logobee" width="100">
+    <img src="@/assets/image-logo.png" alt="logobee" width="100">
     <el-progress class="align-vertical" :percentage="percentage" :color="customColors" :format="format"></el-progress>
 
     <p> Form 선택 들어갈 곳 </p>
@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name: "FeedWrite3",
   components: {
   },
   data() {
