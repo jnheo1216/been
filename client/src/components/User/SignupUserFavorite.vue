@@ -9,6 +9,17 @@
 
 export default {
   name: 'SignupUserFavorite',
+  data: () => {
+    return {
+      user:{
+        userName: "",
+        userId: "",
+        userPw: "",
+        myTag:[],
+      },
+      component: this,
+    }
+  },
 }
 </script>
 
