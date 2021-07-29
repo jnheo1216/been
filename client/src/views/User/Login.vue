@@ -1,55 +1,62 @@
 <template>
   <div class="background">
-    로그인
-    <form action="">
-      <div class="">
-        <label class="" for="user-id">아이디(이메일)</label><br>
-        <input 
+    <img src="@/assets/image-logo.png" alt="image-logo">
+    <form @submit="onSubmit" class="login-form">
+      <div class="login-input-box">
+        <el-input 
           id="user-id"
           v-model="email"
           type="text"
           class=""
-          placeholder="아이디를 입력하세요."
-        >
-        <div>
+          placeholder="이메일을 입력하세요."
+        ></el-input>
+        <div class="text-color-danger">
           <div v-if="error.email">{{ error.email }}</div>
         </div>
       </div>
 
-      <div class="">
-        <label class="" for="user-pw">비밀번호</label><br>
-        <input 
+      <div class="login-input-box">
+        <el-input 
           id="user-pw"
           v-model="password"
           type="password"
           class="" 
           placeholder="비밀번호를 입력하세요." 
-        >
-        <div>
+        ></el-input>
+        <div class="text-color-danger">
           <div v-if="error.password">{{ error.password }}</div>
         </div>
       </div>
 
-      <div>
-        <span><el-checkbox v-model="checked"></el-checkbox>로그인 상태 유지</span>
+      <div class="login-checkbox">
+        <span class="login-input-box"><el-checkbox v-model="checked"></el-checkbox>로그인 상태 유지</span>
       </div>
-      <div>
-        <el-button plain>대충로그인버튼</el-button>
-      </div>
-      <div>
-        <router-link to="/signup" class="link-info">대충둘러보기버튼</router-link>
-        <router-link to="/signup" class="link-info">대충회원가입버튼</router-link>
+      <div class="login-button">
+        <img style="max-height: 100%;" src="@/assets/text-logo-resize.png" alt="logo">
       </div>
     </form>
+
+    <!-- <div class="google-login">
+      <Google class=""/>
+    </div> -->
+    
+    <div>
+      <router-link to="/feed" class="link-info">둘러보기</router-link> | 
+      <router-link to="/signup" class="link-info">회원가입</router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
+// import Google from "@/components/User/Google.vue" 
 
 export default {
   name: 'Login',
+  components: {
+    // Google,
+  },
   data: () => {
     return {
       vWidth: 0,
@@ -109,7 +116,7 @@ export default {
       //     if(token){
       //       localStorage.setItem("access-token", token);
       //       this.$store.commit("setUserInfo",res.data.user);
-      //       this.$router.push("/home");
+      //       this.$router.push("/");
       //     }
       //     else{
       //       alert(res.data['message']);
@@ -131,5 +138,28 @@ export default {
     text-align: center;
     background-color: #FFFAF4;
     margin:0 auto;
+  }
+  .login-button {
+    width: 300px;
+    height: 40px;
+    background-color: #F4DBDB;
+    margin: 0 auto;
+  }
+  .login-form {
+    padding: 10px;
+  }
+  .login-checkbox {
+    text-align: left;
+    margin: 10px;
+  }
+  .login-input-box {
+    margin: 20px;
+  }
+  .google-login {
+    margin: 0 auto;
+  }
+  .text-color-danger {
+    color: crimson;
+    text-align: right;
   }
 </style>
