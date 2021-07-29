@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.been.beenbackend.Mapper.PostMapper">
+	<select id="list" resultType="post">
+		select *
+		from post;
+	</select>
+	
+	<select id="listOne" parameterType="String" resultType="post">
+		select *
+		from post
+		where postId = #{postId};
+	</select>
+
+	
+	<insert id="register" parameterType="Post">
+		insert into post (userId, title, content)
+		values (#{userId}, #{title}, #{content});
+	</insert>
+	
+	<update id="modify" parameterType="Post">
+		update post
+		set title = #{title}, content = #{content}, updatedAt = #{current_timestamp}
+		where postId = #{postId};
+	</update>
+
+	<delete id="delete" parameterType="String">
+		delete from post
+		where postId = #{postId};
+	</delete>
+
+	<!--내가 팔로우한 유저들의 게시물 -->
+	<select id="showFollowingPost" parameterType="String" resultType="post">
+		select postId, userId, title, content, createdAt, updatedAt, likeCnt
+		from post inner join follow on post.userId = follow.followedId
+		where follow.followerId = #{id} and follow.accepted = 1;
+	</select>
+
+	<!--좋아요 추가-->
+	<insert id="makeLike" parameterType="String">
+		insert into like (postId,userId)
+		values (#{postId}, #{userId})
+	</insert>
+
+	<!--좋아요 제거-->
+	<delete id="removeLike" parameterType="String">
+		delete from like
+		where postId = #{postId} and userId = #{userId}
+	</delete>
+
+ 	<!--좋아요한 게시물-->
+	<select id="likePost" parameterType="String">
+		select postId, userId, title, content, createdAt, updatedAt, likeCnt
+		from post inner join like on post.userId = like.userId
+		where like.userId = #{id}
+	</select>
+
+
+</mapper>

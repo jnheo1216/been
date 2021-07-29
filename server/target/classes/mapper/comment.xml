@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.been.beenbackend.Mapper.CommentMapper">
+	<select id="list" resultType="comment">
+		select *
+		from comment;
+	</select>
+	
+	<select id="listOne" parameterType="String" resultType="Comment">
+		select *
+		from comment
+		where commentId = #{commentId};
+	</select>
+
+	
+	<insert id="register" parameterType="Comment">
+		insert into comment (commentId, postId, comment)
+		values (#{commenId}, #{postId}, #{comment});
+	</insert>
+	
+	<update id="modify" parameterType="Comment">
+		update comment
+		set comment = #{comment}, updatedAt = #{current_timestamp}
+		where commentId = #{commentId};
+	</update>
+
+	<delete id="delete" parameterType="String">
+		delete from comment
+		where commentId = #{commentId};
+	</delete>
+</mapper>
