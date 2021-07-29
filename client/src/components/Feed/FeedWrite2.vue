@@ -1,6 +1,6 @@
 <template>
   <div class="back">
-    <img src="../../assets/logobee.png" alt="logobee" width="120">
+    <img src="@/assets/image-logo.png" alt="logobee" width="120">
     <el-progress class="align-vertical" :percentage="percentage" :color="customColors" :format="format"></el-progress>
     <h4>사진을 업로드해주세요</h4>
     <FeedWriteImage></FeedWriteImage>
@@ -8,7 +8,7 @@
     <h4 style="margin-top: 50px">어떤 여행을 하셨나요?</h4>
     <textarea class='textinput' placeholder="여행기록을 남겨주세요" v-model="message"></textarea>
     <button class="writebtn" @click="$router.push({name: 'Write3'})">
-      <img src="../../assets/klogo.png"  width="75" height="22">
+      <img src="@/assets/text-logo-resize.png"  width="75" height="22">
     </button>
 
   </div>
@@ -16,6 +16,7 @@
 <script>
 import FeedWriteImage from './FeedWriteImage.vue'
 export default {
+  name: "FeedWrite2",
   components: { FeedWriteImage
   },
   data() {
