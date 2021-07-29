@@ -105,6 +105,22 @@ const routes = [
       // redirect: "/404",
       component : NotFound
   },
+  // FeedWrite_csy
+  {
+    path: '/write',
+    name: 'Write',
+    component: FeedWrite,
+  },
+  {
+    path: '/write/2',
+    name: 'Write2',
+    component: FeedWrite2,
+  },
+  {
+    path: '/write/3',
+    name: 'Write3',
+    component: FeedWrite3,
+  },
 ]
 
 const router = createRouter({
