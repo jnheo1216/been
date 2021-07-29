@@ -10,7 +10,10 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.63",
+    "email-validator": "^2.0.4",
+    "password-validator": "^5.1.1",
     "vue": "^3.0.0",
+    "vue-password-validator": "^0.1.8",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
