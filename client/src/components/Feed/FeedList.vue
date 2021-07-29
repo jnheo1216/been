@@ -1,26 +1,42 @@
 <template>
-  <div>
-    <h1>FeedList</h1>
 
+  <div class="FeedList">
+
+<!-- 육각형 한개 -->
     <div class="wrap">
       <div class="hex">
-        <p>Picture</p>
-          <!-- <div class="content">
-            <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
-              <li class="infinite-list-item">{{ i }}</li>
-              <router-link to="">
-            </ul>
-          </div> -->
-
+        <div class="hex-inner">
+          <div class="content">
+          </div>
+        </div>
       </div>
+
       <div class="logos-wrap">
-       <div class="restaurant"></div>
-       <div class="hotel"></div>
-       <div class="tour"></div>
+      <div class="restaurant"></div>
+      <div class="hotel"></div>
+      <div class="tour"></div>
+      </div>
+    </div>
+  <!-- 육각형 한개 끝 -->
+
+    <div class="wrap2">
+      <div class="hex">
+      <div class="logos-wrap2">
+      <div class="restaurant"></div>
+      <div class="hotel"></div>
+      <div class="tour"></div>
+        <div class="hex-inner">
+          <div class="content">
+          </div>
+        </div>
+      </div>
+
       </div>
     </div>
 
+
   </div>
+
 </template>
 
 <script>
@@ -31,95 +47,135 @@ export default {
 </script>
 
 <style>
-  .wrap {
-    width: 60%;
-    margin: 100px auto;
-    display: flex;
-    flex-wrap: wrap;
-  }
 
-  .hex {
-    width: 4vw;
-    height: calc(4 * 1.7320vw);
-    position: relative;
-    background: #000000;
-    border: 5px solid pink;
 
-  }
+* {
+  margin: 0%;
+  padding: 0%;
+}
 
-  .hex::before {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(60deg);
-    border-top: 5px solid pink;
-    border-bottom: 5px solid pink;
-    
-  }
+.wrap {
+  width: 100%;
+  margin: 50px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
 
-  .hex::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-60deg);
-    border-top: 5px solid pink;
-    border-bottom: 5px solid pink;
-    /* box-shadow: 5px none 3px 1.5px gray; */
-  }
+.wrap2 {
+  width: 100%;
+  margin: 50px 220px;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
 
-/* 
-  .content {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
-  } */
+.wrap:nth-child(2) {
+  position: absolute;
+  top: 20%;
+  left: 30%;
+}
 
-  .logos-wrap {
-    display: flex column;
-    justify-content: space-evenly;
-    align-items: stretch;
-  }
+.hex {
+  width: 25%;
+  margin-bottom: 1.8%;
+  position: relative;
+  visibility: hidden;
+  border: 2px solid red;
+  box-shadow: 5px 5px 5px 5px;
+}
 
-  .restaurant {
-    margin-left: 50px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: green;
-  }
+.hex:nth-of-type(7n+5) {
+  margin: 12.5%;
+}
 
-  .hotel {
-    margin-left: 50px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: yellowgreen;
-  }
+.hex::after {
+  content: '';
+  display: block;
+  padding-bottom: 80%;
+}
 
-  .tour {
-    margin-left: 50px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: coral;
-  }
+.hex-inner {
+  position: absolute;
+  width: 99%;
+  padding-bottom: 114.6%;
+  overflow: hidden;
+  visibility: hidden;
+  transform: rotate3d(0,0,1,-60deg) skewY(30deg);
+  /* border: 2px solid red; */
+}
+
+.hex-inner * {
+  position: absolute;
+  visibility: visible; 
+}
+
+.content {
+  /* border: 2px solid red; */
+  position:absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: skewY(-30deg) rotate3d(0,0,1,60deg);
+  background-image: url(https://picsum.photos/200/300?grayscale);
+  justify-content: center;
+  align-items: center;
+  background-repeat : no-repeat;
+  background-size : cover;
+}
+
+.content p {
+  font-size: 3vw;
+  text-align: center;
+  color: #fff;
+}
+
+.logos-wrap {
+  margin-left: 0;
+  display: flex column;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+
+.logos-wrap2 {
+  margin-left: 50px;
+  display: flex column;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+
+.restaurant {
+  margin-left: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: green;
+}
+
+.hotel {
+  margin-left: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: yellowgreen;
+}
+
+.tour {
+  margin-left: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: coral;
+}
+
+
+
+
 </style>
