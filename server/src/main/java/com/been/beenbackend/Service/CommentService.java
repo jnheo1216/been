@@ -12,7 +12,11 @@ public interface CommentService {
 
     void modify(Comment comment);
 
-    void delete(String commentId);
+    void delete(int commentId);
 
-    Comment listOne(String commentId);
+    Comment listOne(int commentId);
+
+    int makeLike(int commentId, int userId);
+
+    int deleteLike(int commentId, int userId);
 }

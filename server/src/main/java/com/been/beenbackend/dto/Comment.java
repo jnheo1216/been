@@ -3,6 +3,16 @@ package com.been.beenbackend.dto;
 public class Comment {
     private int commentId;
     private int postId;
+    private int userId;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     private String comment;
     private String createdAt;
     private String updatedAt;

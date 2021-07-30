@@ -30,12 +30,23 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public void delete(String commentId) {
+    public void delete(int commentId) {
         sqlSession.getMapper(CommentMapper.class).delete(commentId);
     }
 
     @Override
-    public Comment listOne(String commentId) {
+    public Comment listOne(int commentId) {
         return sqlSession.getMapper(CommentMapper.class).listOne(commentId);
     }
+
+    @Override
+    public int makeLike(int commentId, int userId) {
+        return sqlSession.getMapper(CommentMapper.class).makeLike(commentId, userId);
+    }
+
+    @Override
+    public int deleteLike(int commentId, int userId) {
+        return sqlSession.getMapper(CommentMapper.class).makeLike(commentId, userId);
+    }
 }
+

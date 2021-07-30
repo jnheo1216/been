@@ -2,6 +2,7 @@ package com.been.beenbackend.Controller;
 
 import com.been.beenbackend.Service.CommentService;
 import com.been.beenbackend.dto.Comment;
+import com.been.beenbackend.dto.LikeComment;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class CommentController {
 
     @ApiOperation(value="comment 리스트 하나만 받아오기(read)")
     @GetMapping(value="/comment/{commentId}")
-    public ResponseEntity<Map<String, Object>> list(String commentId) throws Exception {
+    public ResponseEntity<Map<String, Object>> list(@PathVariable int commentId) throws Exception {
         Comment comment = commentService.listOne(commentId);
         Map<String, Object> result = new HashMap<>();
         result.put("comment", comment);
@@ -57,8 +58,25 @@ public class CommentController {
 
     @ApiOperation(value="comment 삭제하기(delete)")
     @DeleteMapping(value = "/comment/{commentId}")
-    public ResponseEntity<Map<String, Object>> delete(@PathVariable String commentId) throws Exception {
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable int commentId) throws Exception {
         commentService.delete(commentId);
+        return list();
+    }
+
+    @ApiOperation(value="comment 좋아요 등록(create)")
+    @PostMapping(value="/comment/like")
+    public ResponseEntity makeLike(@RequestBody LikeComment likeComment) throws Exception {
+        int cnt = commentService.makeLike(likeComment.getCommentId(), likeComment.getUserId());
+        if(cnt != 0) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation(value="comment 삭제하기(delete)")
+    @DeleteMapping(value = "/comment/like")
+    public ResponseEntity<Map<String, Object>> delete(@RequestBody LikeComment likeComment) throws Exception {
+        commentService.deleteLike(likeComment.getCommentId(), likeComment.getUserId());
         return list();
     }
 }
