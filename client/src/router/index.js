@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Signup from '@/views/User/Signup.vue'
 import Login from '@/views/User/Login.vue'
 import Feed from '@/views/Feed/Feed.vue'
+import FeedWrite from '@/views/Feed/FeedWrite.vue'
 import Search from '@/views/Search/Search.vue'
 import Profile from '@/views/User/Profile.vue'
 import NotFound from '@/components/NotFound/NotFound.vue'
@@ -104,6 +105,29 @@ const routes = [
       path: '/:pathMatch(.*)*',
       // redirect: "/404",
       component : NotFound
+  },
+  // FeedWrite_csy
+  {
+    path: '/write',
+    name: 'Write',
+    component: FeedWrite,
+    children: [
+      {
+        path: "",
+        name: "FeedWrite1",
+        component: ()=> import("@/components/Feed/FeedWrite1.vue")
+      },
+      {
+        path: "/2",
+        name: "FeedWrite2",
+        component: ()=> import("@/components/Feed/FeedWrite2.vue")
+      },
+      {
+        path: "/3",
+        name: "FeedWrite3",
+        component: ()=> import("@/components/Feed/FeedWrite3.vue")
+      },
+    ],
   },
 ]
 

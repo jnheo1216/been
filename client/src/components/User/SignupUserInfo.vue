@@ -1,51 +1,58 @@
 <template>
   <suspense>
     <template #default>
-      <div>
+      <div class="background">
+        <img src="@/assets/image-logo.png" alt="image-logo">
         <form @submit="onSubmit">
-          <div class="">
-            <label class="" for="user-id">이메일</label><br>
-            <input 
+          <div class="login-input-box">
+            <div class="login-checkbox">
+              <label class="" for="user-id"><i class="el-icon-check icon-color-must"></i>이메일</label><br>
+            </div>            
+            <el-input 
               id="user-id"
               v-model="email"
               type="text"
               class=""
-              placeholder="아이디를 입력하세요."
-            >
-            <div>
+              placeholder="이메일을 입력하세요."
+            ></el-input>
+            <div class="text-color-danger">
               <div v-if="error.email">{{ error.email }}</div>
             </div>
           </div>
           
-          <div class="">
-            <label class="" for="user-pw">비밀번호</label><br>
-            <input 
+          <div class="login-input-box">
+            <div class="login-checkbox">
+              <label class="" for="user-pw"><i class="el-icon-check icon-color-must"></i>비밀번호</label><br>
+            </div>
+            <el-input 
               id="user-pw"
               v-model="password"
               type="password"
               class="" 
               placeholder="비밀번호를 입력하세요." 
-            >
-            <div>
+            ></el-input>
+            <div class="text-color-danger">
               <div v-if="error.password">{{ error.password }}</div>
             </div>
           </div>
 
-          <div class="">
-            <label class="" for="userpw_check">비밀번호 확인</label><br>
-            <input 
+          <div class="login-input-box">
+            <div class="login-checkbox">
+              <label class="" for="userpw_check"><i class="el-icon-check icon-color-must"></i>비밀번호 확인</label><br>
+            </div>
+            <el-input 
               id="userpw_check"
               v-model="passwordCheck"
               type="password"
               class="" 
               placeholder="비밀번호를 다시 입력해주세요." 
-            >
-            <div>
+            ></el-input>
+            <div class="text-color-danger">
               <div v-if="error.passwordCheck">{{ error.passwordCheck }}</div>
             </div>
           </div>
 
-          <button @click="onSubmit">다음</button>
+          <el-link @click="onSubmit" type="sucess">다음<i class="el-icon-right"></i></el-link>
 
         </form>
       </div>
@@ -155,5 +162,35 @@ export default {
 </script>
 
 <style>
+  .background {
+    width: 375px;
+    height: 812px;
+    text-align: center;
+    background-color: #FFFAF4;
+    margin:0 auto;
+  }
+  .login-button {
+    width: 300px;
+    height: 40px;
+    background-color: #F4DBDB;
+    margin: 0 auto;
+  }
+  .login-form {
+    padding: 10px;
+  }
+  .login-checkbox {
+    text-align: left;
+    margin: 10px;
+  }
+  .login-input-box {
+    margin: 20px;
+  }
+  .text-color-danger {
+    color: crimson;
+    text-align: right;
+  }
+  .icon-color-must {
+    color: #31D89C;
+  }
 
 </style>
