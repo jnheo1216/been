@@ -63,7 +63,8 @@ import FeedList from '@/components/Feed/FeedList.vue'
 
   .el-button {
     position: absolute;
-    bottom: 0;
+    bottom: 25px;
+    right: 50px;
   }
 
 </style>
