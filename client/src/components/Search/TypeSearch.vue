@@ -9,6 +9,11 @@
       :props="props"
       clearable></el-cascader>
     </div>
+
+    <!-- 검색 결과 -->
+    <div class="searched">
+      
+    </div>
   </div>
 </template>
 
@@ -57,12 +62,12 @@ export default {
 </script>
 
 <style>
-  /* .TypeSearch {
+  .TypeSearch {
     width: 375px;
     height: 812px;
     background-color: #fffaf4;
     margin: 0 auto;
-  } */
+  }
 
   .block {
     justify-content: center;
