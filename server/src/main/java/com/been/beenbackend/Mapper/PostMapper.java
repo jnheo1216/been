@@ -8,6 +8,8 @@ import java.util.List;
 public interface PostMapper {
     List<Post> list();
 
+    List<Post> listByUser(int userId);
+
     int register(Post post);
 
     void modify(Post post);
@@ -27,4 +29,6 @@ public interface PostMapper {
     int registerPic(PostPic postPic);
 
     List<PostPic> getPostPic(int postId);
+
+    void deletePic(int postId);
 }

@@ -21,6 +21,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> listByUser(int userId) {
+        return sqlSession.getMapper(PostMapper.class).listByUser(userId);
+    }
+
+    @Override
     public int register(Post post) {
         return sqlSession.getMapper(PostMapper.class).register(post);
 
@@ -74,4 +79,8 @@ public class PostServiceImpl implements PostService {
         return sqlSession.getMapper(PostMapper.class).getPostPic(postId);
     }
 
+    @Override
+    public void deletePic(int postId) {
+        sqlSession.getMapper(PostMapper.class).deletePic(postId);
+    }
 }

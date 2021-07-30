@@ -63,11 +63,10 @@ public class UserController {
     @PostMapping(value="/user")
     public ResponseEntity<Map<String, Object>> signUp(@RequestBody User user) throws Exception {
 
-
         //회원 db에 집어넣기
-        int cnt = userService.register(user);
-        int id = userService.list(user.getEmail()).getId();
-        if(cnt != 0) {
+        int id = userService.register(user);
+//        int id = userService.list(user.getEmail()).getId();
+        if(id >= 0) {
             //인증 이메일 보내기
             emailConfirmationService.createEmailConfirmation(id,user.getEmail());
 
@@ -126,7 +125,7 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
-    @ApiOperation(value="user 리스트 하나만 받아오기(read)")
+    @ApiOperation(value="user 하나만 받아오기(read)")
     @GetMapping(value="/user/{id}")
     public ResponseEntity<Map<String, Object>> list(int id) throws Exception {
         User user = userService.list(id);

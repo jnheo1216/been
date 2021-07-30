@@ -26,15 +26,16 @@
 		where email = #{email} and password = #{password} and emailConfirmation = 1;
 	</select>
 	
-	<insert id="register" parameterType="user">
+	<insert id="register" parameterType="user" useGeneratedKeys="true" keyColumn="id">
 		insert into user (id, email, password, intro, nickname, name)
-		values (#{id}, #{email}, #{password}, #{intro}, #{nickname}, #{name});
+		values (#{id}, #{email}, #{password}, #{intro}, #{nickname}, #{name})
+		;
 	</insert>
 	
 	<update id="modify" parameterType="user">
 		update user
 		set password = #{password}, intro = #{intro}, nickname = #{nickname}, tier = #{tier}, followingCnt = #{followingCnt}, followerCnt = #{followerCnt},
-		profilePicSrc = #{profilePicSrc}, profilePicName = #{profilePicName}, emailConfirmation = #{emailConfirmation}
+		profilePicSrc = #{profilePicSrc}, profilePicName = #{profilePicName}, emailConfirmation = #{emailConfirmation}, status = #{status}
 		where id = #{id};
 	</update>
 
@@ -61,7 +62,7 @@
 
 	<!-- 나를 팔로우한 사람들 보기-->
 	<select id="showFollower" parameterType="String" resultType="user">
-		SELECT id, password, email, intro, nickname, name, tier, followerCnt, followingCnt, createdAt, profilePicSrc, profilePicName, emailConfirmation
+		SELECT id, password, email, intro, nickname, name, tier, followerCnt, followingCnt, createdAt, profilePicSrc, profilePicName, emailConfirmation ,status
 		FROM user INNER JOIN follow ON follow.followedId=user.id
 		WHERE user.id = #{id} AND follow.accepted=1
 
@@ -69,7 +70,7 @@
 
 	<!-- 내가 팔로우중인 사람들 보기-->
 	<select id="showFollowing" parameterType="String" resultType="user">
-		select id, password, email, intro, nickname, name, tier, followerCnt, followingCnt, createdAt, profilePicSrc, profilePicName, emailConfirmation
+		select id, password, email, intro, nickname, name, tier, followerCnt, followingCnt, createdAt, profilePicSrc, profilePicName, emailConfirmation, status
 		from user inner join follow on follow.followerId = user.id
 		where user.id = #{id} and follow.accepted=1
 	</select>

@@ -44,6 +44,15 @@ public class PostController {
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value="post 유저아이디로 받아오기(read)")
+    @GetMapping(value="/post/{userid}")
+    public ResponseEntity<Map<String, Object>> listByUser(@PathVariable int userid) throws Exception {
+        List<Post> posts = postService.listByUser(userid);
+        Map<String, Object> result = new HashMap<>();
+        result.put("posts", posts);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+    }
+
     @ApiOperation(value="post 하나만 받아오기(read)")
     @GetMapping(value="/post/{postId}")
     public ResponseEntity<Map<String, Object>> getPost(int postId) throws Exception {
@@ -68,31 +77,48 @@ public class PostController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ApiOperation(value="post 사진 넣기(update), 가장 첫번째에 썸네일 이미지를 넣어주세요")
-    @PostMapping(value= "/post/postPic/{postId}") //postId를 어떻게 넣는지 생각해야... 여기부터 30일에 하자!
-    public ResponseEntity<Map<String, Object>> modify(@RequestPart List<MultipartFile> files, @PathVariable int postId) throws Exception {
+    @ApiOperation(value="post 사진 넣기(update), thumbnail은 null 값이 넘어오지 않게 해주세요!thumbnail이 없으면 default 값으로 만들어주세요!")
+    @PostMapping(value= "/post/postPic/{postId}")
+    public ResponseEntity<Map<String, Object>> modify(@RequestPart List<MultipartFile> files, @RequestPart MultipartFile thumbnail, @PathVariable int postId) throws Exception {
+        //썸네일 사진 넣기
+        String imgPath = s3Service.uploadObject(thumbnail);
+        PostPic postPic = new PostPic();
+        postPic.setSrc(imgPath);
+        postPic.setName(thumbnail.getOriginalFilename());
+        postPic.setPostId(postId);
+        postPic.setNum(0);
+        Post post = postService.listOne(postId);
+        post.setPostPicName(postPic.getName());
+        post.setPostPicSrc(imgPath);
+        postService.modify(post);
+        //각각의 사진 넣기
         for(int i = 0; i < files.size(); i++){
-            String imgPath = s3Service.uploadObject(files.get(i));
-            PostPic postPic = new PostPic();
+            imgPath = s3Service.uploadObject(files.get(i));
+            postPic = new PostPic();
             postPic.setSrc(imgPath);
             postPic.setName(files.get(i).getOriginalFilename());
             postPic.setPostId(postId);
-            postPic.setNum(i);
+            postPic.setNum(i+1);
             postService.registerPic(postPic);
-            if(i == 0) { //썸네일 사진 post에 넣어주기
-                Post post = postService.listOne(postId);
-                post.setPostPicName(postPic.getName());
-                post.setPostPicSrc(imgPath);
-                postService.modify(post);
-            }
+//            if(i == 0) { //썸네일 사진 post에 넣어주기
+//                Post post = postService.listOne(postId);
+//                post.setPostPicName(postPic.getName());
+//                post.setPostPicSrc(imgPath);
+//                postService.modify(post);
+//            }
         }
         return list();
     }
 
-    @ApiOperation(value="post 수정하기(update)") // 수정 요망
+    @ApiOperation(value="post 수정하기(update), 수정하기 호출 후 post 사진 넣기(update) 다시할것")
     @PutMapping(value= "/post")
     public ResponseEntity<Map<String, Object>> modify(@RequestBody Post post) throws Exception {
         postService.modify(post);
+        List<PostPic> postPics = postService.getPostPic(post.getPostId());
+        for(int i = 0; i < postPics.size(); i++) {
+            s3Service.deleteObject(postPics.get(i).getName());
+        }
+        postService.deletePic(post.getPostId());
         return list();
     }
 
@@ -100,6 +126,11 @@ public class PostController {
     @DeleteMapping(value = "/post/{postId}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int postId) throws Exception {
         postService.delete(postId);
+        List<PostPic> postPics = postService.getPostPic(postId);
+        for(int i = 0; i < postPics.size(); i++) {
+            s3Service.deleteObject(postPics.get(i).getName());
+        }
+        postService.deletePic(postId);
         return list();
     }
 
@@ -130,7 +161,7 @@ public class PostController {
     }
 
     @ApiOperation(value="좋아요를 누른 post 리스트 받아오기(read)")
-    @GetMapping(value="/post/follow/{userId}")
+    @GetMapping(value="/post/like/{userId}")
     public ResponseEntity<Map<String, Object>> showLikePost(@PathVariable int userId) throws Exception {
         List<Post> posts = postService.likePost(userId);
         Map<String, Object> result = new HashMap<>();

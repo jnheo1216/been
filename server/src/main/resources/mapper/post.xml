@@ -7,6 +7,12 @@
 		select *
 		from post;
 	</select>
+
+	<select id="listByUser" resultType="post">
+		select *
+		from post
+		where userId = #{userId};
+	</select>
 	
 	<select id="listOne" parameterType="int" resultType="post">
 		select *
@@ -63,9 +69,16 @@
 		values (#{postId}, #{src}, #{name}, #{num});
 	</insert>
 
+	<!--사진 가져오기-->
 	<select id="getPostPic" parameterType="String" resultType="PostPic">
 		select * from post_pic
 		where postId = #{postId};
 	</select>
+
+	<!--사진 제거-->
+	<delete id="deletePic" parameterType="int">
+		delete from post_pic
+		where postId = #{postId};
+	</delete>
 
 </mapper>

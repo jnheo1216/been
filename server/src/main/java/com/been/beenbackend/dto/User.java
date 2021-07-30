@@ -95,6 +95,15 @@ public class User {
     private String profilePicSrc;
     private String profilePicName;
     private int emailConfirmation;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getEmailConfirmation() {
         return emailConfirmation;
