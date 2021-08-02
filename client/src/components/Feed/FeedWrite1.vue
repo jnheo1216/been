@@ -14,19 +14,26 @@
                  :props="props2"></el-cascader>
   </div>
 
-    <!--   버튼 wirte2로 넘어가는 버튼-->
-    <button class="writebtn" @click="$router.push({name: 'Write2'})">
-      <img src="@/assets/text-logo-resize.png"  width="75" height="22" alt="#">
+  <!--  물음표  -->
+    <p id="show-modal" @click="showModal = true" class="question el-icon-question"></p>
+    <FeedModal v-if="showModal" @close="showModal = false">   </FeedModal>
+  <!--   버튼 wirte2로 넘어가는 버튼 & 뒤로가기-->
+  <div class="btns">
+    <p class="el-icon-back backbtn" @click="$router.push({name: ''})"></p>
+    <button class="writebtn" @click="$router.push({name: 'FeedWrite2'})">
+      <img class="btnimg" src="@/assets/text-logo-resize.png" >
     </button>
+  </div>
 
   </div>
 </template>
 
 <script>
+import FeedModal from "./FeedModal.vue"
 export default {
   name: "FeedWrite1",
   components: {
-
+    FeedModal,
   },
   data() {
     return {
@@ -79,20 +86,35 @@ export default {
 
 <style scoped>
 .back {
-  background-color: #ffe8c4;
   width: 375px;
   height: 812px;
-  text-align: center;
+  background-color: #ffe8c4;
+  margin: 0 auto;
+}
+.question {
+  margin-left: 300px;
+  display: block;
+  margin-right: 10px;
+  margin-bottom: 30px;
+}
+.backbtn{
+  margin-left: 20px;
+}
+.btns {
+  display: flex;
+  justify-content: space-between;
+}
+.btnimg {
+  width: 80px;
 }
 .writebtn {
+  display: block;
   width: 27%;
   height: 40px;
   background-color: #f4dbdb;
   border: none;
   border-radius: 10px;
-  float: right;
   margin-right: 20px;
-  margin-top: 30px;
 }
 .writebtn:hover {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.50);
@@ -103,5 +125,9 @@ export default {
 .block {
   padding: 10px;
   margin-bottom: 30px;
+}
+#show-modal {
+  font-size: 22px;
+  margin-right: 20px;
 }
 </style>
