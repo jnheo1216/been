@@ -103,6 +103,10 @@ export default ({
     padding: 0;
   }
 
+  .peoplesearchinput {
+    margin: 50px;
+  }
+  
   .lost-img {
     width: 150px;
     padding: 0;

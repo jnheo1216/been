@@ -5,11 +5,15 @@
     </div>
     <h1 class="text">찾기</h1>
     <div class="friend-search">
-      <el-input @keydown="keyDowntoPeopleSearch" placeholder="꿀벌 찾기" v-model="input"></el-input>
+      <el-input @keydown="keyDowntoPeopleSearch" placeholder="꿀벌 찾기" v-model="people_input"></el-input>
     </div>
 
     <div class="type-search">
-      <el-input @click="clicktoTypeSearch" placeholder="여행 정보 찾기" suffix-icon="el-icon-arrow-down" v-model="input2"></el-input>
+      <el-input @click="clicktoTypeSearch" placeholder="여행 정보 찾기" suffix-icon="el-icon-arrow-down" v-model="type_input"></el-input>
+    </div>
+
+    <div class="article-search">
+      <el-input @kedown="keyDowntoArticleSearch" placeholder="게시물 찾기" suffix-icon="el-icon-search" v-model="article_input"></el-input>
     </div>
 
   <el-button @click="drawer = true" type="info" icon="el-icon-search" style="margin-left: 250px;" circle>
@@ -34,7 +38,8 @@ export default {
   name: 'SearchMain',
   data() {
     return {
-      input: ''
+      people_input: '',
+      article_input: ''
     }
   },
   components: {
@@ -49,12 +54,17 @@ export default {
       this.$router.push({
         name: "TypeSearch"
       })
+    },
+    keyDowntoArticleSearch: function () {
+      this.$router.push({
+        name: "ArticleSearch"
+      })
     }
   },
     setup() {
       return {
         // input: ref(''),
-        input2: ref('')
+        type_input: ref('')
       }
     },
   watch: {
@@ -89,6 +99,10 @@ export default {
   }
 
   .type-search {
+    margin: 50px;
+  }
+
+  .article-search {
     margin: 50px;
   }
 
