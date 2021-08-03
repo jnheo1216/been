@@ -2,22 +2,27 @@
   <div class="back">
     <img src="@/assets/image-logo.png" alt="logobee" width="120">
     <el-progress class="align-vertical" :percentage="percentage" :color="customColors" :format="format"></el-progress>
-    <h4>사진을 업로드해주세요</h4>
-    <FeedWriteImage></FeedWriteImage>
-    <br>
-    <h4 style="margin-top: 50px">어떤 여행을 하셨나요?</h4>
+    <h5 class="head">사진을 업로드 해주세요</h5>
+<!--    <FeedWriteImage></FeedWriteImage>-->
+    <TestImages></TestImages>
+    <h5 class="head" style="margin-top: 20px">어떤 여행을 하셨나요?</h5>
     <textarea class='textinput' placeholder="여행기록을 남겨주세요" v-model="message"></textarea>
-    <button class="writebtn" @click="$router.push({name: 'Write3'})">
-      <img src="@/assets/text-logo-resize.png"  width="75" height="22">
-    </button>
+    <div class="btns">
+      <p class="el-icon-back backbtn" @click="$router.push({name: 'FeedWrite1'})"></p>
+      <button class="writebtn" @click="$router.push({name: 'FeedWrite3'})">
+        <img class="btnimg" src="@/assets/text-logo-resize.png" >
+      </button>
+    </div>
 
   </div>
 </template>
 <script>
-import FeedWriteImage from './FeedWriteImage.vue'
+// import FeedWriteImage from './FeedWriteImage.vue'
+import TestImages from './TestImages.vue'
 export default {
   name: "FeedWrite2",
-  components: { FeedWriteImage
+  components: { 
+    TestImages,
   },
   data() {
     return {
@@ -47,22 +52,36 @@ export default {
 
 <style scoped>
 .back {
-  background-color: #ffe8c4;
   width: 375px;
   height: 812px;
-  text-align: center;
+  background-color: #ffe8c4;
+  margin: 0 auto;
+}
+.head {
+  margin: 20px auto;
+}
+
+.btns {
+  display: flex;
+  justify-content: space-between;
+}
+.btnimg {
+  width: 80px;
 }
 .writebtn {
+  display: block;
   width: 27%;
   height: 40px;
   background-color: #f4dbdb;
   border: none;
   border-radius: 10px;
-  float: right;
   margin-right: 20px;
 }
 .writebtn:hover {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.50);
+}
+.backbtn{
+  margin-left: 20px;
 }
 .textinput {
   display: inline-flex;
