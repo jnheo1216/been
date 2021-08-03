@@ -90,6 +90,11 @@ const routes = [
         name: "PeopleSearch",
         component: ()=> import("@/components/Search/PeopleSearch.vue")
       },
+      {
+        path: "articlesearch",
+        name: "ArticleSearch",
+        component: ()=> import("@/components/Search/ArticleSearch.vue")
+      }
     ],
   },
   
