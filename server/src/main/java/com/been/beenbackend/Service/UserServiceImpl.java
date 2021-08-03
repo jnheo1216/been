@@ -21,7 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(User user) {
-        return sqlSession.getMapper(UserMapper.class).register(user);
+        sqlSession.getMapper(UserMapper.class).register(user);
+        return user.getId();
     }
 
     @Override

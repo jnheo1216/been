@@ -26,9 +26,12 @@
 		where email = #{email} and password = #{password} and emailConfirmation = 1;
 	</select>
 	
-	<insert id="register" parameterType="user" useGeneratedKeys="true" keyColumn="id">
-		insert into user (id, email, password, intro, nickname, name)
-		values (#{id}, #{email}, #{password}, #{intro}, #{nickname}, #{name})
+	<insert id="register" parameterType="user">
+		insert into user (email, password, intro, nickname, name)
+		values (#{email}, #{password}, #{intro}, #{nickname}, #{name})
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 		;
 	</insert>
 	
@@ -39,41 +42,43 @@
 		where id = #{id};
 	</update>
 
-	<delete id="delete" parameterType="String">
+	<delete id="delete" parameterType="int">
 		delete from user
 		where id = #{id};
 	</delete>
 
-	<insert id="makeFollow" parameterType="String">
+	<!--팔로우 신청-->
+	<insert id="makeFollow" parameterType="int">
 		insert into follow (followerId, followedId)
 		values (#{followerId}, #{followedId});
 	</insert>
 
-	<delete id="removeFollow" parameterType="String">
+	<!--팔로우 삭제-->
+	<delete id="removeFollow" parameterType="int">
 		delete from follow
 		where followerId = #{followerId} and followedId = #{followedId};
 	</delete>
 
 	<!--팔로우 수락-->
-	<update id="acceptFollow" parameterType="String">
+	<update id="acceptFollow" parameterType="int">
 		update follow
 		set accepted = 1
 		where followerId = #{followerId} and followedId = #{followedId};
 	</update>
 
 	<!-- 나를 팔로우한 사람들 보기-->
-	<select id="showFollower" parameterType="String" resultType="user">
+	<select id="showFollower" parameterType="Integer" resultType="user">
 		SELECT id, password, email, intro, nickname, name, tier, followerCnt, followingCnt, createdAt, profilePicSrc, profilePicName, emailConfirmation ,status
-		FROM user INNER JOIN follow ON follow.followedId=user.id
-		WHERE user.id = #{id} AND follow.accepted=1
+		FROM user INNER JOIN follow ON follow.followerId=user.id
+		WHERE follow.followedId = #{id} AND follow.accepted=1
 
 	</select>
 
 	<!-- 내가 팔로우중인 사람들 보기-->
-	<select id="showFollowing" parameterType="String" resultType="user">
+	<select id="showFollowing" parameterType="Integer" resultType="user">
 		select id, password, email, intro, nickname, name, tier, followerCnt, followingCnt, createdAt, profilePicSrc, profilePicName, emailConfirmation, status
-		from user inner join follow on follow.followerId = user.id
-		where user.id = #{id} and follow.accepted=1
+		from user inner join follow on follow.followedId = user.id
+		where follow.followerId = #{id} and follow.accepted=1
 	</select>
 
 	<!--이메일로 검색-->
@@ -82,10 +87,10 @@
 		where email like #{email};
 	</select>
 
-	<!--이메일로 검색-->
+	<!--닉네임으로 검색-->
 	<select id="findUserByNickname" parameterType="String" resultType="user">
 		select * from user
-		where email like #{nickname};
+		where nickname like #{nickname};
 	</select>
 
 	<update id="updatePic" parameterType="user">
@@ -94,7 +99,7 @@
 		where email = #{email};
 	</update>
 
-	<select id="beforeFollowList" parameterType="String" resultType="follow">
+	<select id="beforeFollowList" parameterType="int" resultType="follow">
 		select * from follow
 		where followedId = #{id} and accepted = 0;
 	</select>

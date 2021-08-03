@@ -46,7 +46,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public int deleteLike(int commentId, int userId) {
-        return sqlSession.getMapper(CommentMapper.class).makeLike(commentId, userId);
+        return sqlSession.getMapper(CommentMapper.class).deleteLike(commentId, userId);
     }
 }
 

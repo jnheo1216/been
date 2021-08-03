@@ -103,7 +103,10 @@ public class UserController {
     @ApiOperation(value="user 회원탈퇴(delete)")
     @DeleteMapping(value = "/user")
     public ResponseEntity<Map<String, Object>> withdrawal(@RequestBody User user) throws Exception {
-        s3Service.deleteObject(user.getProfilePicName());
+        String fileName = user.getProfilePicName();
+        if(!fileName.equals("defaultProfile.png")) {
+            s3Service.deleteObject(fileName);
+        }
         userService.delete(user.getId());
         return list();
     }
@@ -118,7 +121,7 @@ public class UserController {
     }
 
     @ApiOperation(value="user nickname으로 찾기(read)")
-    @GetMapping(value="/user/findEmail/{nickname}")
+    @GetMapping(value="/user/findNickname/{nickname}")
     public ResponseEntity<Map<String, Object>> findUserByNickname(@PathVariable String nickname) throws Exception {
         List<User> users = userService.findUserByNickname(nickname);
         Map<String, Object> result = new HashMap<>();
@@ -135,7 +138,7 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
-    @ApiOperation(value="user 팔로워 표시(read)")
+    @ApiOperation(value="user가 팔로우하는 유저 표시(read)")
     @GetMapping(value="/user/showFollowing/{id}")
     public ResponseEntity<Map<String, Object>> showFollowing(@PathVariable int id) throws Exception {
         List<User> users = userService.showFollowing(id);
@@ -197,13 +200,13 @@ public class UserController {
 
     @ApiOperation(value="user 언팔로우(delete)")
     @DeleteMapping(value = "/user/{followedId}/{followerId}")
-    public void deleteFollow(@PathVariable("followedId") int followedId, @PathVariable("followedId") int followerId) throws Exception {
+    public void deleteFollow(@PathVariable("followedId") int followedId, @PathVariable("followerId") int followerId) throws Exception {
         userService.deleteFollow(followedId, followerId);
     }
 
     @ApiOperation(value="user 팔로우 수락(update)")
     @PutMapping(value = "/user/{followedId}/{followerId}")
-    public void acceptFollow(@PathVariable("followedId") int followedId, @PathVariable("followedId") int followerId) throws Exception {
+    public void acceptFollow(@PathVariable("followedId") int followedId, @PathVariable("followerId") int followerId) throws Exception {
         userService.acceptFollow(followedId, followerId);
     }
 
