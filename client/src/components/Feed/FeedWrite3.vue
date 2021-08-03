@@ -3,7 +3,7 @@
     <img src="@/assets/image-logo.png" alt="logobee" width="100">
     <el-progress class="align-vertical" :percentage="percentage" :color="customColors" :format="format"></el-progress>
 
-    <p> Form 선택 들어갈 곳 </p>
+    <TestForm></TestForm>
 
     <button @click="increase">완료</button>
 
@@ -11,9 +11,10 @@
 </template>
 
 <script>
+import TestForm from "./TestForm";
 export default {
   name: "FeedWrite3",
-  components: {
+  components: { TestForm,
   },
   data() {
     return {
