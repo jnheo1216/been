@@ -5,6 +5,7 @@ import com.been.beenbackend.Service.JwtService;
 import com.been.beenbackend.Service.S3Service;
 import com.been.beenbackend.Service.UserService;
 import com.been.beenbackend.dto.User;
+import com.been.beenbackend.dto.follow;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,8 +110,35 @@ public class UserController {
 
     @ApiOperation(value="user email로 찾기(read)")
     @GetMapping(value="/user/findEmail/{email}")
-    public ResponseEntity<Map<String, Object>> findUser(@PathVariable String email) throws Exception {
-        List<User> users = userService.findUser(email);
+    public ResponseEntity<Map<String, Object>> findUserByEmail(@PathVariable String email) throws Exception {
+        List<User> users = userService.findUserByEmail(email);
+        Map<String, Object> result = new HashMap<>();
+        result.put("users", users);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user nickname으로 찾기(read)")
+    @GetMapping(value="/user/findEmail/{nickname}")
+    public ResponseEntity<Map<String, Object>> findUserByNickname(@PathVariable String nickname) throws Exception {
+        List<User> users = userService.findUserByNickname(nickname);
+        Map<String, Object> result = new HashMap<>();
+        result.put("users", users);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user 팔로워 표시(read)")
+    @GetMapping(value="/user/showFollower/{id}")
+    public ResponseEntity<Map<String, Object>> showFollower(@PathVariable int id) throws Exception {
+        List<User> users = userService.showFollower(id);
+        Map<String, Object> result = new HashMap<>();
+        result.put("users", users);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user 팔로워 표시(read)")
+    @GetMapping(value="/user/showFollowing/{id}")
+    public ResponseEntity<Map<String, Object>> showFollowing(@PathVariable int id) throws Exception {
+        List<User> users = userService.showFollowing(id);
         Map<String, Object> result = new HashMap<>();
         result.put("users", users);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
@@ -177,5 +205,14 @@ public class UserController {
     @PutMapping(value = "/user/{followedId}/{followerId}")
     public void acceptFollow(@PathVariable("followedId") int followedId, @PathVariable("followedId") int followerId) throws Exception {
         userService.acceptFollow(followedId, followerId);
+    }
+
+    @ApiOperation(value="user 팔로우 대기 리스트(read)")
+    @PutMapping(value = "/user/beforeFollowList/{id}")
+    public ResponseEntity<Map<String,Object>> beforeFollowList(@PathVariable("id") int id) throws Exception {
+        List<follow> beforeFollowList = userService.beforeFollowList(id);
+        Map<String,Object> result = new HashMap<>();
+        result.put("beforeFollowList",beforeFollowList);
+        return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
     }
 }

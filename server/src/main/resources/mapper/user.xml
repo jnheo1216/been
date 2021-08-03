@@ -54,6 +54,7 @@
 		where followerId = #{followerId} and followedId = #{followedId};
 	</delete>
 
+	<!--팔로우 수락-->
 	<update id="acceptFollow" parameterType="String">
 		update follow
 		set accepted = 1
@@ -76,9 +77,15 @@
 	</select>
 
 	<!--이메일로 검색-->
-	<select id="findUser" parameterType="String" resultType="user">
+	<select id="findUserByEmail" parameterType="String" resultType="user">
 		select * from user
 		where email like #{email};
+	</select>
+
+	<!--이메일로 검색-->
+	<select id="findUserByNickname" parameterType="String" resultType="user">
+		select * from user
+		where email like #{nickname};
 	</select>
 
 	<update id="updatePic" parameterType="user">
@@ -86,4 +93,9 @@
 		set profilePicSrc = #{profilePicSrc}, profilePicName = #{profilePicName}
 		where email = #{email};
 	</update>
+
+	<select id="beforeFollowList" parameterType="String" resultType="follow">
+		select * from follow
+		where followedId = #{id} and accepted = 0;
+	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.been.beenbackend.Service;
 
 import com.been.beenbackend.dto.User;
+import com.been.beenbackend.dto.follow;
 
 import java.util.List;
 
@@ -27,7 +28,15 @@ public interface UserService {
 
     void acceptFollow(int followedId, int followerId);
 
-    List<User> findUser(String email);
+    List<User> findUserByEmail(String email);
+
+    List<User> findUserByNickname(String nickname);
 
     void updatePic(User user);
+
+    List<User> showFollowing(int id);
+
+    List<User> showFollower(int id);
+
+    List<follow> beforeFollowList(int id);
 }
