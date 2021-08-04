@@ -31,7 +31,7 @@
       <div class="login-checkbox">
         <span class="login-input-box"><el-checkbox v-model="checked"></el-checkbox>로그인 상태 유지</span>
       </div>
-      <div class="login-button">
+      <div @click="onSubmit" class="login-button">
         <img style="max-height: 100%;" src="@/assets/text-logo-resize.png" alt="logo">
       </div>
     </form>
@@ -51,6 +51,28 @@
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 // import Google from "@/components/User/Google.vue" 
+import axios from "axios";
+
+// function createInstance() {
+//   const instance = axios.create({
+//     baseURL: 'http://localhost:8080/',
+//     headers:{
+//       "Content-Type": "application/json"
+//     }
+//   });
+//   return instance;
+// }
+
+// const instance = createInstance();
+// function login(user, success, fail){
+//   instance.defaults.headers["accesss-token"] = window.localStorage.getItem(
+//     "access-token"
+//   );
+//   instance
+//   .post("user/signin", JSON.stringify(user))
+//   .then(success)
+//   .catch(fail);
+// }
 
 export default {
   name: 'Login',
@@ -101,31 +123,25 @@ export default {
         this.error.password = "영문, 숫자 포함 8 자리 이상이어야 합니다";
       else this.error.password = false;
     },
-    onSubmit(event){
-      event.preventDefault();
+    onSubmit() {
+      // event.preventDefault();
       localStorage.setItem("access-token", "");
-      // const user={
-      //   userId: this.email,
-      //   userPw: this.password
-      // };
-      // login(
-      //   user,
-      //   (res)=>{
-      //     // console.log(res.data.user);
-      //     const token = res.data['auth-token'];
-      //     if(token){
-      //       localStorage.setItem("access-token", token);
-      //       this.$store.commit("setUserInfo",res.data.user);
-      //       this.$router.push("/");
-      //     }
-      //     else{
-      //       alert(res.data['message']);
-      //     }
-      //   },
-      //   (err)=>{
-      //     console.error(err);
-      //   }
-      // )
+      const user={
+        email: this.email,
+        password: this.password
+      };
+      axios.post('http://localhost:8080/user/signin', user)
+        .then(res => {
+          console.log(res)
+          localStorage.setItem('access-token', res.data.user)
+          // this.$store.commit('UPDATE_TOKEN', res.data.user)
+        })
+        .then(() => {
+          this.$router.push("/")
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }
