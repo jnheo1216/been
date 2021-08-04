@@ -3,7 +3,7 @@
     <template #default>
       <div class="background">
         <img src="@/assets/image-logo.png" alt="image-logo">
-        <form @submit="onSubmit">
+        <form @submit="onSignUp">
           <div class="login-input-box">
             <div class="login-checkbox">
               <label class="" for="prefer-region"><i class="el-icon-check icon-color-must"></i>당신의 선호 지역</label><br>
@@ -43,14 +43,14 @@
             </div>
             <el-input 
               id="profile"
-              v-model="wish"
+              v-model="user.intro"
               type="textarea"
               class="" 
               placeholder="프로필 소개" 
             ></el-input>
           </div>
           
-          <div @click="onSubmit" class="login-button">
+          <div @click="onSignUp" class="login-button">
             <img style="max-height: 100%;" src="@/assets/text-logo-resize.png" alt="logo">
           </div>
 
@@ -65,20 +65,39 @@
 </template>
 
 <script>
+import axios from "axios";
+
+function createInstance() {
+  const instance = axios.create({
+    baseURL: 'http://localhost:8080/',
+    headers:{
+      "Content-Type": "application/json"
+    }
+  });
+  return instance;
+}
+
+const instance = createInstance();
+function join(user, success, fail){
+  instance
+  .post("user", JSON.stringify(user))
+  .then(success)
+  .catch(fail);
+}
 
 export default {
   name: 'SignupUserFavorite',
   data: () => {
     return {
       user:{
-        userName: "",
-        userId: "",
-        userPw: "",
-        myTag:[],
+        nickname: "",
+        email: "",
+        password: "",
+        intro: "",
+        name: "",
       },
       region: "",
       tripstyle: "",
-      wish: "",
       component: this,
       props_region: { multiple: true },
       props_style: { multiple: true },
@@ -135,28 +154,35 @@ export default {
       ]
     }
   },
+  created() {
+    this.user.nickname = this.$route.params.nickname
+    this.user.email = this.$route.params.email
+    this.user.password = this.$route.params.password
+    this.user.intro = this.$route.params.intro
+  },
   methods: {
     onSignUp(){
-      // join(
-      //   this.user,
-      //   (res)=>{
-      //     // console.log(res.data)
-      //     if(res.data===true){
-      //       this.$router.push({
-      //         name:"SignupSuccess",
-      //         params:{
-      //           ...this.user,
-      //         }
-      //       })
-      //     }
-      //     else{
-      //       // console.log(res.data)
-      //     }
-      //   },
-      //   (err)=>{
-      //     console.error(err);
-      //   }
-      // )
+      join(
+        this.user,
+        (res)=>{
+          // console.log('되는지좀알려줘라')
+          console.log(res.data)
+          if(typeof res.data==='object'){
+            this.$router.push({
+              name:"SignupSuccess",
+              params:{
+                ...this.user,
+              }
+            })
+          }
+          else{
+            console.log(res.data)
+          }
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
     }
   }
 }

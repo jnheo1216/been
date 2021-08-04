@@ -19,6 +19,19 @@
               <div v-if="error.email">{{ error.email }}</div>
             </div>
           </div>
+
+          <div class="login-input-box">
+            <div class="login-checkbox">
+              <label class="" for="user-name"><i class="el-icon-check icon-color-must"></i>닉네임</label><br>
+            </div>            
+            <el-input 
+              id="user-name"
+              v-model="username"
+              type="text"
+              class=""
+              placeholder="닉네임을 입력하세요."
+            ></el-input>
+          </div>
           
           <div class="login-input-box">
             <div class="login-checkbox">
@@ -131,10 +144,7 @@ export default {
     },
     onSubmit(event){
       event.preventDefault();
-      if(this.error.username){
-        alert(this.error.username);
-      }
-      else if(this.error.email){
+      if(this.error.email){
         alert(this.error.email);
       }
       else if(this.error.password){
@@ -145,9 +155,10 @@ export default {
       }
       else{
         const user={
-          userName: this.username,
-          userId: this.email,
-          userPw: this.password,
+          nickname: this.username,
+          email: this.email,
+          password: this.password,
+          intro: '내 소개',
         }
         this.$router.push({
           name:"SignupUserFavorite",

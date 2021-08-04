@@ -55,7 +55,7 @@ const routes = [
         component: ()=> import("@/components/Feed/FeedList.vue")
       },
       {
-        path:"/favorite",
+        path:"favorite",
         name:"FavoriteList",
         component: ()=> import("@/components/Feed/FavoriteList.vue")
       },
@@ -76,15 +76,25 @@ const routes = [
     component: Search,
     children:[
       {
-        path:"/typesearch",
+        path: "",
+        name: "SearchMain",
+        component: ()=> import("@/components/Search/SearchMain.vue")
+      },
+      {
+        path:"typesearch",
         name: "TypeSearch",
         component: ()=> import("@/components/Search/TypeSearch.vue")
       },
       {
-        path:"/peoplesearch",
+        path:"peoplesearch",
         name: "PeopleSearch",
         component: ()=> import("@/components/Search/PeopleSearch.vue")
       },
+      {
+        path: "articlesearch",
+        name: "ArticleSearch",
+        component: ()=> import("@/components/Search/ArticleSearch.vue")
+      }
     ],
   },
   
