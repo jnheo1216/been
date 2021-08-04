@@ -16,6 +16,12 @@
       <el-input @kedown="keyDowntoArticleSearch" placeholder="게시물 찾기" suffix-icon="el-icon-search" v-model="article_input"></el-input>
     </div>
 
+    <!--  물음표  -->
+    <p id="show-modal" @click="showModal = true" class="question el-icon-question"></p>
+    <SearchModal v-if="showModal" @close="showModal = false">   </SearchModal>
+ 
+
+
   <el-button @click="drawer = true" type="info" icon="el-icon-search" style="margin-left: 250px;" circle>
   </el-button>
   <el-drawer
@@ -31,18 +37,19 @@
 
 <script>
 import { ref } from 'vue'
-
-
+import SearchModal from "./SearchModal.vue"
 
 export default {
   name: 'SearchMain',
   data() {
     return {
       people_input: '',
-      article_input: ''
+      article_input: '',
+      showModal: false
     }
   },
   components: {
+    SearchModal,
   },
   methods: {
     keyDowntoPeopleSearch: function () {
@@ -114,5 +121,17 @@ export default {
 
   button {
     color: red;
+  }
+
+.question {
+  margin-left: 300px;
+  display: block;
+  margin-right: 10px;
+  margin-bottom: 30px;
+  }
+
+  #show-modal {
+  font-size: 22px;
+  margin-right: 20px;
   }
 </style>
