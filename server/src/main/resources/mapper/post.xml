@@ -24,11 +24,14 @@
 	<insert id="register" parameterType="Post">
 		insert into post (userId, title, content)
 		values (#{userId}, #{title}, #{content});
+		<selectKey resultType="int" keyProperty="postId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
 	<update id="modify" parameterType="Post">
 		update post
-		set title = #{title}, content = #{content}, updatedAt = #{current_timestamp},likeCnt = #{likeCnt}, postPicSrc = #{postPicSrc}, postPicName=#{postPicName}
+		set title = #{title}, content = #{content}, updatedAt = current_timestamp(),likeCnt = #{likeCnt}, postPicSrc = #{postPicSrc}, postPicName=#{postPicName}
 		where postId = #{postId};
 	</update>
 
@@ -46,21 +49,21 @@
 
 	<!--좋아요 추가-->
 	<insert id="makeLike" parameterType="int">
-		insert into like (postId,userId)
+		insert into likey (postId,userId)
 		values (#{postId}, #{userId})
 	</insert>
 
 	<!--좋아요 제거-->
 	<delete id="removeLike" parameterType="int">
-		delete from like
+		delete from likey
 		where postId = #{postId} and userId = #{userId}
 	</delete>
 
  	<!--좋아요한 게시물-->
 	<select id="likePost" parameterType="int" resultType="post">
-		select postId, userId, title, content, createdAt, updatedAt, likeCnt
-		from post inner join like on post.userId = like.userId
-		where like.userId = #{id}
+		select post.*
+		from post inner join likey on post.postId = likey.postId
+		where likey.userId = #{id}
 	</select>
 
 	<!--사진 등록-->
@@ -70,7 +73,7 @@
 	</insert>
 
 	<!--사진 가져오기-->
-	<select id="getPostPic" parameterType="String" resultType="PostPic">
+	<select id="getPostPic" parameterType="Integer" resultType="PostPic">
 		select * from post_pic
 		where postId = #{postId};
 	</select>

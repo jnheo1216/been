@@ -17,6 +17,13 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+        <!--java8버전 아닐시에 주석풀어줄것 -->
+        <!--
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <version>2.3.1</version>
+        </dependency>
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
