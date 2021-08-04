@@ -37,6 +37,7 @@ export default {
   },
   data() {
     return {
+      showModal: false,
       percentage: 20,
       customColors: [
         {color: '#5cb87a', percentage: 60},
