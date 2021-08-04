@@ -16,13 +16,13 @@
 
 	
 	<insert id="register" parameterType="Comment">
-		insert into comment (commentId, postId, comment)
-		values (#{commenId}, #{postId}, #{comment});
+		insert into comment (commentId, postId, comment, userId)
+		values (#{commentId}, #{postId}, #{comment}, #{userId});
 	</insert>
 	
 	<update id="modify" parameterType="Comment">
 		update comment
-		set comment = #{comment}, updatedAt = #{current_timestamp}
+		set comment = #{comment}, updatedAt = current_timestamp()
 		where commentId = #{commentId};
 	</update>
 
@@ -33,7 +33,7 @@
 
 	<insert id="makeLike" parameterType="int">
 		insert into like_comment (commentId, userId)
-		values (#{commenId}, #{userId});
+		values (#{commentId}, #{userId});
 	</insert>
 
 	<delete id="deleteLike" parameterType="int">

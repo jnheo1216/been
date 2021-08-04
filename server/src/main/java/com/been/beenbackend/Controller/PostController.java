@@ -135,7 +135,7 @@ public class PostController {
     }
 
     @ApiOperation(value="팔로우한 유저의 post 리스트 받아오기(read)")
-    @GetMapping(value="/post/follow/{userId}")
+    @GetMapping(value="/post/followPost/{userId}")
     public ResponseEntity<Map<String, Object>> showFollowPost(@PathVariable int userId) throws Exception {
         List<Post> posts = postService.showFollowPost(userId);
         Map<String, Object> result = new HashMap<>();

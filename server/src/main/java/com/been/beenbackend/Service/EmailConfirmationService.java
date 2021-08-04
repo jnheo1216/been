@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+
 @RequiredArgsConstructor
 @Service
 public class EmailConfirmationService {
@@ -15,6 +17,8 @@ public class EmailConfirmationService {
      * @return
      */
     public void createEmailConfirmation(int id, String email){
+        System.out.println(id);
+        System.out.println(email);
         String userId = Integer.toString(id);
         Assert.hasText(userId,"아이디 입력은 필수 입니다.");
         Assert.hasText(email,"수신자 이메일 입력은 필수 입니다.");
@@ -25,7 +29,7 @@ public class EmailConfirmationService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);
         mailMessage.setSubject("회원가입 이메일 인증");
-        mailMessage.setText("http://localhost:8080/user/confirmEmail?id="+email);
+        mailMessage.setText("http://localhost:8081/user/confirmEmail?id="+userId);
         emailSenderService.sendEmail(mailMessage);
 
 //        return emailConfirmationToken.getId();
