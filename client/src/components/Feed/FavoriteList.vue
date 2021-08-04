@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="favoriteList">
   </div>
 </template>
 
@@ -11,5 +11,11 @@ export default {
 </script>
 
 <style>
-
+  .favoriteList {
+    position: relative;
+    width: 375px;
+    height: 812px;
+    background-color: #fffaf4;
+    margin: 0 auto;
+  }
 </style>
