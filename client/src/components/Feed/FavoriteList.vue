@@ -8,30 +8,81 @@
 
     <div class="curation">
 
-      <div class="wrap">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+      <div class="grid grid-cols-12">
+        <div class="wrap block">
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+              </div>
+            </div>
+          </div>
+
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/200/301?grayscale)')">
+              </div>
+            </div>
+          </div>
+
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/200/302?grayscale)')">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+
+      <div class="grid grid-cols-12">
+        <div class="wrap block">
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/200/303?grayscale)')">
+              </div>
+            </div>
+          </div>
+
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/200/304?grayscale)')">
+              </div>
+            </div>
+          </div>
+
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/200/305?grayscale)')">
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="wrap">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+
+      <div class="grid grid-cols-12">
+        <div class="wrap block">
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/201/303?grayscale)')">
+              </div>
+            </div>
+          </div>
+
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/202/304?grayscale)')">
+              </div>
+            </div>
+          </div>
+
+          <div class="hex" @click="toDetail">
+            <div class="hex-inner">
+              <div class="content" style="background: url('https://picsum.photos/203/305?grayscale)')">
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="wrap">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-            </div>
-          </div>
-        </div>
-      </div>
+
 
     </div>
 
@@ -57,6 +108,8 @@ export default {
     height: 812px;
     background-color: #fffaf4;
     margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .logo {
@@ -64,7 +117,7 @@ export default {
     padding: 0;
   }
   img {
-    width: 100px;
+    width: 110px;
     padding: 0;
   }
 
