@@ -6,102 +6,97 @@
     </div>
 
     <!-- 전체 게시물 -->
-    <div class="articles flex flex-col space-y-4">
+    <div class="articles space-y-2">
 
       <!-- 육각형 한개 -->
       <!-- v-for="post in feed" :key="post.postId" @click="toDetail(post.postId)" -->
-      <div class="grid grid-cols-12 place-items-start">
-        <div class="wrap flex flex-row items-start">
-          <div class="hex" @click="toDetail">
-            <div class="hex-inner">
-              <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-              </div>
+      <div class="wrap block">
+        <div class="hex" @click="toDetail">
+          <div class="hex-inner">
+            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
             </div>
           </div>
+        </div>
 
-          <div class="flex flex-col logos-wrap">
-            <div class="restaurant" v-if="restaurant"></div>
-            <div class="hotel" v-if="hotel"></div>
-            <div class="tour" v-if="tour"></div>
-          </div>
+        <div class="logos-wrap">
+          <div class="restaurant" v-if="restaurant"></div>
+          <div class="hotel" v-if="hotel"></div>
+          <div class="tour" v-if="tour"></div>
         </div>
       </div>
     <!-- 육각형 한개 끝 -->
 
-    <div class="grid grid-cols-12 place-items-end">
-      <div class="wrap flex flex-row-reverse justify-items-end">
-          <div class="hex" @click="toDetail">
-            <div class="hex-inner">
-              <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-              </div>
+      <div class="wrap2 block">
+        <div class="logos-wrap">
+          <div class="restaurant" v-if="restaurant"></div>
+          <div class="hotel" v-if="hotel"></div>
+          <div class="tour" v-if="tour"></div>
+        </div>
+
+        <div class="hex" @click="toDetail">
+          <div class="hex-inner">
+            <div class="content" style="background: url('https://picsum.photos/200/301?grayscale)')">
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="flex flex-col logos-wrap">
-            <div class="restaurant" v-if="restaurant"></div>
-            <div class="hotel" v-if="hotel"></div>
-            <div class="tour" v-if="tour"></div>
+      <div class="wrap block">
+        <div class="hex" @click="toDetail">
+          <div class="hex-inner">
+            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+            </div>
           </div>
         </div>
+
+        <div class="logos-wrap">
+          <div class="restaurant" v-if="restaurant"></div>
+          <div class="hotel" v-if="hotel"></div>
+          <div class="tour" v-if="tour"></div>
+        </div>
+      </div>
+
+      <div class="wrap2 block">
+        <div class="logos-wrap">
+          <div class="restaurant" v-if="restaurant"></div>
+          <div class="hotel" v-if="hotel"></div>
+          <div class="tour" v-if="tour"></div>
+        </div>
+
+        <div class="hex" @click="toDetail">
+          <div class="hex-inner">
+            <div class="content" style="background: url('https://picsum.photos/200/301?grayscale)')">
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="wrap flex flex-row-reverse">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-            </div>
-          </div>
-        </div>
-
-        <div class="flex flex-col logos-wrap">
-          <div class="restaurant" v-if="restaurant"></div>
-          <div class="hotel" v-if="hotel"></div>
-          <div class="tour" v-if="tour"></div>
-        </div>
-      </div>
-
-    <div class="wrap flex flex-row place-items-end">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-            </div>
-          </div>
-        </div>
-
-        <div class="flex flex-col logos-wrap">
-          <div class="restaurant" v-if="restaurant"></div>
-          <div class="hotel" v-if="hotel"></div>
-          <div class="tour" v-if="tour"></div>
-        </div>
-      </div>
-    
-    <div class="wrap flex flex-row">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-            </div>
-          </div>
-        </div>
-
-        <div class="flex flex-col logos-wrap">
-          <div class="restaurant" v-if="restaurant"></div>
-          <div class="hotel" v-if="hotel"></div>
-          <div class="tour" v-if="tour"></div>
-        </div>
-      </div>
   </div>
 
-</div>
+  <el-button @click="drawer = true" type="info" icon="el-icon-search" style="margin-left: 250px;" circle>
+  </el-button>
+  <el-drawer
+    title="BEEN 서비스"
+    v-model="drawer"
+    :direction="direction"
+    :before-close="handleClose">
+    <span>BEEN 사용법</span>
+  </el-drawer>
+  
+
 </template>
 
 <script>
-import axios from 'axios'
-// import {ref} from 'vue'
 
 export default {
-  name: 'FeedList',
+  name: 'FeedList2',
   data () {
     return {
+      drawer: false,
+      direction: 'btt',
+
       Nr: 0,
       img_src: '',
       restaurant: 1,
@@ -116,13 +111,7 @@ export default {
       feed: []
     }
   },
-  // setup () {
-  //   const feedBody = ref('')
-  // },
   methods: {
-    getPosts : function () {
-      axios.get('http://localhost:8080/post/followPost/{userId}')
-    },
     toDetail: function () {
       this.$router.replace({
         name: 'FeedDetail',
@@ -146,10 +135,9 @@ export default {
   margin-top: 300px;
 } */
 
-
 .wrap {
-  width: 120%;
-  margin: 40px 20px 40px 20px;
+  width: 110%;
+  margin: 60px 20px 40px 20px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -297,8 +285,6 @@ export default {
   height: 812px;
   background-color: #fffaf4;
   margin: 0 auto;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .logo {
@@ -312,6 +298,10 @@ img {
   padding: 0;
 }
 
-
+.el-button {
+  position: absolute;
+  bottom: 25px;
+  right: 50px;
+}
 
 </style>
