@@ -27,7 +27,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int register(Post post) {
-        return sqlSession.getMapper(PostMapper.class).register(post);
+        sqlSession.getMapper(PostMapper.class).register(post);
+        int postId = post.getPostId();
+        return postId;
 
     }
 

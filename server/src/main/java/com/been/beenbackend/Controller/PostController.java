@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins="*")
+//@CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
 @Slf4j
 public class PostController {
@@ -45,7 +46,7 @@ public class PostController {
     }
 
     @ApiOperation(value="post 유저아이디로 받아오기(read)")
-    @GetMapping(value="/post/{userid}")
+    @GetMapping(value="/post/userId/{userid}")
     public ResponseEntity<Map<String, Object>> listByUser(@PathVariable int userid) throws Exception {
         List<Post> posts = postService.listByUser(userid);
         Map<String, Object> result = new HashMap<>();
@@ -53,9 +54,9 @@ public class PostController {
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
-    @ApiOperation(value="post 하나만 받아오기(read)")
+    @ApiOperation(value="post 하나만 받아오기. 디테일 페이지에 사용(read)")
     @GetMapping(value="/post/{postId}")
-    public ResponseEntity<Map<String, Object>> getPost(int postId) throws Exception {
+    public ResponseEntity<Map<String, Object>> getPost(@PathVariable int postId) throws Exception {
         Post post = postService.listOne(postId);
         List<PostPic> postPics = postService.getPostPic(postId);
         Map<String, Object> result = new HashMap<>();
@@ -77,8 +78,8 @@ public class PostController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ApiOperation(value="post 사진 넣기(update), thumbnail은 null 값이 넘어오지 않게 해주세요!thumbnail이 없으면 default 값으로 만들어주세요!")
-    @PostMapping(value= "/post/postPic/{postId}")
+    @ApiOperation(value="post 사진 넣기(update), thumbnail은 null 값이 넘어오지 않게 해주세요!thumbnail이 없으면 db에 있는 기본값으로 만들어주세요! 사진 용량 제한도 있습니다")
+    @PostMapping(value= "/post/postPic/{postId}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<Map<String, Object>> modify(@RequestPart List<MultipartFile> files, @RequestPart MultipartFile thumbnail, @PathVariable int postId) throws Exception {
         //썸네일 사진 넣기
         String imgPath = s3Service.uploadObject(thumbnail);
