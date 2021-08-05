@@ -6,14 +6,19 @@
 
     <h1 class="text">꿀벌찾기</h1>
 
-    <form @submit="searchSubmit" class="peoplesearchinput">
-      <el-input
-        input="onInput" 
-        v-model="user"
-        placeholder="꿀벌 찾기"
-        type="text">
-      </el-input>
-    </form>
+    <el-form :inline="true" class="peoplesearchinput">
+      <el-form-item>
+        <el-input
+          input="onInput" 
+          v-model="user"
+          placeholder="꿀벌 찾기"
+          type="text">
+        </el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="searchSubmit" icon="el-icon-search" circle></el-button>
+      </el-form-item>
+    </el-form>
 
     <!-- 검색 결과 -->
     <div class="searchResult">
@@ -25,7 +30,7 @@
         <ul>
           <li @click="toUserProfile" v-for="(user, userId) in users"
             :key="userId">
-            <img :src="user.profilePicSrc" alt=""><p>{{ user.nickname }}</p>
+            <img :src="user.profilePicSrc" alt="" class="rounded-full"><p class="font-bold">{{ user.nickname }}</p>
             <p>{{ user.intro }}</p>
             </li>
         </ul>
