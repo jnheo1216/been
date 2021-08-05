@@ -1,6 +1,8 @@
 <template>
   <div class="background">
-    <img src="@/assets/image-logo.png" alt="image-logo">
+    <div class="logo">
+      <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
+    </div>
     <form @submit="onSubmit" class="login-form">
       <div class="login-input-box">
         <el-input 
@@ -179,5 +181,13 @@ export default {
   .text-color-danger {
     color: crimson;
     text-align: right;
+  }
+  .logo {
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 200px;
+  }
+  .logo > img {
+    width: 100%;
   }
 </style>

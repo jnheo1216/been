@@ -2,7 +2,9 @@
   <suspense>
     <template #default>
       <div class="background">
-        <img src="@/assets/image-logo.png" alt="image-logo">
+        <div class="logo">
+          <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
+        </div>
         <form @submit="onSignUp">
           <div class="login-input-box">
             <div class="login-checkbox">
@@ -191,6 +193,14 @@ export default {
 <style>
   .icon-color-must {
     color: #31D89C;
+  }
+  .logo {
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 200px;
+  }
+  .logo > img {
+    width: 100%;
   }
 
 </style>

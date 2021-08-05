@@ -2,6 +2,7 @@ package com.been.beenbackend.Service;
 
 import com.been.beenbackend.Mapper.UserMapper;
 import com.been.beenbackend.dto.User;
+import com.been.beenbackend.dto.follow;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(User user) {
-        return sqlSession.getMapper(UserMapper.class).register(user);
+        sqlSession.getMapper(UserMapper.class).register(user);
+        return user.getId();
     }
 
     @Override
@@ -70,15 +72,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUser(String email) {
+    public List<User> findUserByEmail(String email) {
         email = "%"+email+"%";
         System.out.println(email);
-        return sqlSession.getMapper(UserMapper.class).findUser(email);
+        return sqlSession.getMapper(UserMapper.class).findUserByEmail(email);
+    }
+
+    @Override
+    public List<User> findUserByNickname(String nickname) {
+        nickname = "%"+nickname+"%";
+        System.out.println(nickname);
+        return sqlSession.getMapper(UserMapper.class).findUserByNickname(nickname);
     }
 
     @Override
     public void updatePic(User user) {
         sqlSession.getMapper(UserMapper.class).updatePic(user);
+    }
+
+    @Override
+    public List<User> showFollowing(int id) {
+        return sqlSession.getMapper(UserMapper.class).showFollowing(id);
+    }
+
+    @Override
+    public List<User> showFollower(int id) {
+        return sqlSession.getMapper(UserMapper.class).showFollower(id);
+    }
+
+    @Override
+    public List<follow> beforeFollowList(int id) {
+        return sqlSession.getMapper(UserMapper.class).beforeFollowList(id);
     }
 
 

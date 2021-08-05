@@ -73,7 +73,7 @@ public class CommentController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ApiOperation(value="comment 삭제하기(delete)")
+    @ApiOperation(value="comment 좋아요 삭제하기(delete)")
     @DeleteMapping(value = "/comment/like")
     public ResponseEntity<Map<String, Object>> delete(@RequestBody LikeComment likeComment) throws Exception {
         commentService.deleteLike(likeComment.getCommentId(), likeComment.getUserId());

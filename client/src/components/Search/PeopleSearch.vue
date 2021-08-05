@@ -1,7 +1,7 @@
 <template>
   <div class="PeopleSearch">
      <div class="logo">
-      <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo.png">
+      <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
     </div>
 
     <h1 class="text">꿀벌찾기</h1>
