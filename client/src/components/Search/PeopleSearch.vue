@@ -32,6 +32,12 @@
       </div>  
       <!-- 일치하는 검색 결과가 없을 때 -->
       <div class="peoplenotfound" v-if="users.length==0">
+          <el-alert
+            title="다시 찾아보세요"
+            type="error"
+            description="  찾는 꿀벌이 없습니다"
+            show-icon>
+          </el-alert>
         <img src="@/assets/lost-bee.png" class="lost-img" alt="lost-bee" v-if="users.length == 0">
         <p>찾는 꿀벌이 없습니다</p>
         <el-button @click="backToSearchmain" type="info" icon="el-icon-back" circle></el-button>
@@ -68,16 +74,16 @@ export default ({
       })
     },
     getUser: function () {
-      axios.get('http://localhost:8080/user/findNickname/{}')
+      axios.get('http://localhost:8080/user/findNickname/{user}')
       .then(res => {
-
+        console.log(res)
       })
       
     },
     onInput: function(event) {
       this.search = event.target.dataset.search
       this.isSubmit = false
-      if (this.search.length === 0 ) this.isShow = false
+      if (this.search.length === 0) this.isShow = false
       else this.isShow = true
     },
     // searchSubmit : function (event) {
