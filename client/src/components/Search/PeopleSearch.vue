@@ -9,7 +9,7 @@
     <form @submit="searchSubmit" class="peoplesearchinput">
       <el-input
         input="onInput" 
-        v-model="search"
+        v-model="user"
         placeholder="꿀벌 찾기"
         type="text">
       </el-input>
@@ -42,11 +42,13 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default ({
   name: 'PeopleSearch',
   data () {
     return {
+      user: '',
       users : [],
       search: '',
       isSubmit: false,
@@ -65,7 +67,11 @@ export default ({
         params: { userId: userId }
       })
     },
-    find: function () {
+    getUser: function () {
+      axios.get('http://localhost:8080/user/findNickname/{}')
+      .then(res => {
+
+      })
       
     },
     onInput: function(event) {
