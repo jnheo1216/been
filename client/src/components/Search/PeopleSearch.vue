@@ -76,7 +76,7 @@ export default ({
     getUser: function () {
       axios.get('http://localhost:8080/user/findNickname/{user}')
       .then(res => {
-        console.log(res)
+        res
       })
       
     },

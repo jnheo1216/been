@@ -132,16 +132,14 @@ export default {
         email: this.email,
         password: this.password
       };
-      axios.post('http://localhost:8081/user/signin', user)
+      axios.post('http://localhost:8080/user/signin', user)
         .then(res => {
-          console.log(res.data.data)
-          localStorage.setItem('access-token', res.data.data)
-          this.$store.commit("setUserInfo",res.data.data)
+          console.log(res)
+          localStorage.setItem('access-token', res.data.user)
+          // this.$store.commit('UPDATE_TOKEN', res.data.user)
         })
         .then(() => {
-          this.$router.push("/feed");
-          console.log(this.$store.state.user)
-          console.log(this.$store.state.isLogin)
+          this.$router.push("/")
         })
         .catch(err => {
           console.error(err)
