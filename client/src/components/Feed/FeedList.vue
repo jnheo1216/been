@@ -119,6 +119,10 @@ export default {
   // setup () {
   //   const feedBody = ref('')
   // },
+  created() {
+    console.log(this.$store.state.user)
+    console.log(this.$store.state.isLogin)
+  },
   methods: {
     getPosts : function () {
       axios.get('http://localhost:8080/post/followPost/{userId}')
