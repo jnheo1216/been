@@ -97,6 +97,9 @@ export default {
     }
   },  
   created(){
+    if (this.$store.state.isLogin === true) {
+      this.$router.push("/feed");
+    }
     this.component = this;
     this.passwordSchema
       .is()
@@ -127,15 +130,17 @@ export default {
     },
     onSubmit() {
       // event.preventDefault();
-      localStorage.setItem("access-token", "");
+      localStorage.setItem("jwt-auth-token", "");
+      localStorage.setItem("userInfo", "");
       const user={
         email: this.email,
         password: this.password
       };
       axios.post('http://localhost:8081/user/signin', user)
         .then(res => {
-          console.log(res.data.data)
-          localStorage.setItem('access-token', res.data.data)
+          console.log(res)
+          localStorage.setItem('jwt-auth-token', res.headers['jwt-auth-token'])
+          localStorage.setItem('userId', res.data.data['id'])
           this.$store.commit("setUserInfo",res.data.data)
         })
         .then(() => {
@@ -164,6 +169,7 @@ export default {
     height: 40px;
     background-color: #F4DBDB;
     margin: 0 auto;
+    cursor: pointer;
   }
   .login-form {
     padding: 10px;
