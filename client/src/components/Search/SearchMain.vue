@@ -24,13 +24,7 @@
 
   <el-button @click="drawer = true" type="info" icon="el-icon-search" style="margin-left: 250px;" circle>
   </el-button>
-  <el-drawer
-    title="BEEN 서비스"
-    v-model="drawer"
-    :direction="direction"
-    :before-close="handleClose">
-    <span>BEEN 사용법</span>
-  </el-drawer>
+
 
   </div>
 </template>

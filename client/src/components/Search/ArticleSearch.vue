@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'ArticleSearch',
+  name: "ArticleSearch",
   data () {
     return {
       
