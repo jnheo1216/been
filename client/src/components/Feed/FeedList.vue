@@ -1,97 +1,113 @@
 <template>
+  <suspense>
+    <template #default>
+      <div class="FeedList">
+        
+        <div v-for="(feed, index) in feeds" :key="feed.postId">
+          <div>{{ index }}</div>
+          <div>{{ feed }}</div>
+          <div v-if="index % 2">홀</div>
+          <div v-else>짝</div>
+        </div>
 
-  <div class="FeedList">
-    <div class="logo">
-      <img alt="BEEN LOGO" src="@/assets/image-logo.png">
-    </div>
+        <div class="logo">
+          <img alt="BEEN LOGO" src="@/assets/image-logo.png">
+        </div>
 
-    <!-- 전체 게시물 -->
-    <div class="articles flex flex-col space-y-4">
+        <!-- 전체 게시물 -->
+        <div class="articles flex flex-col space-y-4">
 
-      <!-- 육각형 한개 -->
-      <!-- v-for="post in feed" :key="post.postId" @click="toDetail(post.postId)" -->
-      <div class="grid grid-cols-12 place-items-start">
-        <div class="wrap flex flex-row items-start">
-          <div class="hex" @click="toDetail">
-            <div class="hex-inner">
-              <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+          <!-- 육각형 한개 -->
+          <!-- v-for="post in feed" :key="post.postId" @click="toDetail(post.postId)" -->
+          <div class="grid grid-cols-12 place-items-start">
+            <div class="wrap flex flex-row items-start">
+              <div class="hex" @click="toDetail">
+                <div class="hex-inner">
+                  <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-col logos-wrap">
+                <div class="restaurant" v-if="restaurant"></div>
+                <div class="hotel" v-if="hotel"></div>
+                <div class="tour" v-if="tour"></div>
               </div>
             </div>
           </div>
+        <!-- 육각형 한개 끝 -->
 
-          <div class="flex flex-col logos-wrap">
-            <div class="restaurant" v-if="restaurant"></div>
-            <div class="hotel" v-if="hotel"></div>
-            <div class="tour" v-if="tour"></div>
-          </div>
-        </div>
-      </div>
-    <!-- 육각형 한개 끝 -->
+        <div class="grid grid-cols-12 place-items-end">
+          <div class="wrap flex flex-row-reverse justify-items-end">
+              <div class="hex" @click="toDetail">
+                <div class="hex-inner">
+                  <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+                  </div>
+                </div>
+              </div>
 
-    <div class="grid grid-cols-12 place-items-end">
-      <div class="wrap flex flex-row-reverse justify-items-end">
-          <div class="hex" @click="toDetail">
-            <div class="hex-inner">
-              <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+              <div class="flex flex-col logos-wrap">
+                <div class="restaurant" v-if="restaurant"></div>
+                <div class="hotel" v-if="hotel"></div>
+                <div class="tour" v-if="tour"></div>
               </div>
             </div>
-          </div>
-
-          <div class="flex flex-col logos-wrap">
-            <div class="restaurant" v-if="restaurant"></div>
-            <div class="hotel" v-if="hotel"></div>
-            <div class="tour" v-if="tour"></div>
-          </div>
         </div>
-    </div>
 
-    <div class="wrap flex flex-row-reverse">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+        <div class="wrap flex flex-row-reverse">
+            <div class="hex" @click="toDetail">
+              <div class="hex-inner">
+                <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col logos-wrap">
+              <div class="restaurant" v-if="restaurant"></div>
+              <div class="hotel" v-if="hotel"></div>
+              <div class="tour" v-if="tour"></div>
             </div>
           </div>
-        </div>
 
-        <div class="flex flex-col logos-wrap">
-          <div class="restaurant" v-if="restaurant"></div>
-          <div class="hotel" v-if="hotel"></div>
-          <div class="tour" v-if="tour"></div>
-        </div>
-      </div>
+        <div class="wrap flex flex-row place-items-end">
+            <div class="hex" @click="toDetail">
+              <div class="hex-inner">
+                <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+                </div>
+              </div>
+            </div>
 
-    <div class="wrap flex flex-row place-items-end">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+            <div class="flex flex-col logos-wrap">
+              <div class="restaurant" v-if="restaurant"></div>
+              <div class="hotel" v-if="hotel"></div>
+              <div class="tour" v-if="tour"></div>
             </div>
           </div>
-        </div>
+        
+        <div class="wrap flex flex-row">
+            <div class="hex" @click="toDetail">
+              <div class="hex-inner">
+                <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+                </div>
+              </div>
+            </div>
 
-        <div class="flex flex-col logos-wrap">
-          <div class="restaurant" v-if="restaurant"></div>
-          <div class="hotel" v-if="hotel"></div>
-          <div class="tour" v-if="tour"></div>
-        </div>
-      </div>
-    
-    <div class="wrap flex flex-row">
-        <div class="hex" @click="toDetail">
-          <div class="hex-inner">
-            <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+            <div class="flex flex-col logos-wrap">
+              <div class="restaurant" v-if="restaurant"></div>
+              <div class="hotel" v-if="hotel"></div>
+              <div class="tour" v-if="tour"></div>
             </div>
           </div>
-        </div>
-
-        <div class="flex flex-col logos-wrap">
-          <div class="restaurant" v-if="restaurant"></div>
-          <div class="hotel" v-if="hotel"></div>
-          <div class="tour" v-if="tour"></div>
-        </div>
       </div>
-  </div>
+      </div>
 
-</div>
+    </template>
+
+    <template #fallback>
+      <div>Loading...</div>
+    </template>
+  </suspense>
+
 </template>
 
 <script>
@@ -113,7 +129,7 @@ export default {
         nickname: '',
         followed_id: []
       },
-      feed: []
+      feeds: []
     }
   },
   // setup () {
@@ -122,6 +138,14 @@ export default {
   created() {
     console.log(this.$store.state.user)
     console.log(this.$store.state.isLogin)
+    axios.get('http://localhost:8081/post')
+      .then(res => {
+        console.log(res)
+        this.feeds = res.data.posts
+      })
+      .catch(err => {
+        console.error(err)
+      })
   },
   methods: {
     getPosts : function () {
