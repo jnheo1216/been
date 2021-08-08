@@ -55,14 +55,19 @@ const routes = [
         component: ()=> import("@/components/Feed/FeedList.vue")
       },
       {
+        path:":feedNumber",
+        name:"FeedDetail",
+        component: ()=> import("@/components/Feed/FeedDetail.vue")
+      },
+      {
+        path:"follow",
+        name:"FeedFollowList",
+        component: ()=> import("@/components/Feed/FeedFollowList.vue")
+      },
+      {
         path:"favorite",
         name:"FavoriteList",
         component: ()=> import("@/components/Feed/FavoriteList.vue")
-      },
-      {
-        path:"/:feedNumber",
-        name:"FeedDetail",
-        component: ()=> import("@/components/Feed/FeedDetail.vue")
       },
     ],
     redirect: () => {
@@ -104,7 +109,7 @@ const routes = [
     component: Profile,
     children: [
       {
-        path:"/:userId",
+        path:":userId",
         name:"UserProfile",
         component: ()=> import("@/components/User/UserProfile.vue")
       },
