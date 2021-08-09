@@ -1,9 +1,8 @@
 package com.been.beenbackend.Controller;
 
-import com.been.beenbackend.Service.EmailConfirmationService;
-import com.been.beenbackend.Service.JwtService;
-import com.been.beenbackend.Service.S3Service;
-import com.been.beenbackend.Service.UserService;
+import com.been.beenbackend.Service.*;
+import com.been.beenbackend.dto.Post;
+import com.been.beenbackend.dto.PostPic;
 import com.been.beenbackend.dto.User;
 import com.been.beenbackend.dto.follow;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +25,9 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostService postService;
 
     @Autowired
     private JwtService jwtService;
@@ -84,10 +86,12 @@ public class UserController {
     @PutMapping(value= "/user/profilePic/{email}")
     public ResponseEntity<Map<String, Object>> modify(@RequestPart MultipartFile file,@PathVariable String email) throws Exception {
         //회원 프로필 이미지 넣기
-        String imgPath = s3Service.uploadObject(file);
+        String fileName = "userProfile_"+email;
+        String imgPath = s3Service.uploadObject(file,fileName);
         User user = new User();
         user.setProfilePicSrc(imgPath);
-        user.setProfilePicName(file.getOriginalFilename());
+//        user.setProfilePicName(file.getOriginalFilename());
+        user.setProfilePicName(fileName);
         user.setEmail(email);
         userService.updatePic(user);
         return list();
@@ -104,9 +108,20 @@ public class UserController {
     @DeleteMapping(value = "/user")
     public ResponseEntity<Map<String, Object>> withdrawal(@RequestBody User user) throws Exception {
         String fileName = user.getProfilePicName();
+        //프로필 사진 삭제
         if(!fileName.equals("defaultProfile.png")) {
             s3Service.deleteObject(fileName);
         }
+        //포스트 사진 삭제
+        List<Post> posts = postService.listByUser(user.getId());
+        for( Post post : posts) {
+            List<PostPic> postPics = postService.getPostPic(post.getPostId());
+            for(int i = 0; i < postPics.size(); i++) {
+                s3Service.deleteObject(postPics.get(i).getName());
+            }
+        }
+
+        //유저 db에서 삭제. cacscde로 fk로 연결된 것 전부다 삭제
         userService.delete(user.getId());
         return list();
     }

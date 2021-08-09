@@ -21,7 +21,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @ApiOperation(value="comment 리스트 받아오기(read)")
+    @ApiOperation(value="comment 전체 리스트 받아오기(read)")
     @GetMapping(value="/comment")
     public ResponseEntity<Map<String, Object>> list() throws Exception {
         List<Comment> comments = commentService.list();
@@ -30,12 +30,21 @@ public class CommentController {
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
-    @ApiOperation(value="comment 리스트 하나만 받아오기(read)")
+    @ApiOperation(value="comment 하나만 받아오기(read)")
     @GetMapping(value="/comment/{commentId}")
     public ResponseEntity<Map<String, Object>> list(@PathVariable int commentId) throws Exception {
         Comment comment = commentService.listOne(commentId);
         Map<String, Object> result = new HashMap<>();
         result.put("comment", comment);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="comment postId로 받아오기(read)")
+    @GetMapping(value="/comment/{postId}")
+    public ResponseEntity<Map<String, Object>> listByPostId(@PathVariable int postId) throws Exception {
+        List<Comment> comments = commentService.listByPostId(postId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("comments", comments);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
