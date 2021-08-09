@@ -1,34 +1,101 @@
 <template>
   <div class="background">
-    <div>
+    <!-- <div>
       <div class="hexagon hexa-right"></div>
       <div class="hexagon hexa-left"></div>
     </div>
     <div>
       {{ postId }}
       {{ post }}
+    </div> -->
+    
+    <div class="to-profile" @click="toProfile">
+      <el-row :gutter="10">
+        <el-col :span="4">
+          <div class="post-profile-image">
+            <img style="max-width: 100%;" :src="postProfilePicSrc" alt="프로필이미지">
+          </div>
+        </el-col>
+        <el-col :span="20">
+          <div class="post-user-nickname">
+            <h3>{{ postUserNickname }}</h3>
+          </div>
+        </el-col>
+      </el-row>
     </div>
 
-    <div v-if="formNumber === 1">
-      <div style="width: 375px">
+    <div v-if="formNumber === 1" class="post-box-1">
+      <div class="image-box-1">
         <img style="max-width: 100%;" :src="post.postPicSrc" alt="이미지">
       </div>
-      <div v-if="isLike" @click="likeDown">좋아요취소</div>
-      <div v-else @click="likeUp">좋아요</div>
-      <div>
-        <div>{{ post.title }}</div>
+      <div class="title-box-1">
+        <div><h2>{{ post.title }}</h2></div>
       </div>
-      <div>
+      <div class="content-box-1">
         <div>{{ post.content }}</div>
       </div>
     </div>
-
+    
     <div v-else-if="formNumber === 2">
-      2번 폼 형태
+      <div class="backimg" v-bind:style="{backgroundImage:'url('+this.post.postPicSrc+')'}">
+          <el-container>
+            <el-header></el-header>
+            <el-container>
+              <el-aside width="200px"></el-aside>
+              <el-container>
+                <el-main></el-main>
+                <el-footer>
+
+                  <div class="text-box">
+                    <div class="title-box-1">
+                      <div><h2>{{ post.title }}</h2></div>
+                    </div>
+                    <div class="content-box-1">
+                      <div>{{ post.content }}</div>
+                    </div>
+                  </div>
+
+                </el-footer>
+              </el-container>
+            </el-container>
+          </el-container>
+      </div>
+    </div>
+
+    <div v-else-if="formNumber === 3">
+      <div class="backimg" v-bind:style="{backgroundImage:'url('+this.post.postPicSrc+')'}">
+          <el-container>
+            <el-header></el-header>
+            <el-container>
+              <el-aside width="150px">
+                
+                  <div class="text-box" style="margin-top: 200px;">
+                    <div class="title-box-1">
+                      <div><h2>{{ post.title }}</h2></div>
+                    </div>
+                    <div class="content-box-1">
+                      <div>{{ post.content }}</div>
+                    </div>
+                  </div>
+
+              </el-aside>
+              <el-container>
+                <el-main></el-main>
+                <el-footer>
+                </el-footer>
+              </el-container>
+            </el-container>
+          </el-container>
+      </div>
     </div>
 
     <div v-else>
-      폼폼3
+      폼폼4?
+    </div>
+
+    <div class="like-box-1">
+      <div v-if="isLike" @click="likeDown">좋아요취소</div>
+      <div v-else @click="likeUp">좋아요</div>
     </div>
 
     <div class="comment-form">
@@ -41,10 +108,12 @@
       </div>
       <div class="comment-input">
         <el-input 
+        style="padding: 10px;"
           v-model="newComment"
           type="text"
           class=""
           placeholder="소감을 남겨주세요"
+          size="small"
           @keyup.enter="commentWrite"></el-input>
         <button @click="commentWrite">작성</button>
       </div>
@@ -62,10 +131,12 @@ export default {
     return {
       postId: '',
       post: {},
-      formNumber: 1,
+      formNumber: 3,
       isLike: false,
       comments: [],
       newComment: '',
+      postUserNickname: '',
+      postProfilePicSrc: '',
     }
   },
   created() {
@@ -75,6 +146,16 @@ export default {
         console.log(res)
         this.postId = res.data.post.postId
         this.post = res.data.post
+        const id = res.data.post.userId
+        axios.get(`http://localhost:8081/user/{id}?id=${id}`)
+          .then(res2 => {
+            console.log(res2)
+            this.postUserNickname = res2.data.user.nickname
+            this.postProfilePicSrc = res2.data.user.profilePicSrc
+          })
+          .catch(err2 => {
+            console.error(err2)
+          })
       })
       .catch(err => {
         console.error(err)
@@ -123,6 +204,10 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+    toProfile() {
+      const userId = this.post.userId
+      this.$router.push({ name: 'UserProfile', params: { userId: userId }})
     }
   }
 }
@@ -169,5 +254,39 @@ export default {
   }
   .hexa-left {
     float: left;
+  }
+  .post-profile-image {
+    margin: 10px;
+  }
+  .post-user-nickname {
+    margin: 10px;
+    position: relative;
+    float: left;
+    top: 10px;
+  }
+  .post-box-1 {
+    background-color: white;
+  }
+  .like-box-1 {
+    margin: 10px;
+  }
+  .text-box {
+    margin: 10px;
+    background-color: lightgray;
+    border-radius: 10px;
+  }
+  .comment-form {
+    margin: 10px;
+  }
+  .title-box-1 {
+    padding: 10px;
+  }
+  .content-box-1 {
+    padding: 10px;
+  }
+  .backimg {
+    width: 375px;
+    height: 375px;
+    background-size: 375px;
   }
 </style>
