@@ -13,7 +13,7 @@
     </div>
 
     <div class="article-search">
-      <el-input @kedown="keyDowntoArticleSearch" placeholder="게시물 찾기" suffix-icon="el-icon-search" v-model="article_input"></el-input>
+      <el-input @keydown="keyDowntoArticleSearch" placeholder="게시물 찾기" suffix-icon="el-icon-search" v-model="article_input"></el-input>
     </div>
 
     <!--  물음표  -->
@@ -22,7 +22,7 @@
  
 
 
-  <el-button @click="drawer = true" type="info" icon="el-icon-search" style="margin-left: 250px;" circle>
+  <el-button @click="backToFeed" type="info" icon="el-icon-back" circle>
   </el-button>
 
 
@@ -60,8 +60,12 @@ export default {
       this.$router.push({
         name: "ArticleSearch"
       })
+    },
+    backtoFeed: function () {
+      this.$router.push({ name: "Home" })
     }
   },
+
     setup() {
       return {
         // input: ref(''),
@@ -79,21 +83,31 @@ export default {
     margin: 10px;
     padding: 0;
   }
-  img {
-    width: 100px;
-    padding: 0;
+  .logo > img {
+    width: 100%;
   }
-  .Search {
-    width: 375px;
-    height: 812px;
-    background-color: #fffaf4;
-    position: relative;
-    margin: 0 auto;
-  }
-  
-  .text {
-    font-family: 'Nanum Pen Script', cursive;
-  }
+
+.text {
+  font-family: 'Nanum Pen Script', cursive;
+}
+
+.lost-img {
+  width: 150px;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+.Search {
+  width: 375px;
+  height: 812px;
+  background-color: #fffaf4;
+  position: relative;
+  margin: 0 auto;
+}
+
+.text {
+  font-family: 'Nanum Pen Script', cursive;
+}
 
   .friend-search {
     margin: 50px;
