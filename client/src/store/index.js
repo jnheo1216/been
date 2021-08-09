@@ -22,6 +22,11 @@ export default createStore({
     user: {},
     jwtAuthToken: localStorage.getItem('jwt-auth-token') || ''
   },
+  getters: {
+    isLoggedIn({ jwtAuthToken }) {
+      return jwtAuthToken ? true : false
+    }
+  },
   mutations: {
     setUserInfo(state, data) {
       state.user = data;
@@ -29,6 +34,7 @@ export default createStore({
       state.jwtAuthToken = localStorage.getItem('jwt-auth-token');
     },
     logout(state) {
+      localStorage.removeItem('jwt-auth-token')
       state.isLogin = false;
       state.user=null;
     },
