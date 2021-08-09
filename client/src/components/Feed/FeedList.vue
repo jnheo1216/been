@@ -3,12 +3,12 @@
     <template #default>
       <div class="FeedList">
         
-        <div v-for="(feed, index) in feeds" :key="feed.postId">
+        <!-- <div v-for="(feed, index) in feeds" :key="feed.postId">
           <div>{{ index }}</div>
           <div>{{ feed }}</div>
           <div v-if="index % 2">홀</div>
           <div v-else>짝</div>
-        </div>
+        </div> -->
 
         <div class="logo">
           <img alt="BEEN LOGO" src="@/assets/image-logo.png">
@@ -17,14 +17,29 @@
         <!-- 전체 게시물 -->
         <div class="articles flex flex-col space-y-4">
 
-          <!-- 육각형 한개 -->
-          <!-- v-for="post in feed" :key="post.postId" @click="toDetail(post.postId)" -->
-          <div class="grid grid-cols-12 place-items-start">
-            <div class="wrap flex flex-row items-start">
+          <h1 class="text">{{ this.user.nickname }}님의 뉴스피드</h1>
+
+          <!-- 팔로잉이 없는 경우 -->
+        <div v-if="this.user.followingCnt">
+          <img src="@/assets/lost-bee.png" alt="길 잃은 꿀벌" class="lost-img">
+          <h2 class="text">아직 동료 꿀벌이 없습니다.</h2><br>
+          <h3 class="text">꿀바르고 새로운 소식을 받아보세요.</h3>
+          <el-button plain>동료 찾으러 가기</el-button>
+        </div>
+
+      <!-- 팔로잉이 있는 경우 -->
+      <div v-if="this.user.followingCnt == 0">
+        <!-- 육각형 한개 -->
+        <div v-for="(post, index) in this.feed"
+          :key="post.postId" @click="toDetail(post.postId)">
+
+
+          <div v-if="index % 2 == 0" class="row justify-content-start">
+            <div class="wrap">
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
-                  <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-                  </div>
+                  <div v-if="post.postPicSrc" class="content" style="background: url('{post.postPicSrc}')"></div>
+                  <div v-else class="content" style="background: url('https://picsum.photos/200/300?grayscale)')"></div>
                 </div>
               </div>
 
@@ -35,10 +50,11 @@
               </div>
             </div>
           </div>
-        <!-- 육각형 한개 끝 -->
 
-        <div class="grid grid-cols-12 place-items-end">
-          <div class="wrap flex flex-row-reverse justify-items-end">
+        
+        <!-- 육각형 한개 끝 -->
+          <div v-if="index % 2 == 1" class="row justify-contend-end">
+          <div class="wrap flex flex-row-reverse mx-0">
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
                   <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
@@ -53,53 +69,12 @@
               </div>
             </div>
         </div>
+        </div>
 
-        <div class="wrap flex flex-row-reverse">
-            <div class="hex" @click="toDetail">
-              <div class="hex-inner">
-                <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-                </div>
-              </div>
-            </div>
-
-            <div class="flex flex-col logos-wrap">
-              <div class="restaurant" v-if="restaurant"></div>
-              <div class="hotel" v-if="hotel"></div>
-              <div class="tour" v-if="tour"></div>
-            </div>
-          </div>
-
-        <div class="wrap flex flex-row place-items-end">
-            <div class="hex" @click="toDetail">
-              <div class="hex-inner">
-                <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-                </div>
-              </div>
-            </div>
-
-            <div class="flex flex-col logos-wrap">
-              <div class="restaurant" v-if="restaurant"></div>
-              <div class="hotel" v-if="hotel"></div>
-              <div class="tour" v-if="tour"></div>
-            </div>
-          </div>
         
-        <div class="wrap flex flex-row">
-            <div class="hex" @click="toDetail">
-              <div class="hex-inner">
-                <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-                </div>
-              </div>
-            </div>
-
-            <div class="flex flex-col logos-wrap">
-              <div class="restaurant" v-if="restaurant"></div>
-              <div class="hotel" v-if="hotel"></div>
-              <div class="tour" v-if="tour"></div>
-            </div>
-          </div>
       </div>
       </div>
+    </div>
 
     </template>
 
@@ -129,32 +104,41 @@ export default {
         nickname: '',
         followed_id: []
       },
-      feeds: []
+      feed: []
     }
   },
   // setup () {
   //   const feedBody = ref('')
   // },
   created() {
+    this.user = this.$store.state.user
+    axios.get('http://localhost:8081/post/followPost/' + this.user.id)
+      .then((res) => {
+        console.log(res)
+        this.feed = res.data.posts
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+
     console.log(this.$store.state.user)
     console.log(this.$store.state.isLogin)
     axios.get('http://localhost:8081/post')
       .then(res => {
-        console.log(res)
+        // console.log(res)
         this.feeds = res.data.posts
       })
       .catch(err => {
         console.error(err)
       })
+    
   },
   methods: {
-    getPosts : function () {
-      axios.get('http://localhost:8080/post/followPost/{userId}')
-    },
     toDetail: function () {
       this.$router.replace({
         name: 'FeedDetail',
-        params: {}
+        params: { postId: this.feed.postId }
       })
     }
   },
@@ -176,32 +160,20 @@ export default {
 
 
 .wrap {
-  width: 120%;
-  margin: 40px 20px 40px 20px;
+  width: 140%;
+  margin: 20px 10px 20px 10px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   right: 10px;
 }
 
-.wrap2 {
-  width: 110%;
-  margin: 80px 0px 10px 100px;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-}
 
 .wrap:nth-child(2) {
   position: absolute;
   top: 20%;
   left: 30%;
-}
 
-.wrap2:nth-child(2) {
-  position: absolute;
-  top: 20%;
-  left: 30%;
 }
 
 
@@ -330,16 +302,24 @@ export default {
 }
 
 .logo {
-  margin: 10px;
-  padding: 0;
-
+  padding-top: 10px;
+  margin: 0 auto;
+  width: 200px;
+}
+.logo > img {
+  width: 100%;
 }
 
-img {
-  width: 100px;
-  padding: 0;
+.text {
+  font-family: 'Nanum Pen Script', cursive;
 }
 
+.lost-img {
+  width: 150px;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 
 </style>
