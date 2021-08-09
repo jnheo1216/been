@@ -24,17 +24,16 @@
     <div class="searchResult">
       <!-- 일치하는 검색 결과가 있을 때  -->
       <div class="peoplefound" v-if="users.length">
-        <p v-if="isShow">
-          일치하는 꿀벌 {{ users.length }}벌
-        </p>
-        <ul>
+        <h2 class="text">일치하는 꿀벌 : {{ users.length }}벌</h2>
+        <ul class="my-3">
           <li @click="toUserProfile" v-for="(user, userId) in users"
-            :key="userId">
-            <img :src="user.profilePicSrc" alt="" class="rounded-full"><p class="font-bold">{{ user.nickname }}</p>
-            <p>{{ user.intro }}</p>
+          :key="userId" class="bg-success bg-gradient bg-opacity-50 text-dark">
+            <img :src="user.profilePicSrc" alt="" class="profile-image"><h3 class="font-bold">{{ user.nickname }}</h3>
+            <h4>{{ user.intro }}</h4>
             </li>
         </ul>
-      </div>  
+      </div> 
+        
       <!-- 일치하는 검색 결과가 없을 때 -->
       <div class="peoplenotfound" v-if="users.length==0">
           <el-alert
@@ -44,7 +43,7 @@
             show-icon>
           </el-alert>
         <img src="@/assets/lost-bee.png" class="lost-img" alt="lost-bee" v-if="users.length == 0">
-        <p>찾는 꿀벌이 없습니다</p>
+        <h3 class="text">찾는 꿀벌이 없습니다</h3>
         <el-button @click="backToSearchmain" type="info" icon="el-icon-back" circle></el-button>
       </div>
     </div>
@@ -63,41 +62,25 @@ export default ({
       users : [],
       search: '',
       isSubmit: false,
-      isShow: false
     }
   },
-  computed: {
-
+  mounted () {
+    this.searchSubmit()
   },
-  methods: {
-    toUserProfile: function(event) {
-      const user = this.users[event.target.dataset.pk]
-      const userId = user.userId
-      this.$router.replace({
-        name: "UserProfile",
-        params: { userId: userId }
+ methods: {
+   searchSubmit: function () {
+     axios.get('http://localhost:8081/user/findNickname/' + this.user)
+      .then((res) => {
+        this.users = res.data.users
       })
-    },
-    getUser: function () {
-      axios.get('http://localhost:8080/user/findNickname/{user}')
-      .then(res => {
-        res
+      .catch((err) => {
+        console.log(err)
       })
-      
-    },
-    onInput: function(event) {
-      this.search = event.target.dataset.search
-      this.isSubmit = false
-      if (this.search.length === 0) this.isShow = false
-      else this.isShow = true
-    },
-    // searchSubmit : function (event) {
-
-    // }
-    backToSearchmain: function () {
-      this.$router.push({ name: "SearchMain" })
-    }
-  }
+   },
+   toUserProfile: function(event) {
+     console.log(event.target)
+   }
+ }
 })
 </script>
 
@@ -120,6 +103,10 @@ export default ({
     padding: 0;
   }
 
+  .logo > img {
+    width: 100%;
+  }
+
   .peoplesearchinput {
     margin: 50px;
   }
@@ -131,5 +118,16 @@ export default ({
 
   .text {
     font-family: 'Nanum Pen Script', cursive;
+  }
+
+  .profile-image {
+    width: 50px;
+    border-radius: 15px;
+  }
+
+  li {
+    border-radius: 15px;
+    list-style: none;
+    margin-right: 10px;
   }
 </style>
