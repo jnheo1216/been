@@ -15,10 +15,17 @@
         </div>
 
         <!-- 전체 게시물 -->
-        <div class="articles flex flex-col space-y-4">
+        <div class="articles flex flex-col space-y-2">
 
           <h1 class="text">{{ this.user.nickname }}님의 뉴스피드</h1>
 
+          <!-- 추천 게시물 -->
+          <h2 class="text">맞춤 추천게시물</h2>
+          <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel-item v-for="item in 3" :key="item">
+              <h3 class="medium">{{ item }}</h3>
+            </el-carousel-item>
+          </el-carousel>
           <!-- 팔로잉이 없는 경우 -->
         <div v-if="this.user.followingCnt">
           <img src="@/assets/lost-bee.png" alt="길 잃은 꿀벌" class="lost-img">
@@ -28,13 +35,14 @@
         </div>
 
       <!-- 팔로잉이 있는 경우 -->
+      <h2 class="text">{{ this.user.nickname }}님의 동료 꿀벌들의 소식</h2>
       <div v-if="this.user.followingCnt == 0">
         <!-- 육각형 한개 -->
         <div v-for="(post, index) in this.feed"
           :key="post.postId" @click="toDetail(post.postId)">
 
 
-          <div v-if="index % 2 == 0" class="row justify-content-start">
+          <div v-if="index % 2 == 0" class="row justify-content-start mx-0">
             <div class="wrap">
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
@@ -53,7 +61,7 @@
 
         
         <!-- 육각형 한개 끝 -->
-          <div v-if="index % 2 == 1" class="row justify-contend-end">
+          <div v-if="index % 2 == 1" class="row justify-contend-end mx-0">
           <div class="wrap flex flex-row-reverse mx-0">
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
@@ -111,6 +119,8 @@ export default {
   //   const feedBody = ref('')
   // },
   created() {
+    // if (!this.isLogin) {
+    //   this.$router.push({ name: 'Login' })}
     this.user = this.$store.state.user
     axios.get('http://localhost:8081/post/followPost/' + this.user.id)
       .then((res) => {
@@ -161,7 +171,7 @@ export default {
 
 .wrap {
   width: 140%;
-  margin: 20px 10px 20px 10px;
+  margin: 10px 10px 10px 10px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -178,7 +188,7 @@ export default {
 
 
 .hex {
-  width: 25%;
+  width: 30%;
   margin-bottom: 1.8%;
   position: relative;
   visibility: hidden;
@@ -321,5 +331,21 @@ export default {
   margin-right: auto;
 }
 
+
+.el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
 
 </style>
