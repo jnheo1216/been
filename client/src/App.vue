@@ -18,6 +18,9 @@
             <li class="nav-item" @click="this.$router.push('/profile')">
               <a class="nav-link" href="#" >profile</a>
             </li>
+            <li class="nav-item" @click="logout">
+              <a class="nav-link">logout</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
@@ -36,7 +39,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'App',
@@ -44,6 +47,11 @@ export default {
     ...mapGetters([
       'isLoggedIn'
     ]),
+  },
+  methods: {
+    ...mapActions([
+      'logout'
+    ])
   },
 }
 </script>
