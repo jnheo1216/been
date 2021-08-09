@@ -2,7 +2,9 @@
   <suspense>
     <template #default>
       <div class="background">
-        <img src="@/assets/image-logo.png" alt="image-logo">
+        <div class="logo">
+          <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
+        </div>
         <form @submit="onSubmit">
           <div class="login-input-box">
             <div class="login-checkbox">
@@ -18,6 +20,19 @@
             <div class="text-color-danger">
               <div v-if="error.email">{{ error.email }}</div>
             </div>
+          </div>
+
+          <div class="login-input-box">
+            <div class="login-checkbox">
+              <label class="" for="user-name"><i class="el-icon-check icon-color-must"></i>닉네임</label><br>
+            </div>            
+            <el-input 
+              id="user-name"
+              v-model="username"
+              type="text"
+              class=""
+              placeholder="닉네임을 입력하세요."
+            ></el-input>
           </div>
           
           <div class="login-input-box">
@@ -131,10 +146,7 @@ export default {
     },
     onSubmit(event){
       event.preventDefault();
-      if(this.error.username){
-        alert(this.error.username);
-      }
-      else if(this.error.email){
+      if(this.error.email){
         alert(this.error.email);
       }
       else if(this.error.password){
@@ -145,9 +157,10 @@ export default {
       }
       else{
         const user={
-          userName: this.username,
-          userId: this.email,
-          userPw: this.password,
+          nickname: this.username,
+          email: this.email,
+          password: this.password,
+          intro: '내 소개',
         }
         this.$router.push({
           name:"SignupUserFavorite",
@@ -191,6 +204,14 @@ export default {
   }
   .icon-color-must {
     color: #31D89C;
+  }
+  .logo {
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 200px;
+  }
+  .logo > img {
+    width: 100%;
   }
 
 </style>

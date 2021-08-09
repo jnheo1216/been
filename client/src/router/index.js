@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
 import Signup from '@/views/User/Signup.vue'
 import Login from '@/views/User/Login.vue'
 import Feed from '@/views/Feed/Feed.vue'
@@ -11,12 +10,6 @@ import NotFound from '@/components/NotFound/NotFound.vue'
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
-  },
-
-  {
-    path: '/login',
     name: 'Login',
     component: Login,
   },
@@ -55,14 +48,19 @@ const routes = [
         component: ()=> import("@/components/Feed/FeedList.vue")
       },
       {
-        path:"/favorite",
-        name:"FavoriteList",
-        component: ()=> import("@/components/Feed/FavoriteList.vue")
-      },
-      {
-        path:"/:feedNumber",
+        path:":feedNumber",
         name:"FeedDetail",
         component: ()=> import("@/components/Feed/FeedDetail.vue")
+      },
+      {
+        path:"follow",
+        name:"FeedFollowList",
+        component: ()=> import("@/components/Feed/FeedFollowList.vue")
+      },
+      {
+        path:"favorite",
+        name:"FavoriteList",
+        component: ()=> import("@/components/Feed/FavoriteList.vue")
       },
     ],
     redirect: () => {
@@ -76,15 +74,25 @@ const routes = [
     component: Search,
     children:[
       {
-        path:"/typesearch",
+        path: "",
+        name: "SearchMain",
+        component: ()=> import("@/components/Search/SearchMain.vue")
+      },
+      {
+        path:"typesearch",
         name: "TypeSearch",
         component: ()=> import("@/components/Search/TypeSearch.vue")
       },
       {
-        path:"/peoplesearch",
+        path:"peoplesearch",
         name: "PeopleSearch",
         component: ()=> import("@/components/Search/PeopleSearch.vue")
       },
+      {
+        path: "articlesearch",
+        name: "ArticleSearch",
+        component: ()=> import("@/components/Search/ArticleSearch.vue")
+      }
     ],
   },
   
@@ -94,7 +102,7 @@ const routes = [
     component: Profile,
     children: [
       {
-        path:"/:userId",
+        path:":userId",
         name:"UserProfile",
         component: ()=> import("@/components/User/UserProfile.vue")
       },
