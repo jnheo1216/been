@@ -5,6 +5,7 @@ import Feed from '@/views/Feed/Feed.vue'
 import FeedWrite from '@/views/Feed/FeedWrite.vue'
 import Search from '@/views/Search/Search.vue'
 import Profile from '@/views/User/Profile.vue'
+import Follow from '@/views/User/Follow.vue'
 import NotFound from '@/components/NotFound/NotFound.vue'
 
 const routes = [
@@ -107,6 +108,28 @@ const routes = [
         component: ()=> import("@/components/User/UserProfile.vue")
       },
     ],
+  },
+  {
+    path: "/follow",
+    name: "Follow",
+    component: Follow,
+    children: [
+      {
+        path:"follower/:userId",
+        name:"UserFollower",
+        component: ()=> import("@/components/User/UserFollower.vue")
+      },
+      {
+        path:"following/:userId",
+        name:"UserFollowing",
+        component: ()=> import("@/components/User/UserFollowing.vue")
+      },
+      {
+        path:"followwait/:userId",
+        name:"UserFollowWait",
+        component: ()=> import("@/components/User/UserFollowWait.vue")
+      },
+    ]
   },
 
   {
