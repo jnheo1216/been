@@ -19,4 +19,6 @@ public interface CommentService {
     int makeLike(int commentId, int userId);
 
     int deleteLike(int commentId, int userId);
+
+    List<Comment> listByPostId(int postId);
 }

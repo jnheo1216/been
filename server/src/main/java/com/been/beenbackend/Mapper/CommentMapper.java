@@ -15,7 +15,10 @@ public interface CommentMapper {
 
     Comment listOne(int commentId);
 
+    List<Comment> listByPostId(int postId);
+
     int makeLike(int commentId, int userId);
 
     int deleteLike(int commentId, int userId);
+
 }
