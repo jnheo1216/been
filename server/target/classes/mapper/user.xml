@@ -23,7 +23,7 @@
 	<select id="signIn" parameterType="String" resultType="user">
 		select *
 		from user
-		where email = #{email} and password = #{password} and emailConfirmation = 1;
+		where email = #{email} and emailConfirmation = 1;
 	</select>
 	
 	<insert id="register" parameterType="user">
