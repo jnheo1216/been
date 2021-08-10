@@ -14,6 +14,12 @@
 		where commentId = #{commentId};
 	</select>
 
+	<select id="listByPostId" parameterType="int" resultType="Comment">
+		select *
+		from comment
+		where postId = #{postId};
+	</select>
+
 	
 	<insert id="register" parameterType="Comment">
 		insert into comment (commentId, postId, comment, userId)

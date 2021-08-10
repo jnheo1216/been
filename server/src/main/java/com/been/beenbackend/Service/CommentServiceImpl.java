@@ -40,6 +40,11 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public List<Comment> listByPostId(int postId) {
+        return sqlSession.getMapper(CommentMapper.class).listByPostId(postId);
+    }
+
+    @Override
     public int makeLike(int commentId, int userId) {
         return sqlSession.getMapper(CommentMapper.class).makeLike(commentId, userId);
     }
@@ -48,5 +53,6 @@ public class CommentServiceImpl implements CommentService{
     public int deleteLike(int commentId, int userId) {
         return sqlSession.getMapper(CommentMapper.class).deleteLike(commentId, userId);
     }
+
 }
 
