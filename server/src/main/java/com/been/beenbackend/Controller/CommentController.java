@@ -40,7 +40,7 @@ public class CommentController {
     }
 
     @ApiOperation(value="comment postId로 받아오기(read)")
-    @GetMapping(value="/comment/{postId}")
+    @GetMapping(value="/comment/listByPost/{postId}")
     public ResponseEntity<Map<String, Object>> listByPostId(@PathVariable int postId) throws Exception {
         List<Comment> comments = commentService.listByPostId(postId);
         Map<String, Object> result = new HashMap<>();
@@ -87,5 +87,23 @@ public class CommentController {
     public ResponseEntity<Map<String, Object>> delete(@RequestBody LikeComment likeComment) throws Exception {
         commentService.deleteLike(likeComment.getCommentId(), likeComment.getUserId());
         return list();
+    }
+
+    @ApiOperation(value="comment 좋아요 개수(read)")
+    @GetMapping(value="/comment/like/{commentId}")
+    public ResponseEntity<Map<String, Integer>> showLikeyCnt(@PathVariable int commentId) throws Exception {
+        int likeys = commentService.showLikeyCnt(commentId);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("likes", likeys);
+        return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="comment 게시물당 유저가 좋아요 누른 댓글 리스트(read)")
+    @GetMapping(value="/comment/likeListByPost/{postId}/{userId}")
+    public ResponseEntity<Map<String, Object>> getLikeyList(@PathVariable int postId, @PathVariable int userId) throws Exception {
+        List<LikeComment> likeList = commentService.getLike(postId,userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("likeList", likeList);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 }

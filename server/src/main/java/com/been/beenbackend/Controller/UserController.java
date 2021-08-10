@@ -162,6 +162,24 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value="user가 팔로우하는 유저 명수 표시(read)")
+    @GetMapping(value="/user/showFollowingCnt/{followingId}")
+    public ResponseEntity<Map<String, Integer>> showFollowingCnt(@PathVariable int followingId) throws Exception {
+        int followingCnt = userService.showFollowingCnt(followingId);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("followingCnt", followingCnt);
+        return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user를 팔로우하는 유저 명수 표시(read)")
+    @GetMapping(value="/user/showFollowerCnt/{followerId}")
+    public ResponseEntity<Map<String, Integer>> showFollowerCnt(@PathVariable int followerId) throws Exception {
+        int followerCnt = userService.showFollowerCnt(followerId);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("followerCnt", followerCnt);
+        return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
+    }
+
     @ApiOperation(value="user 리스트 받아오기(read)")
     @GetMapping(value="/user")
     public ResponseEntity<Map<String, Object>> list() throws Exception {

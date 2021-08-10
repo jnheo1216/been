@@ -159,10 +159,30 @@ public class PostController {
     }
 
     @ApiOperation(value="post 좋아요 삭제하기(delete)")
-    @DeleteMapping(value = "/post/like")
-    public ResponseEntity<Map<String, Object>> delete(@RequestBody Like like) throws Exception {
-        postService.removeLke(like.getPostId(), like.getUserId());
+    @DeleteMapping(value = "/post/like/delete/{postId}/{userId}")
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable int postId, @PathVariable int userId) throws Exception {
+        System.out.println(postId);
+        System.out.println(userId);
+        postService.removeLke(postId, userId);
         return list();
+    }
+
+    @ApiOperation(value="post 좋아요 개수(read)")
+    @GetMapping(value="/post/likeCnt/{postId}")
+    public ResponseEntity<Map<String, Integer>> showLikeyCnt(@PathVariable int postId) throws Exception {
+        int likeys = postService.showLikeyCnt(postId);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("likes", likeys);
+        return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="post에 유저별 좋아요 여부(read)")
+    @GetMapping(value="/post/like/{postId}/{userId}")
+    public ResponseEntity<Map<String, Object>> getLikey(@PathVariable int postId, int userId) throws Exception {
+        Like like = postService.getLikey(postId, userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("like", like);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="좋아요를 누른 post 리스트 받아오기(read)")

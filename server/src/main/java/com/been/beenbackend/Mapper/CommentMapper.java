@@ -1,6 +1,7 @@
 package com.been.beenbackend.Mapper;
 
 import com.been.beenbackend.dto.Comment;
+import com.been.beenbackend.dto.LikeComment;
 
 import java.util.List;
 
@@ -20,5 +21,9 @@ public interface CommentMapper {
     int makeLike(int commentId, int userId);
 
     int deleteLike(int commentId, int userId);
+
+    int showLikeyCnt(int commentId);
+
+    List<LikeComment> getLikey(int postId, int userId);
 
 }

@@ -14,6 +14,12 @@
 		where commentId = #{commentId};
 	</select>
 
+	<select id="listByPostId" parameterType="int" resultType="Comment">
+		select *
+		from comment
+		where postId = #{postId};
+	</select>
+
 	
 	<insert id="register" parameterType="Comment">
 		insert into comment (commentId, postId, comment, userId)
@@ -32,12 +38,23 @@
 	</delete>
 
 	<insert id="makeLike" parameterType="int">
-		insert into like_comment (commentId, userId)
+		insert into likey_comment (commentId, userId)
 		values (#{commentId}, #{userId});
 	</insert>
 
 	<delete id="deleteLike" parameterType="int">
-		delete from like_comment
+		delete from likey_comment
 		where commentId = #{commentId} and userId = #{userId};
 	</delete>
+
+	<!--댓글 좋아요 개수-->
+	<select id="showLikeyCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM likey_comment WHERE commentId = #{commentId};
+	</select>
+
+	<!--좋아요 가져오기-->
+	<select id="getLikey" parameterType="int" resultType="LikeComment">
+		select comment.commentId, likey_comment.userId from likey_comment inner join comment on comment.commentId = likey_comment.commentId
+		where comment.postId = #{postId} and likey_comment.userId = #{userId};
+	</select>
 </mapper>

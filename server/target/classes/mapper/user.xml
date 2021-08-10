@@ -103,4 +103,12 @@
 		select * from follow
 		where followedId = #{id} and accepted = 0;
 	</select>
+
+	<select id="showFollowerCnt" parameterType="int" resultType="int">
+		SELECT COUNT(followerId) FROM follow WHERE followedId = #{followedId} AND accepted = 1;
+	</select>
+
+	<select id="showFollowedCnt" parameterType="int" resultType="int">
+		SELECT COUNT(followedId) FROM follow WHERE followerId = #{followerId} AND accepted = 1;
+	</select>
 </mapper>

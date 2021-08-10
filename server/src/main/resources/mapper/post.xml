@@ -59,6 +59,12 @@
 		where postId = #{postId} and userId = #{userId}
 	</delete>
 
+	<!--좋아요 가져오기-->
+	<select id="getLikey" parameterType="int" resultType="like">
+		select * from likey
+		where postId = #{postId} and userId = #{userId}
+	</select>
+
  	<!--좋아요한 게시물-->
 	<select id="likePost" parameterType="int" resultType="post">
 		select post.*
@@ -66,8 +72,13 @@
 		where likey.userId = #{id}
 	</select>
 
+	<!--게시물 좋아요 개수-->
+	<select id="showLikeyCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM likey WHERE postId = #{postId};
+	</select>
+
 	<!--사진 등록-->
-	<insert id="registerPic" parameterType="PostPic" useGeneratedKeys="true" keyColumn="postId">>
+	<insert id="registerPic" parameterType="PostPic" useGeneratedKeys="true" keyColumn="postId">
 		insert into post_pic (postId, src, name, num)
 		values (#{postId}, #{src}, #{name}, #{num});
 	</insert>
