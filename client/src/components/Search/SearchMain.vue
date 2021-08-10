@@ -79,13 +79,14 @@ export default {
 </script>
 
 <style>
-  .logo {
-    margin: 10px;
-    padding: 0;
-  }
-  .logo > img {
-    width: 100%;
-  }
+.logo {
+  padding-top: 10px;
+  margin: 0 auto;
+  width: 200px;
+}
+.logo > img {
+  width: 100%;
+}
 
 .text {
   font-family: 'Nanum Pen Script', cursive;

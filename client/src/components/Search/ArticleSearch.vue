@@ -40,12 +40,13 @@ export default {
   }
 
   .logo {
-    margin: 10px;
-    padding: 0;
+  padding-top: 10px;
+  margin: 0 auto;
+  width: 200px;
   }
-  .logo-img {
-    width: 100px;
-    padding: 0;
+   
+.logo > img {
+  width: 100%;
   }
 
   .lost-img {
