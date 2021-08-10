@@ -168,6 +168,7 @@ export default {
         postId: this.postId,
         userId: localStorage.getItem('userId'),
       }
+      console.log(like)
       axios.post(`http://localhost:8081/post/like`, like)
         .then(res => {
           console.log(res)
@@ -178,11 +179,9 @@ export default {
     },
     likeDown() {
       this.isLike = false
-      const like = {
-        postId: this.postId,
-        userId: localStorage.getItem('userId'),
-      }
-      axios.delete(`http://localhost:8081/post/like`, like)
+      var userSid = localStorage.getItem('userId')
+      userSid *= 1
+      axios.delete(`http://localhost:8081/post/like/delete/${this.postId}/${userSid}`)
         .then(res => {
           console.log(res)
         })
