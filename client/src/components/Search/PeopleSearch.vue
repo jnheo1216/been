@@ -28,9 +28,10 @@
         <ul class="my-3">
           <li @click="toUserProfile" v-for="(user, userId) in users"
           :key="userId" class="bg-success bg-gradient bg-opacity-50 text-dark">
-            <img :src="user.profilePicSrc" alt="" class="profile-image"><h3 class="font-bold">{{ user.nickname }}</h3>
+            <img :src="user.profilePicSrc" alt="" class="profile-image"><h3 class="small-text">{{ user.nickname }}</h3>
             <h4>{{ user.intro }}</h4>
-            </li>
+        
+          </li> 
         </ul>
       </div> 
         
@@ -43,7 +44,7 @@
             show-icon>
           </el-alert>
         <img src="@/assets/lost-bee.png" class="lost-img" alt="lost-bee" v-if="users.length == 0">
-        <h3 class="text">찾는 꿀벌이 없습니다</h3>
+        <h1 class="text">찾는 꿀벌이 없습니다</h1>
         <el-button @click="backToSearchmain" type="info" icon="el-icon-back" circle></el-button>
       </div>
     </div>
@@ -79,7 +80,10 @@ export default ({
    },
    toUserProfile: function(event) {
      console.log(event.target)
-   }
+   },
+  backToSearchmain: function () {
+    this.$router.push({ name: "SearchMain" })
+  }
  }
 })
 </script>
@@ -95,12 +99,9 @@ export default ({
   }
 
   .logo {
-    margin: 10px;
-    padding: 0;
-  }
-  .logo-img {
-    width: 100px;
-    padding: 0;
+  padding-top: 10px;
+  margin: 0 auto;
+  width: 200px;
   }
 
   .logo > img {
@@ -112,7 +113,7 @@ export default ({
   }
   
   .lost-img {
-    width: 150px;
+    width: 200px;
     padding: 0;
   }
 
@@ -129,5 +130,9 @@ export default ({
     border-radius: 15px;
     list-style: none;
     margin-right: 10px;
+  }
+
+  li:hover {
+    background: bg-opacity-75;
   }
 </style>
