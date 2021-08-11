@@ -37,5 +37,9 @@ public interface UserMapper {
     List<User> showFollower(int id);
 
     List<follow> beforeFollowList(int id);
+
+    int showFollowerCnt(int followerId);
+
+    int showFollowedCnt(int followedId);
 }
 

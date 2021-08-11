@@ -105,5 +105,15 @@ public class UserServiceImpl implements UserService {
         return sqlSession.getMapper(UserMapper.class).beforeFollowList(id);
     }
 
+    @Override
+    public int showFollowingCnt(int followerId) {
+        return sqlSession.getMapper(UserMapper.class).showFollowedCnt(followerId);
+    }
+
+    @Override
+    public int showFollowerCnt(int followedId) {
+        return sqlSession.getMapper(UserMapper.class).showFollowerCnt(followedId);
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.been.beenbackend.Mapper;
 
+import com.been.beenbackend.dto.Like;
 import com.been.beenbackend.dto.Post;
 import com.been.beenbackend.dto.PostPic;
 
@@ -31,4 +32,8 @@ public interface PostMapper {
     List<PostPic> getPostPic(int postId);
 
     void deletePic(int postId);
+
+    int showLikeyCnt(int postId);
+
+    Like getLikey(int postId, int userId);
 }

@@ -1,6 +1,7 @@
 package com.been.beenbackend.Service;
 
 import com.been.beenbackend.dto.Comment;
+import com.been.beenbackend.dto.LikeComment;
 import com.been.beenbackend.dto.Post;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface CommentService {
     int makeLike(int commentId, int userId);
 
     int deleteLike(int commentId, int userId);
+
+    List<Comment> listByPostId(int postId);
+
+    int showLikeyCnt(int commentId);
+
+    List<LikeComment> getLike(int postId, int userId);
 }

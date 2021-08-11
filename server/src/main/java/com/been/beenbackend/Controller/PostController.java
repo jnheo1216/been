@@ -29,7 +29,7 @@ public class PostController {
     @Autowired
     private S3Service s3Service;
 
-    @ApiOperation(value="post 리스트 받아오기(read)")
+    @ApiOperation(value="post 전체 리스트 받아오기(read)")
     @GetMapping(value="/post")
     public ResponseEntity<Map<String, Object>> list() throws Exception {
         List<Post> posts = postService.list();
@@ -78,14 +78,16 @@ public class PostController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ApiOperation(value="post 사진 넣기(update), thumbnail은 null 값이 넘어오지 않게 해주세요!thumbnail이 없으면 db에 있는 기본값으로 만들어주세요! 사진 용량 제한도 있습니다")
+    @ApiOperation(value="post 등록, 수정 후 사진 넣기(update), *thumbnail 필수! thumbnail이 없으면 db에 있는 기본값으로 만들어주세요! 사진 용량 제한도 있습니다")
     @PostMapping(value= "/post/postPic/{postId}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<Map<String, Object>> modify(@RequestPart List<MultipartFile> files, @RequestPart MultipartFile thumbnail, @PathVariable int postId) throws Exception {
         //썸네일 사진 넣기
-        String imgPath = s3Service.uploadObject(thumbnail);
+        String fileName = "postThumbnail_"+postId;
+        String imgPath = s3Service.uploadObject(thumbnail,fileName);
         PostPic postPic = new PostPic();
         postPic.setSrc(imgPath);
-        postPic.setName(thumbnail.getOriginalFilename());
+//        postPic.setName(thumbnail.getOriginalFilename());
+        postPic.setName(fileName);
         postPic.setPostId(postId);
         postPic.setNum(0);
         Post post = postService.listOne(postId);
@@ -94,10 +96,12 @@ public class PostController {
         postService.modify(post);
         //각각의 사진 넣기
         for(int i = 0; i < files.size(); i++){
-            imgPath = s3Service.uploadObject(files.get(i));
+            fileName = "postPic_"+postId+Integer.toString(i+1);
+            imgPath = s3Service.uploadObject(files.get(i),fileName);
             postPic = new PostPic();
             postPic.setSrc(imgPath);
-            postPic.setName(files.get(i).getOriginalFilename());
+//            postPic.setName(files.get(i).getOriginalFilename());
+            postPic.setName(fileName);
             postPic.setPostId(postId);
             postPic.setNum(i+1);
             postService.registerPic(postPic);
@@ -111,7 +115,7 @@ public class PostController {
         return list();
     }
 
-    @ApiOperation(value="post 수정하기(update), 수정하기 호출 후 post 사진 넣기(update) 다시할것")
+    @ApiOperation(value="post 수정하기(update) *수정하기도 호출 후 post 사진 넣기(update)로 사진을 다시 넣어줘야합니다")
     @PutMapping(value= "/post")
     public ResponseEntity<Map<String, Object>> modify(@RequestBody Post post) throws Exception {
         postService.modify(post);
@@ -155,10 +159,30 @@ public class PostController {
     }
 
     @ApiOperation(value="post 좋아요 삭제하기(delete)")
-    @DeleteMapping(value = "/post/like")
-    public ResponseEntity<Map<String, Object>> delete(@RequestBody Like like) throws Exception {
-        postService.removeLke(like.getPostId(), like.getUserId());
+    @DeleteMapping(value = "/post/like/delete/{postId}/{userId}")
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable int postId, @PathVariable int userId) throws Exception {
+        System.out.println(postId);
+        System.out.println(userId);
+        postService.removeLke(postId, userId);
         return list();
+    }
+
+    @ApiOperation(value="post 좋아요 개수(read)")
+    @GetMapping(value="/post/likeCnt/{postId}")
+    public ResponseEntity<Map<String, Integer>> showLikeyCnt(@PathVariable int postId) throws Exception {
+        int likeys = postService.showLikeyCnt(postId);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("likes", likeys);
+        return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="post에 유저별 좋아요 여부(read)")
+    @GetMapping(value="/post/like/{postId}/{userId}")
+    public ResponseEntity<Map<String, Object>> getLikey(@PathVariable int postId, int userId) throws Exception {
+        Like like = postService.getLikey(postId, userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("like", like);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="좋아요를 누른 post 리스트 받아오기(read)")
