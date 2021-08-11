@@ -15,6 +15,7 @@ export default createStore({
       title: '',
       updatedAt: '',
       userId: ''
+      
     }
   },
   getters: {
