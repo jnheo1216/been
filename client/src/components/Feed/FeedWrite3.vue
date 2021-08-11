@@ -31,7 +31,11 @@ export default {
       if (this.percentage<100) {
         return percentage !== 100 ? '비잉 중' : `${percentage}%`;
       }
-      return percentage === 100 ? '비잉 완료' : `${percentage}%`;
+      else{
+          percentage === 100 ? '비잉 완료' : `${percentage}%`;
+          
+        } 
+        
     },
     increase() {
       this.percentage += 40;
