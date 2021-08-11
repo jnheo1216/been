@@ -2,6 +2,7 @@ package com.been.beenbackend.Service;
 
 import com.been.beenbackend.Mapper.CommentMapper;
 import com.been.beenbackend.dto.Comment;
+import com.been.beenbackend.dto.LikeComment;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,21 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public List<Comment> listByPostId(int postId) {
+        return sqlSession.getMapper(CommentMapper.class).listByPostId(postId);
+    }
+
+    @Override
+    public int showLikeyCnt(int commentId) {
+        return sqlSession.getMapper(CommentMapper.class).showLikeyCnt(commentId);
+    }
+
+    @Override
+    public List<LikeComment> getLike(int postId, int userId) {
+        return sqlSession.getMapper(CommentMapper.class).getLikey(postId, userId);
+    }
+
+    @Override
     public int makeLike(int commentId, int userId) {
         return sqlSession.getMapper(CommentMapper.class).makeLike(commentId, userId);
     }
@@ -48,5 +64,6 @@ public class CommentServiceImpl implements CommentService{
     public int deleteLike(int commentId, int userId) {
         return sqlSession.getMapper(CommentMapper.class).deleteLike(commentId, userId);
     }
+
 }
 

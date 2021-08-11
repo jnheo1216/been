@@ -39,4 +39,8 @@ public interface UserService {
     List<User> showFollower(int id);
 
     List<follow> beforeFollowList(int id);
+
+    int showFollowingCnt(int followerId);
+
+    int showFollowerCnt(int followedId);
 }

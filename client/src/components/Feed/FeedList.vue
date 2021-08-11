@@ -65,8 +65,8 @@
           <div class="wrap flex flex-row-reverse mx-0">
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
-                  <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-                  </div>
+                  <div v-if="post.postPicSrc" class="content" style="background: url('{post.postPicSrc}')"></div>
+                  <div v-else class="content" style="background: url('https://picsum.photos/200/301?grayscale)')"></div>
                 </div>
               </div>
 
@@ -101,27 +101,19 @@ export default {
   name: 'FeedList',
   data () {
     return {
-      Nr: 0,
-      img_src: '',
       restaurant: 1,
       hotel: 1,
       tour: 1,
-      user: {
-        userId: '',
-        profilePicSrc: '',
-        nickname: '',
-        followed_id: []
-      },
-      feed: []
+      user: {},
+      feed: [],
+      recommended: []
     }
   },
-  // setup () {
-  //   const feedBody = ref('')
-  // },
   created() {
     // if (!this.isLogin) {
     //   this.$router.push({ name: 'Login' })}
     this.user = this.$store.state.user
+    console.log(this.user)
     axios.get('http://localhost:8081/post/followPost/' + this.user.id)
       .then((res) => {
         console.log(res)
@@ -132,16 +124,15 @@ export default {
       })
 
 
-    console.log(this.$store.state.user)
-    console.log(this.$store.state.isLogin)
-    axios.get('http://localhost:8081/post')
-      .then(res => {
-        // console.log(res)
-        this.feeds = res.data.posts
-      })
-      .catch(err => {
-        console.error(err)
-      })
+    // console.log(this.$store.state.isLogin)
+    // axios.get('http://localhost:8081/post')
+    //   .then(res => {
+    //     // console.log(res)
+    //     this.feeds = res.data.posts
+    //   })
+    //   .catch(err => {
+    //     console.error(err)
+    //   })
     
   },
   methods: {

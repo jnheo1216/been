@@ -1,6 +1,7 @@
 package com.been.beenbackend.Service;
 
 import com.been.beenbackend.Mapper.PostMapper;
+import com.been.beenbackend.dto.Like;
 import com.been.beenbackend.dto.Post;
 import com.been.beenbackend.dto.PostPic;
 import org.apache.ibatis.session.SqlSession;
@@ -84,5 +85,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public void deletePic(int postId) {
         sqlSession.getMapper(PostMapper.class).deletePic(postId);
+    }
+
+    @Override
+    public int showLikeyCnt(int postId) {
+        return sqlSession.getMapper(PostMapper.class).showLikeyCnt(postId);
+    }
+
+    @Override
+    public Like getLikey(int postId, int userId) {
+        return sqlSession.getMapper(PostMapper.class).getLikey(postId, userId);
     }
 }
