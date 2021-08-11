@@ -165,6 +165,7 @@ export default {
 
 <style>
 .Background{
+    /*  */
     width: 375px;
     height: 812px;
     text-align: center;
