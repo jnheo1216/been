@@ -4,7 +4,7 @@
       <img alt="BEEN LOGO" src="@/assets/image-logo.png">
     </div>
 
-    <h1 class="text">{{ user }}님을 위한 맞춤 페이지</h1>
+    <h1 class="text">{{ this.user.nickname }}님을 위한 맞춤 페이지</h1>
 
     <div class="curation">
 
@@ -12,8 +12,8 @@
         <div class="wrap block">
           <div class="hex" @click="toDetail">
             <div class="hex-inner">
-              <div class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-              </div>
+              <div v-if="favorite.postPicSrc" class="content" style="background: url('{}')"></div>
+              <div v-else class="content" style="background: url('https://picsum.photos/200/300?grayscale)')"></div>
             </div>
           </div>
 
@@ -95,8 +95,15 @@ export default {
   name: 'FavoriteList',
   data() {
     return {
-
+      user: {},
+      favorite: []
     }
+  },
+  created() {
+    this.user = this.$store.state.user
+    console.log(this.user)
+    console.log(this.user.nickname)
+    // axios.get()
   }
 }
 </script>
@@ -113,13 +120,14 @@ export default {
   }
 
   .logo {
-    margin: 10px;
-    padding: 0;
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 200px;
   }
-  img {
-    width: 110px;
-    padding: 0;
-  }
+
+.logo > img {
+  width: 100%;
+}
 
   .text {
     font-family: 'Nanum Pen Script', cursive;
