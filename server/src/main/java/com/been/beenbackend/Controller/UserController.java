@@ -115,14 +115,20 @@ public class UserController {
 
     @ApiOperation(value="user 이메일 인증(update)")
     @GetMapping(value="/user/confirmEmail")
-    public void confirmEmail(@RequestParam("id") int id) throws Exception {
+    public void confirmEmail(@RequestParam("id") int id, HttpServletResponse response) throws Exception {
         User user = userService.list(id);
+//        if(user == null) return "만료된 요청입니다";
+//        if(user.getEmailConfirmation() == 1) return "이미 인증된 회원입니다";
         userService.confirmEmail(user);
+        String redirect_uri="http://i5b301.p.ssafy.io/";
+        response.sendRedirect(redirect_uri);
+//        return "유저 인증 완료. 홈페이지에서 로그인해주세요";
     }
 
     @ApiOperation(value="user 회원탈퇴(delete)")
-    @DeleteMapping(value = "/user")
-    public ResponseEntity<Map<String, Object>> withdrawal(@RequestBody User user) throws Exception {
+    @DeleteMapping(value = "/user/withdrwal/{id}")
+    public ResponseEntity<Map<String, Object>> withdrawal(@PathVariable int id) throws Exception {
+        User user = userService.list(id);
         String fileName = user.getProfilePicName();
         //프로필 사진 삭제
         if(!fileName.equals("defaultProfile.png")) {

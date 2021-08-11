@@ -130,11 +130,11 @@ public class PostController {
     @ApiOperation(value="post 삭제하기(delete)") // 수정 요망
     @DeleteMapping(value = "/post/{postId}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int postId) throws Exception {
-        postService.delete(postId);
         List<PostPic> postPics = postService.getPostPic(postId);
         for(int i = 0; i < postPics.size(); i++) {
             s3Service.deleteObject(postPics.get(i).getName());
         }
+        postService.delete(postId);
         postService.deletePic(postId);
         return list();
     }
