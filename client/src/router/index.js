@@ -7,12 +7,18 @@ import Search from '@/views/Search/Search.vue'
 import Profile from '@/views/User/Profile.vue'
 import Follow from '@/views/User/Follow.vue'
 import NotFound from '@/components/NotFound/NotFound.vue'
+import Introduction from '@/views/Introduction/Introduction.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Login',
     component: Login,
+  },
+  {
+    path: '/introduction',
+    name: 'Introduction',
+    component: Introduction
   },
   {
     path: '/signup',

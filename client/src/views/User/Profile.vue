@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="Background">
 
 	<div class="container">
 
@@ -88,20 +88,20 @@ export default {
   data() {
       return {
           User: {
-            id: "",
-            email: "",
-            password: "",
-            intro: "",
-            nickname: "",
-            name: "",
-            tier: 0,
-            followerCnt: 0,
-            followingCnt: 0,
-            createdAt: "",
-            profilePicSrc: "",
-            profilePicName: "",
-            emailConfirmation: 0,
-            status: ''
+            // id: "",
+            // email: "",
+            // password: "",
+            // intro: "",
+            // nickname: "",
+            // name: "",
+            // tier: 0,
+            // followerCnt: 0,
+            // followingCnt: 0,
+            // createdAt: "",
+            // profilePicSrc: "",
+            // profilePicName: "",
+            // emailConfirmation: 0,
+            // status: ''
         },
         postCnt: 0,
         PostList: [],
@@ -112,7 +112,8 @@ export default {
   },
   methods: {
     getUserProfile() {
-        console.log(this.$store.state.user)
+        console.log('프로필임')
+        // console.log(this.$store.state.user)
         this.User = this.$store.state.user
     },
     getUserPost(){
@@ -163,6 +164,14 @@ export default {
 </script>
 
 <style>
+.Background{
+    /*  */
+    width: 375px;
+    height: 812px;
+    text-align: center;
+    background-color: #FFFAF4;
+    margin:0 auto;
+}
 /*
 
 All grid code is placed in a 'supports' rule (feature query) at the bottom of the CSS (Line 310). 
