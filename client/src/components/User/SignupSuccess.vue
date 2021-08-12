@@ -8,7 +8,7 @@
         <h4> 최종 인증을 마무리 해주세요!!</h4>
       </div>
     </div>
-    <router-link to="/login" class="link-info">로그인 화면으로</router-link>
+    <router-link to="/" class="link-info">로그인 화면으로</router-link>
   </div>
 </template>
 
