@@ -158,6 +158,7 @@ export default {
       else{
         const user={
           nickname: this.username,
+          name: this.username,
           email: this.email,
           password: this.password,
           intro: '내 소개',
