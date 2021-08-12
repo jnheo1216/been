@@ -36,4 +36,10 @@ public interface PostMapper {
     int showLikeyCnt(int postId);
 
     Like getLikey(int postId, int userId);
+
+    List<Post> searchByTitle(String title);
+
+    List<Post> showPreferedAreaPost(String areas);
+
+    List<Post> showPreferedStylePost(String styles);
 }

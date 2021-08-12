@@ -111,4 +111,12 @@
 	<select id="showFollowedCnt" parameterType="int" resultType="int">
 		SELECT COUNT(followedId) FROM follow WHERE followerId = #{followerId} AND accepted = 1;
 	</select>
+
+	<select id="getPreferedArea" parameterType="int" resultType="String">
+		select area from preferred_area where userId = #{userId};
+	</select>
+
+	<select id="getPreferedStyle" parameterType="int" resultType="String">
+		select style from preferred_style where userId = #{userId};
+	</select>
 </mapper>
