@@ -7,9 +7,10 @@ public class Post {
     private String content;
     private String createdAt;
     private String updatedAt;
-    private int likeCnt;
     private String postPicSrc;
     private String postPicName;
+    private String area;
+    private String style;
 
     public String getPostPicSrc() {
         return postPicSrc;
@@ -75,11 +76,19 @@ public class Post {
         this.updatedAt = updatedAt;
     }
 
-    public int getLikeCnt() {
-        return likeCnt;
+    public String getArea() {
+        return area;
     }
 
-    public void setLikeCnt(int likeCnt) {
-        this.likeCnt = likeCnt;
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
 }

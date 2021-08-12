@@ -96,4 +96,37 @@ public class PostServiceImpl implements PostService {
     public Like getLikey(int postId, int userId) {
         return sqlSession.getMapper(PostMapper.class).getLikey(postId, userId);
     }
+
+    @Override
+    public List<Post> searchByTitle(String title) {
+        title = "%"+title+"%";
+        return sqlSession.getMapper(PostMapper.class).searchByTitle(title);
+    }
+
+    @Override
+    public List<Post> showPreferedAreaPost(List<String> areas) {
+        StringBuilder areaList = new StringBuilder();
+        for(String area:areas) {
+//            area = "%"+area+"%";
+            areaList.append(area.trim()+"|");
+        }
+        areaList.deleteCharAt(areaList.lastIndexOf("|"));
+        String result = areaList.toString();
+        System.out.println(result);
+        return sqlSession.getMapper(PostMapper.class).showPreferedAreaPost(result);
+    }
+
+    @Override
+    public List<Post> showPreferedStylePost(List<String> styles) {
+        StringBuilder styleList = new StringBuilder();
+        for(String style:styles) {
+//            area = "%"+area+"%";
+//            System.out.println(style.trim());
+            styleList.append(style.trim()+"|");
+        }
+        styleList.deleteCharAt(styleList.lastIndexOf("|"));
+        String result = styleList.toString();
+        System.out.println(result);
+        return sqlSession.getMapper(PostMapper.class).showPreferedStylePost(result);
+    }
 }

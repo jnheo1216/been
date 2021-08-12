@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,19 +39,30 @@ public class UserController {
     @Autowired
     private EmailConfirmationService emailConfirmationService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @ApiOperation(value="user 로그인")
     @PostMapping("/user/signin")
     public ResponseEntity<Map<String, Object>> signIn(@RequestBody User user, HttpServletResponse res) {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
+
         try {
             User loginUser = userService.signIn(user.getEmail(), user.getPassword());
-            // 로그인 성공했다면 토큰을 생성한다.
-            String token = jwtService.create(loginUser);
-            // 토큰 정보는 request의 헤더로 보내고 나머지는 Map에 담아주자.
-            res.setHeader("jwt-auth-token", token);
-            // resultMap.put("auth_token", token);
-
+            System.out.println(user.getEmail());
+            System.out.println(user.getPassword());
+            if(!passwordEncoder.matches(user.getPassword(),loginUser.getPassword())) {
+                System.out.println("비밀번호 불일치");
+                loginUser = null;
+            } else {
+                System.out.println("비밀번호 일치");
+                // 로그인 성공했다면 토큰을 생성한다.
+                String token = jwtService.create(loginUser);
+                // 토큰 정보는 request의 헤더로 보내고 나머지는 Map에 담아주자.
+                res.setHeader("jwt-auth-token", token);
+                // resultMap.put("auth_token", token);
+            }
             resultMap.put("status", true);
             resultMap.put("data", loginUser);
             status = HttpStatus.ACCEPTED;
@@ -65,6 +77,10 @@ public class UserController {
     @ApiOperation(value="user 회원가입(create)") //415 Unsupproted Media Type 에러 발생. 아마도 따로 넣어줘야 하는듯? https://galid1.tistory.com/754 참고
     @PostMapping(value="/user")
     public ResponseEntity<Map<String, Object>> signUp(@RequestBody User user) throws Exception {
+
+        //비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
 
         //회원 db에 집어넣기
         int id = userService.register(user);
@@ -99,14 +115,20 @@ public class UserController {
 
     @ApiOperation(value="user 이메일 인증(update)")
     @GetMapping(value="/user/confirmEmail")
-    public void confirmEmail(@RequestParam("id") int id) throws Exception {
+    public void confirmEmail(@RequestParam("id") int id, HttpServletResponse response) throws Exception {
         User user = userService.list(id);
+//        if(user == null) return "만료된 요청입니다";
+//        if(user.getEmailConfirmation() == 1) return "이미 인증된 회원입니다";
         userService.confirmEmail(user);
+        String redirect_uri="http://i5b301.p.ssafy.io/";
+        response.sendRedirect(redirect_uri);
+//        return "유저 인증 완료. 홈페이지에서 로그인해주세요";
     }
 
     @ApiOperation(value="user 회원탈퇴(delete)")
-    @DeleteMapping(value = "/user")
-    public ResponseEntity<Map<String, Object>> withdrawal(@RequestBody User user) throws Exception {
+    @DeleteMapping(value = "/user/withdrwal/{id}")
+    public ResponseEntity<Map<String, Object>> withdrawal(@PathVariable int id) throws Exception {
+        User user = userService.list(id);
         String fileName = user.getProfilePicName();
         //프로필 사진 삭제
         if(!fileName.equals("defaultProfile.png")) {
@@ -214,6 +236,7 @@ public class UserController {
     @ApiOperation(value="user 수정하기(update)")
     @PutMapping(value= "/user")
     public ResponseEntity<Map<String, Object>> modify(@RequestBody User user) throws Exception {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.modify(user);
         return list();
     }

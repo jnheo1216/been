@@ -115,5 +115,15 @@ public class UserServiceImpl implements UserService {
         return sqlSession.getMapper(UserMapper.class).showFollowerCnt(followedId);
     }
 
+    @Override
+    public List<String> getPreferedArea(int userId) {
+        return sqlSession.getMapper(UserMapper.class).getPreferedArea(userId);
+    }
+
+    @Override
+    public List<String> getPreferedStyle(int userId) {
+        return sqlSession.getMapper(UserMapper.class).getPreferedStyle(userId);
+    }
+
 
 }

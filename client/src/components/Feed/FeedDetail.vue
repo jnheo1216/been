@@ -156,6 +156,14 @@ export default {
           .catch(err2 => {
             console.error(err2)
           })
+        axios.get(`http://localhost:8081/comment/listByPost/${this.postId}`)
+          .then(res3 => {
+            console.log(res3)
+            this.comments = res3.data.comments
+          })
+          .catch(err3 => {
+            console.error(err3)
+          })
       })
       .catch(err => {
         console.error(err)
