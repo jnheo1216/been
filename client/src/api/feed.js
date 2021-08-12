@@ -52,7 +52,7 @@ function postLike(userpostInfo, success, fail){
 }
 function postLikeDelete(userpostInfo, success, fail){
     instance
-    .delete(`post/like/delete/${userpostInfo.postId}/${userpostInfo.userId}`, JSON.stringify(userpostInfo))
+    .delete(`post/like/delete/${userpostInfo.postId}/${userpostInfo.userId}`)
     .then(success)
     .catch(fail);
 }
