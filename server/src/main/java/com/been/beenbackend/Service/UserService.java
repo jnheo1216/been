@@ -43,4 +43,8 @@ public interface UserService {
     int showFollowingCnt(int followerId);
 
     int showFollowerCnt(int followedId);
+
+    List<String> getPreferedArea(int userId);
+
+    List<String> getPreferedStyle(int userId);
 }

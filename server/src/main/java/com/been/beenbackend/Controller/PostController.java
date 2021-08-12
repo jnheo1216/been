@@ -2,6 +2,7 @@ package com.been.beenbackend.Controller;
 
 import com.been.beenbackend.Service.PostService;
 import com.been.beenbackend.Service.S3Service;
+import com.been.beenbackend.Service.UserService;
 import com.been.beenbackend.dto.Like;
 import com.been.beenbackend.dto.Post;
 import com.been.beenbackend.dto.PostPic;
@@ -28,6 +29,8 @@ public class PostController {
     private PostService postService;
     @Autowired
     private S3Service s3Service;
+    @Autowired
+    private UserService userService;
 
     @ApiOperation(value="post 전체 리스트 받아오기(read)")
     @GetMapping(value="/post")
@@ -192,5 +195,36 @@ public class PostController {
         Map<String, Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="post 제목으로 검색")
+    @GetMapping(value = "/post/searchByTitle/{title}")
+    public ResponseEntity<Map<String,Object>> searchByTitle(@PathVariable String title) throws Exception {
+        List<Post> posts = postService.searchByTitle(title);
+        Map<String,Object> result = new HashMap<>();
+        result.put("posts",posts);
+        return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="post 선호지역으로 가져오기")
+    @GetMapping(value = "/post/preferedArea/{userId}")
+    public ResponseEntity<Map<String,Object>> showPreferedAreaPost(@PathVariable int userId) throws Exception {
+        List<String> areas = userService.getPreferedArea(userId);
+
+        List<Post> posts = postService.showPreferedAreaPost(areas);
+        Map<String,Object> result = new HashMap<>();
+        result.put("posts", posts);
+        return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
+    }
+
+    @ApiOperation(value="post 선호스타일로 가져오기")
+    @GetMapping(value = "/post/preferedStyle/{userId}")
+    public ResponseEntity<Map<String,Object>> showPreferedStylePost(@PathVariable int userId) throws Exception {
+        List<String> styles = userService.getPreferedStyle(userId);
+
+        List<Post> posts = postService.showPreferedStylePost(styles);
+        Map<String,Object> result = new HashMap<>();
+        result.put("posts", posts);
+        return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
     }
 }

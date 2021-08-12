@@ -36,4 +36,10 @@ public interface PostService {
     int showLikeyCnt(int postId);
 
     Like getLikey(int postId, int userId);
+
+    List<Post> searchByTitle(String title);
+
+    List<Post> showPreferedAreaPost(List<String> areas);
+
+    List<Post> showPreferedStylePost(List<String> styles);
 }

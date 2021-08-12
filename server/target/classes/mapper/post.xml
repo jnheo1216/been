@@ -23,7 +23,7 @@
 	
 	<insert id="register" parameterType="Post">
 		insert into post (userId, title, content)
-		values (#{userId}, #{title}, #{content});
+		values (#{userId}, #{title}, #{content}, #{area}, #{style});
 		<selectKey resultType="int" keyProperty="postId" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -31,7 +31,7 @@
 	
 	<update id="modify" parameterType="Post">
 		update post
-		set title = #{title}, content = #{content}, updatedAt = current_timestamp(),likeCnt = #{likeCnt}, postPicSrc = #{postPicSrc}, postPicName=#{postPicName}
+		set title = #{title}, content = #{content}, area = #{area}, style = #{style}, updatedAt = current_timestamp(),likeCnt = #{likeCnt}, postPicSrc = #{postPicSrc}, postPicName=#{postPicName}
 		where postId = #{postId};
 	</update>
 
@@ -42,7 +42,7 @@
 
 	<!--내가 팔로우한 유저들의 게시물 -->
 	<select id="showFollowPost" parameterType="int" resultType="post">
-		select postId, userId, title, content, createdAt, updatedAt
+		select post.*
 		from post inner join follow on post.userId = follow.followedId
 		where follow.followerId = #{id} and follow.accepted = 1;
 	</select>
@@ -95,4 +95,15 @@
 		where postId = #{postId};
 	</delete>
 
+	<select id ="searchByTitle" parameterType="String" resultType="Post">
+		select * from post where title like #{title};
+	</select>
+	
+	<select id="showPreferedAreaPost" parameterType="String" resultType="Post">
+		select * from post where area regexp #{areas}
+	</select>
+
+	<select id="showPreferedStylePost" parameterType="String" resultType="Post">
+		select * from post where style regexp #{styles}
+	</select>
 </mapper>
