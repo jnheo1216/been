@@ -94,8 +94,9 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 // import {ref} from 'vue'
+import {getFeedFollowPost} from '@/api/feed.js'
 
 export default {
   name: 'FeedList',
@@ -114,14 +115,25 @@ export default {
     //   this.$router.push({ name: 'Login' })}
     this.user = this.$store.state.user
     console.log(this.user)
-    axios.get('http://localhost:8081/post/followPost/' + this.user.id)
-      .then((res) => {
+    const userId = localStorage.getItem('userId')
+    getFeedFollowPost(
+      userId,
+      (res) => {
         console.log(res)
         this.feed = res.data.posts
-      })
-      .catch((err) => {
+      },
+      (err) => {
         console.log(err)
-      })
+      }
+    )
+    // axios.get('http://localhost:8081/post/followPost/' + this.user.id)
+    //   .then((res) => {
+    //     console.log(res)
+    //     this.feed = res.data.posts
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
 
 
     // console.log(this.$store.state.isLogin)

@@ -124,6 +124,9 @@
 
 <script>
 import axios from 'axios'
+import {getFeedDetail, postLike, postLikeDelete} from '@/api/feed.js'
+import {writeComment} from '@/api/comment.js'
+import {API_BASE_URL} from "@/config/index.js";
 
 export default {
   name: 'FeedDetail',
@@ -131,7 +134,7 @@ export default {
     return {
       postId: '',
       post: {},
-      formNumber: 3,
+      formNumber: 2,
       isLike: false,
       comments: [],
       newComment: '',
@@ -141,13 +144,15 @@ export default {
   },
   created() {
     console.log('loading')
-    axios.get(`http://localhost:8081/post/${this.$route.params.feedNumber}`)
-      .then(res => {
+    const postId = this.$route.params.feedNumber
+    getFeedDetail(
+      postId,
+      (res) => {
         console.log(res)
         this.postId = res.data.post.postId
         this.post = res.data.post
         const id = res.data.post.userId
-        axios.get(`http://localhost:8081/user/{id}?id=${id}`)
+        axios.get(API_BASE_URL + `user/{id}?id=${id}`)
           .then(res2 => {
             console.log(res2)
             this.postUserNickname = res2.data.user.nickname
@@ -156,7 +161,7 @@ export default {
           .catch(err2 => {
             console.error(err2)
           })
-        axios.get(`http://localhost:8081/comment/listByPost/${this.postId}`)
+        axios.get(API_BASE_URL + `comment/listByPost/${this.postId}`)
           .then(res3 => {
             console.log(res3)
             this.comments = res3.data.comments
@@ -164,10 +169,38 @@ export default {
           .catch(err3 => {
             console.error(err3)
           })
-      })
-      .catch(err => {
+      },
+      (err) => {
         console.error(err)
-      })
+      }
+    )
+    // axios.get(`http://localhost:8081/post/${this.$route.params.feedNumber}`)
+    //   .then(res => {
+    //     console.log(res)
+    //     this.postId = res.data.post.postId
+    //     this.post = res.data.post
+    //     const id = res.data.post.userId
+    //     axios.get(`http://localhost:8081/user/{id}?id=${id}`)
+    //       .then(res2 => {
+    //         console.log(res2)
+    //         this.postUserNickname = res2.data.user.nickname
+    //         this.postProfilePicSrc = res2.data.user.profilePicSrc
+    //       })
+    //       .catch(err2 => {
+    //         console.error(err2)
+    //       })
+    //     axios.get(`http://localhost:8081/comment/listByPost/${this.postId}`)
+    //       .then(res3 => {
+    //         console.log(res3)
+    //         this.comments = res3.data.comments
+    //       })
+    //       .catch(err3 => {
+    //         console.error(err3)
+    //       })
+    //   })
+    //   .catch(err => {
+    //     console.error(err)
+    //   })
   },
   methods: {
     likeUp() {
@@ -177,25 +210,46 @@ export default {
         userId: localStorage.getItem('userId'),
       }
       console.log(like)
-      axios.post(`http://localhost:8081/post/like`, like)
-        .then(res => {
+      postLike(
+        like,
+        (res) => {
           console.log(res)
-        })
-        .catch(err => {
+        },
+        (err) => {
           console.error(err)
-        })
+        }
+      )
+      // axios.post(`http://localhost:8081/post/like`, like)
+      //   .then(res => {
+      //     console.log(res)
+      //   })
+      //   .catch(err => {
+      //     console.error(err)
+      //   })
     },
     likeDown() {
       this.isLike = false
-      var userSid = localStorage.getItem('userId')
-      userSid *= 1
-      axios.delete(`http://localhost:8081/post/like/delete/${this.postId}/${userSid}`)
-        .then(res => {
+      const like = {
+        postId: this.postId,
+        userId: localStorage.getItem('userId'),
+      }
+      console.log(like)
+      postLikeDelete(
+        like,
+        (res) => {
           console.log(res)
-        })
-        .catch(err => {
+        },
+        (err) => {
           console.error(err)
-        })
+        }
+      )
+      // axios.delete(`http://localhost:8081/post/like/delete/${this.postId}/${userSid}`)
+      //   .then(res => {
+      //     console.log(res)
+      //   })
+      //   .catch(err => {
+      //     console.error(err)
+      //   })
     },
     commentWrite() {
       const new_comment = {
@@ -203,14 +257,24 @@ export default {
         userId: localStorage.getItem('userId'),
         comment: this.newComment,
       }
-      axios.post(`http://localhost:8081/comment`, new_comment)
-        .then(res => {
+      writeComment(
+        new_comment,
+        (res) => {
           console.log(res)
           this.comments.push(new_comment)
-        })
-        .catch(err => {
+        },
+        (err) => {
           console.error(err)
-        })
+        }
+      )
+      // axios.post(`http://localhost:8081/comment`, new_comment)
+      //   .then(res => {
+      //     console.log(res)
+      //     this.comments.push(new_comment)
+      //   })
+      //   .catch(err => {
+      //     console.error(err)
+      //   })
     },
     toProfile() {
       const userId = this.post.userId
@@ -223,7 +287,6 @@ export default {
 <style>
   .background {
     width: 375px;
-    height: 812px;
     text-align: center;
     background-color: #FFFAF4;
     margin:0 auto;

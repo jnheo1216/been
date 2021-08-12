@@ -53,28 +53,9 @@
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 // import Google from "@/components/User/Google.vue" 
-import axios from "axios";
+// import axios from "axios";
+import {login} from '@/api/user.js'
 
-// function createInstance() {
-//   const instance = axios.create({
-//     baseURL: 'http://localhost:8080/',
-//     headers:{
-//       "Content-Type": "application/json"
-//     }
-//   });
-//   return instance;
-// }
-
-// const instance = createInstance();
-// function login(user, success, fail){
-//   instance.defaults.headers["accesss-token"] = window.localStorage.getItem(
-//     "access-token"
-//   );
-//   instance
-//   .post("user/signin", JSON.stringify(user))
-//   .then(success)
-//   .catch(fail);
-// }
 
 export default {
   name: 'Login',
@@ -136,21 +117,36 @@ export default {
         email: this.email,
         password: this.password
       };
-      axios.post('http://localhost:8081/user/signin', user)
-        .then(res => {
+      login(
+        user,
+        (res) => {
           console.log(res)
           localStorage.setItem('jwt-auth-token', res.headers['jwt-auth-token'])
           localStorage.setItem('userId', res.data.data['id'])
           this.$store.commit("setUserInfo",res.data.data)
-        })
-        .then(() => {
-          this.$router.push("/feed");
           console.log(this.$store.state.user)
           console.log(this.$store.state.isLogin)
-        })
-        .catch(err => {
-          console.error(err)
-        })
+          this.$router.push("/feed");
+        },
+        (err) => {
+          console.error(err);
+        }
+      )
+      // axios.post('http://localhost:8081/user/signin', user)
+      //   .then(res => {
+      //     console.log(res)
+      //     localStorage.setItem('jwt-auth-token', res.headers['jwt-auth-token'])
+      //     localStorage.setItem('userId', res.data.data['id'])
+      //     this.$store.commit("setUserInfo",res.data.data)
+      //   })
+      //   .then(() => {
+      //     this.$router.push("/feed");
+      //     console.log(this.$store.state.user)
+      //     console.log(this.$store.state.isLogin)
+      //   })
+      //   .catch(err => {
+      //     console.error(err)
+      //   })
     }
   }
 }
