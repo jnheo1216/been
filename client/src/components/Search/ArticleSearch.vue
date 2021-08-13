@@ -45,7 +45,6 @@
               </div>
             </div>
           </div>
-
         
         <!-- 육각형 한개 끝 -->
           <div v-if="index % 2 == 1" class="row justify-contend-end mx-0">
