@@ -19,7 +19,6 @@
         <el-button @click="searchSubmit" icon="el-icon-search" circle></el-button>
       </el-form-item>
     </el-form>
-
     <!-- 검색 결과 -->
     <div class="searchResult">
       <!-- 일치하는 검색 결과가 있을 때  -->
@@ -27,12 +26,13 @@
         <h2 class="text">일치하는 꿀벌 : {{ users.length }}벌</h2>
         <ul class="my-3">
           <li @click="toUserProfile" v-for="(user, userId) in users"
-          :key="userId" class="bg-success bg-gradient bg-opacity-50 text-dark">
+          :key="userId" class="text-dark">
             <img :src="user.profilePicSrc" alt="" class="profile-image"><h3 class="small-text">{{ user.nickname }}</h3>
             <h4>{{ user.intro }}</h4>
-        
+            <hr>
           </li> 
         </ul>
+        <el-button @click="backToSearchmain" type="info" icon="el-icon-back" circle></el-button>
       </div> 
         
       <!-- 일치하는 검색 결과가 없을 때 -->
@@ -53,8 +53,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
-import {getUserByNickname} from '@/api/user.js'
+import axios from 'axios'
 
 export default ({
   name: 'PeopleSearch',
@@ -71,25 +70,16 @@ export default ({
   },
  methods: {
    searchSubmit: function () {
-     getUserByNickname(
-       this.user,
-       (res) => {
+     axios.get('http://localhost:8081/user/findNickname/' + this.user)
+      .then((res) => {
         this.users = res.data.users
-       },
-       (err) => {
+      })
+      .catch((err) => {
         console.log(err)
-       }
-     )
-    //  axios.get('http://localhost:8081/user/findNickname/' + this.user)
-    //   .then((res) => {
-    //     this.users = res.data.users
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
+      })
    },
-   toUserProfile: function(event) {
-     console.log(event.target)
+   toUserProfile: function(userId) {
+     this.$router.push({name: "UserProfile", params: {userId: userId}})
    },
   backToSearchmain: function () {
     this.$router.push({ name: "SearchMain" })

@@ -12,7 +12,7 @@
         <div class="wrap block">
           <div class="hex" @click="toDetail">
             <div class="hex-inner">
-              <div v-if="favorite.postPicSrc" class="content" style="background: url('{}')"></div>
+              <div v-if="favorite.postPicSrc" class="content" style="background: url('{{ favorite.postPicSrc }}')"></div>
               <div v-else class="content" style="background: url('https://picsum.photos/200/300?grayscale)')"></div>
             </div>
           </div>
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   name: 'FavoriteList',
   data() {
@@ -101,9 +101,23 @@ export default {
   },
   created() {
     this.user = this.$store.state.user
-    console.log(this.user)
-    console.log(this.user.nickname)
-    // axios.get()
+    axios.get('http://localhost:8081/post/preferedStyle/' + this.user.id)
+      .then((res) => {
+        this.favorite.push(res.data.posts)
+      })
+      .catch((err) => {
+        console.log(err)
+      }),
+    axios.get('http://localhost:8081/post/preferdArea/' + this.user.id)
+      .then((res) => {
+        console.log('선호 지역')
+        console.log(res.data.posts)
+        this.favorite.push(res.data.posts)
+        console.log(this.favorite)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 </script>
@@ -129,9 +143,9 @@ export default {
   width: 100%;
 }
 
-  .text {
-    font-family: 'Nanum Pen Script', cursive;
-  }
+.text {
+  font-family: 'Nanum Pen Script', cursive;
+}
 
   .wrap {
   width: 110%;

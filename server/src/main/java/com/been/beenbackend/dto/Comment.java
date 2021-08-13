@@ -16,7 +16,6 @@ public class Comment {
     private String comment;
     private String createdAt;
     private String updatedAt;
-    private int likeCnt;
 
     public int getCommentId() {
         return commentId;
@@ -58,11 +57,4 @@ public class Comment {
         this.updatedAt = updatedAt;
     }
 
-    public int getLikeCnt() {
-        return likeCnt;
-    }
-
-    public void setLikeCnt(int likeCnt) {
-        this.likeCnt = likeCnt;
-    }
 }
