@@ -17,17 +17,21 @@
         <!-- 전체 게시물 -->
         <div class="articles flex flex-col space-y-2">
 
-          <h1 class="text">{{ this.user.nickname }}님의 뉴스피드</h1>
-
+          <h1 class="text bg-white">{{ this.user.nickname }}님의 뉴스피드</h1>
           <!-- 추천 게시물 -->
           <h2 class="text">맞춤 추천게시물</h2>
           <el-carousel :interval="4000" type="card" height="200px">
-            <el-carousel-item v-for="item in 3" :key="item">
-              <h3 class="medium">{{ item }}</h3>
+            <el-carousel-item v-for="post in this.recommended" :key="post.postId">
+              <img @click="toDetail(post.postId)" :src="post.postPicSrc" class="recommended-image medium" alt="">
             </el-carousel-item>
           </el-carousel>
+          <el-button plain @click="toFavorite">추천 게시물 더 보기</el-button>
+
+  
+        
+
           <!-- 팔로잉이 없는 경우 -->
-        <div v-if="this.user.followingCnt">
+        <div v-if="this.user.followingCnt == 0">
           <img src="@/assets/lost-bee.png" alt="길 잃은 꿀벌" class="lost-img">
           <h2 class="text">아직 동료 꿀벌이 없습니다.</h2><br>
           <h3 class="text">꿀바르고 새로운 소식을 받아보세요.</h3>
@@ -35,8 +39,8 @@
         </div>
 
       <!-- 팔로잉이 있는 경우 -->
+      <div v-if="this.user.followingCnt" class="my-4">
       <h2 class="text">{{ this.user.nickname }}님의 동료 꿀벌들의 소식</h2>
-      <div v-if="this.user.followingCnt == 0">
         <!-- 육각형 한개 -->
         <div v-for="(post, index) in this.feed"
           :key="post.postId" @click="toDetail(post.postId)">
@@ -46,8 +50,11 @@
             <div class="wrap">
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
-                  <div v-if="post.postPicSrc" class="content" style="background: url('{post.postPicSrc}')"></div>
-                  <div v-else class="content" style="background: url('https://picsum.photos/200/300?grayscale)')"></div>
+                  <div v-if="post.postPicSrc" class="content">
+                    <img :src="post.postPicSrc" class="hex-image">
+                  </div>
+                  <div v-else class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
+                  </div>
                 </div>
               </div>
 
@@ -65,8 +72,11 @@
           <div class="wrap flex flex-row-reverse mx-0">
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
-                  <div v-if="post.postPicSrc" class="content" style="background: url('{post.postPicSrc}')"></div>
-                  <div v-else class="content" style="background: url('https://picsum.photos/200/301?grayscale)')"></div>
+                  <div v-if="post.postPicSrc" class="content">
+                    <img :src="post.postPicSrc" class="hex-image">
+                  </div>
+                  <div v-else class="content" style="background: url('https://picsum.photos/200/301?grayscale)')">
+                  </div>
                 </div>
               </div>
 
@@ -94,9 +104,8 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 // import {ref} from 'vue'
-import {getFeedFollowPost} from '@/api/feed.js'
 
 export default {
   name: 'FeedList',
@@ -112,28 +121,25 @@ export default {
   },
   created() {
     // if (!this.isLogin) {
-    //   this.$router.push({ name: 'Login' })}
+    //   this.$router.push({ name: 'Introduction' })}
     this.user = this.$store.state.user
     console.log(this.user)
-    const userId = localStorage.getItem('userId')
-    getFeedFollowPost(
-      userId,
-      (res) => {
-        console.log(res)
+    axios.get('http://localhost:8081/post/preferedStyle/' + this.user.id)
+      .then((res) => {
+        this.recommended = res.data.posts
+        if (this.recommended.length >= 4) {
+          this.recommended = this.recommended.slice(0, 2)
+        }
+        console.log(this.recommended)
+      })
+
+    axios.get('http://localhost:8081/post/followPost/' + this.user.id)
+      .then((res) => {
         this.feed = res.data.posts
-      },
-      (err) => {
+      })
+      .catch((err) => {
         console.log(err)
-      }
-    )
-    // axios.get('http://localhost:8081/post/followPost/' + this.user.id)
-    //   .then((res) => {
-    //     console.log(res)
-    //     this.feed = res.data.posts
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
+      })
 
 
     // console.log(this.$store.state.isLogin)
@@ -148,10 +154,15 @@ export default {
     
   },
   methods: {
-    toDetail: function () {
+    toDetail: function (postId) {
       this.$router.replace({
         name: 'FeedDetail',
-        params: { postId: this.feed.postId }
+        params: { feedNumber: postId }
+      })
+    },
+    toFavorite: function () {
+      this.$router.push({
+        name: "FavoriteList"
       })
     }
   },
@@ -242,24 +253,9 @@ export default {
   background-size : cover;
 }
 
-.content2 {
-  /* border: 2px solid red; */
-  position:absolute;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  transform: skewY(-30deg) rotate3d(0,0,1,60deg);
-  background-image: url(https://picsum.photos/200/301?grayscale);
-  justify-content: center;
-  align-items: center;
-  background-repeat : no-repeat;
-  background-size : cover;
-}
-
 
 .content p {
-  font-size: 3vw;
+  font-size: 2vw;
   text-align: center;
   color: #fff;
 }
@@ -334,21 +330,31 @@ export default {
   margin-right: auto;
 }
 
+.hex-image {
+  width: 140px;
+}
+
 
 .el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 200px;
-    margin: 0;
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
   }
 
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
+.recommended-image {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-  }
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
+}
 
 </style>
