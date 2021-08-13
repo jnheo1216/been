@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import {join} from '@/api/user.js';
 
 
 export default {
@@ -147,27 +146,12 @@ export default {
   },
   methods: {
     onSignUp(){
-      join(
-        this.user,
-        (res)=>{
-          // console.log('되는지좀알려줘라')
-          console.log(res.data)
-          if(typeof res.data==='object'){
-            this.$router.push({
-              name:"SignupSuccess",
-              params:{
-                ...this.user,
-              }
-            })
-          }
-          else{
-            console.log(res.data)
-          }
-        },
-        (err)=>{
-          console.error(err);
+      this.$router.push({
+        name:"SignupSuccess",
+        params:{
+          ...this.user,
         }
-      )
+      })
     }
   }
 }

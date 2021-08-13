@@ -13,9 +13,38 @@
 </template>
 
 <script>
+import {join} from '@/api/user.js';
 
 export default {
   name: 'SignupSuccess',
+  data() {
+    return {
+      user:{
+        nickname: "",
+        email: "",
+        password: "",
+        intro: "",
+        name: "",
+      },
+    }
+  },
+  created() {
+    this.user.nickname = this.$route.params.nickname
+    this.user.name = this.$route.params.nickname
+    this.user.email = this.$route.params.email
+    this.user.password = this.$route.params.password
+    this.user.intro = this.$route.params.intro
+    join(
+      this.user,
+      (res)=>{
+        // console.log('되는지좀알려줘라')
+        console.log(res.data)
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
+  }
 }
 </script>
 
