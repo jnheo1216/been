@@ -1,5 +1,8 @@
 <template>
   <div class="background">
+    
+<!-- <div id="mapdiv" style="width: 375px; height: 169px;"></div> -->
+
     <div class="logo">
       <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
     </div>
@@ -48,6 +51,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import PV from "password-validator";
