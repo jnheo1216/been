@@ -35,6 +35,19 @@ public class EmailConfirmationService {
 //        return emailConfirmationToken.getId();
     }
 
+    public void createTemporaryPasswordEmail(String email, String password){
+        System.out.println(email);
+        Assert.hasText(email,"수신자 이메일 입력은 필수 입니다.");
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(email);
+        mailMessage.setSubject("BEEN 임시 비밀번호");
+        mailMessage.setText("임시비밀번호: "+password);
+        emailSenderService.sendEmail(mailMessage);
+
+//        return emailConfirmationToken.getId();
+    }
+
 //    /**
 //     * 유효한 토큰 가져오기
 //     * @param confirmationTokenId

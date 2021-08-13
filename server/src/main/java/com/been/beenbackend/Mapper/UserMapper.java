@@ -41,5 +41,9 @@ public interface UserMapper {
     int showFollowerCnt(int followerId);
 
     int showFollowedCnt(int followedId);
+
+    List<String> getPreferedArea(int userId);
+
+    List<String> getPreferedStyle(int userId);
 }
 
