@@ -35,10 +35,4 @@ function getFollowWait(userId, success, fail){
     .then(success)
     .catch(fail);
 }
-function getUserByNickname(user, success, fail){
-    instance
-    .get(`user/findNickname/${user}`)
-    .then(success)
-    .catch(fail);
-}
-export {login, join, getFollower, getFollowing, getFollowWait, getUserByNickname};
+export {login, join, getFollower, getFollowing, getFollowWait};
