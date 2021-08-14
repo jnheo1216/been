@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import {getFollowing} from '@/api/user.js'
 
 export default {
   name: 'UserFollowing',
@@ -35,14 +36,24 @@ export default {
   },
   created() {
     const userId = localStorage.getItem('userId')
-    axios.get(`http://localhost:8081/user/showFollowing/${userId}`)
-      .then(res => {
+    getFollowing(
+      userId,
+      (res) => {
         console.log(res)
         this.followingUsers = res.data.users
-      })
-      .catch(err => {
-          console.error(err)
-      })
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+    // axios.get(`http://localhost:8081/user/showFollowing/${userId}`)
+    //   .then(res => {
+    //     console.log(res)
+    //     this.followingUsers = res.data.users
+    //   })
+    //   .catch(err => {
+    //       console.error(err)
+    //   })
   },
   methods: {
     goProfile(id) {

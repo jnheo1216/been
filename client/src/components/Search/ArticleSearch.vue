@@ -74,7 +74,9 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import {searchPostTitle} from '@/api/search.js'
+
 export default {
   name: "ArticleSearch",
   data () {
@@ -86,15 +88,27 @@ export default {
   },
   methods: {
     searchSubmit: function() {
-      axios.get('http://localhost:8081/post/searchByTitle/' + this.search)
-      .then((res) => {
-        this.results.push(res.data.posts)
-        this.isSubmit = true
-        console.log(this.results)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      const postTitle = this.search
+      searchPostTitle(
+        postTitle,
+        (res) => {
+          this.results.push(res.data.posts)
+          this.isSubmit = true
+          console.log(this.results)
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
+      // axios.get('http://localhost:8081/post/searchByTitle/' + this.search)
+      // .then((res) => {
+      //   this.results.push(res.data.posts)
+      //   this.isSubmit = true
+      //   console.log(this.results)
+      // })
+      // .catch((err) => {
+      //   console.log(err)
+      // })
     },
     toDetail: function(postId) {
       this.$router.push({
