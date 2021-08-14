@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import {getFollowWait} from '@/api/user.js'
 
 export default {
   name: 'UserFollowWait',
@@ -37,14 +38,19 @@ export default {
   },
   created() {
     const id = localStorage.getItem('userId')
-    axios.put(`http://localhost:8081/user/beforeFollowList/${id}`, id)
-      .then(res => {
-        console.log(res)
-        // this.followUserWaits = res.data.users
-      })
-      .catch(err => {
-          console.error(err)
-      })
+    getFollowWait(
+      id,
+      (res) => {console.log(res)},
+      (err) => {console.error(err)}
+    )
+    // axios.put(`http://localhost:8081/user/beforeFollowList/${id}`, id)
+    //   .then(res => {
+    //     console.log(res)
+    //     // this.followUserWaits = res.data.users
+    //   })
+    //   .catch(err => {
+    //       console.error(err)
+    //   })
   },
 }
 </script>

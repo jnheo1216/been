@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <img src="@/assets/image-logo.png" alt="image-logo">
+    <img src="@/assets/image-logo-resize.png" alt="image-logo">
     <div class="char-box">
       <h2>회원가입 성공!</h2>
       <div class="char-box">

@@ -53,7 +53,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import {searchUserNickname} from '@/api/search.js'
 
 export default ({
   name: 'PeopleSearch',
@@ -70,13 +71,23 @@ export default ({
   },
  methods: {
    searchSubmit: function () {
-     axios.get('http://localhost:8081/user/findNickname/' + this.user)
-      .then((res) => {
-        this.users = res.data.users
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+     const nickName = this.user
+     searchUserNickname(
+       nickName,
+       (res) => {
+         this.users = res.data.users
+       },
+       (err) => {
+         console.log(err)
+       }
+     )
+    //  axios.get('http://localhost:8081/user/findNickname/' + this.user)
+    //   .then((res) => {
+    //     this.users = res.data.users
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
    },
    toUserProfile: function(userId) {
      this.$router.push({name: "UserProfile", params: {userId: userId}})
