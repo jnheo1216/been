@@ -1,7 +1,10 @@
 <template>
   <div class="background">
+
     
-<!-- <div id="mapdiv" style="width: 375px; height: 169px;"></div> -->
+    <!-- <div class="map-box">
+      <MyMap :visitedDatas="[[30, 40],[50, 40]]"/>
+    </div> -->
 
     <div class="logo">
       <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
@@ -59,12 +62,14 @@ import * as EmailValidator from "email-validator";
 // import Google from "@/components/User/Google.vue" 
 // import axios from "axios";
 import {login} from '@/api/user.js'
+// import MyMap from '@/components/MyMaps/MyMap.vue'
 
 
 export default {
   name: 'Login',
   components: {
     // Google,
+    // MyMap
   },
   data: () => {
     return {
