@@ -125,6 +125,32 @@ public class UserController {
 //        return "유저 인증 완료. 홈페이지에서 로그인해주세요";
     }
 
+    @ApiOperation(value="user 임시비밀번호 발급 후 이메일 보내기 (update)")
+    @PutMapping(value="/user/temporaryPassword/{email}")
+    public String temporaryPassword(@PathVariable String email) throws Exception {
+        User user = userService.list(email);
+        if(user == null) return "유저를 찾을 수 없습니다";
+
+        //임시 비밀번호 생성
+        String ENGLISH_LOWER = "abcdefghijklmnopqrstuvwxyz";
+        String ENGLISH_UPPER = ENGLISH_LOWER.toUpperCase();
+        String NUMBER = "0123456789";
+        String data = ENGLISH_LOWER+ENGLISH_UPPER+NUMBER;
+        String temporaryPassword = "";
+        for(int i = 0; i < 10; i++) {
+            temporaryPassword += data.charAt((int)(Math.random()*data.length()));
+        }
+
+        //임시 비밀번호 이메일로 보내기
+        emailConfirmationService.createTemporaryPasswordEmail(email, temporaryPassword);
+
+        //임시 비밀번호 저장
+        String encodedPassword = passwordEncoder.encode(temporaryPassword);
+        user.setPassword(encodedPassword);
+        userService.modify(user);
+        return "이메일을 확인해주세요";
+    }
+
     @ApiOperation(value="user 회원탈퇴(delete)")
     @DeleteMapping(value = "/user/withdrwal/{id}")
     public ResponseEntity<Map<String, Object>> withdrawal(@PathVariable int id) throws Exception {
