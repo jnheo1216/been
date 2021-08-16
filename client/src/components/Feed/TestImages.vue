@@ -163,7 +163,7 @@ export default {
       const fd = new FormData();
 
       fd.append('image', this.selectedFile, this.selectedFile.name)
-
+      console.log(fd)
       axios.post('#' , fd, {
         onUploadProgress: uploadEvent => {
           console.log('Upload Progress' + Math.round(uploadEvent.loaded / uploadEvent.total *100))
@@ -171,6 +171,7 @@ export default {
       })
           .then(res => {
             console.log(res)
+            // res
           })
     }
   },
