@@ -34,6 +34,37 @@
   <router-view/>
 </div>
 
+  <ul class="nav justify-content-center" v-if="isLoggedIn">
+    <li class="nav-item">
+      <router-link :to="'/search'">
+        <a class="nav-link active text-warning">Search</a>
+      </router-link>
+    </li>
+    <li class="nav-item">
+      <router-link :to="'/feed/favorite'">
+        <a class="nav-link text-warning">Curation</a>
+      </router-link>
+    </li>
+    <li class="nav-item">
+      <!-- <a class="nav-link text-warning" @click="goMain">Main</a> -->
+      <router-link :to="'/feed'">
+        <div class="button-box">
+          <img src="./assets/beenMainbutton.png" alt="button" style="max-width: 100%;">
+        </div>
+      </router-link>
+    </li>
+    <li class="nav-item">
+      <router-link :to="'/profile'">
+        <a class="nav-link text-warning">MyProfile</a>
+      </router-link>
+    </li>
+    <li class="nav-item">
+      <router-link :to="'/write'">
+        <a class="nav-link text-warning">Bee~n</a>
+      </router-link>
+    </li>
+  </ul>
+
 </div>
 </template>
 
@@ -52,6 +83,18 @@ export default {
       'logout'
     ])
   },
+    goCuration() {
+      console.log('curation')
+    },
+    goMain() {
+      console.log('main')
+    },
+    goProfile() {
+      console.log('profile')
+    },
+    gofeedWrite() {
+      console.log('post')
+    },
 }
 </script>
 
@@ -63,5 +106,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.button-box {
+  width: 80px;
 }
 </style>

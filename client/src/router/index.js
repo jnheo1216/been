@@ -8,15 +8,15 @@ import Profile from '@/views/User/Profile.vue'
 import Follow from '@/views/User/Follow.vue'
 import NotFound from '@/components/NotFound/NotFound.vue'
 import Introduction from '@/views/Introduction/Introduction.vue'
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
 
-const requireAuth = () => async (to, from, next) => {
-  // let token = localStorage.getItem('jwt-auth-token');
-  if (!mapGetters.isLoggedIn) {
-    next('/');
-  }
-};
+// const requireAuth = () => async (to, from, next) => {
+//   // let token = localStorage.getItem('jwt-auth-token');
+//   if (!mapGetters.isLoggedIn) {
+//     next('/');
+//   }
+// };
 
 
 const routes = [
@@ -56,7 +56,7 @@ const routes = [
   
   {
     path: "/feed",
-    beforeEnter: requireAuth(),
+    // beforeEnter: requireAuth(),
     name: "Feed",
     component: Feed,
     children:[
@@ -88,7 +88,7 @@ const routes = [
   
   {
     path: "/search",
-    beforeEnter: requireAuth(),
+    // beforeEnter: requireAuth(),
     name: "Search",
     component: Search,
     children:[
@@ -117,7 +117,7 @@ const routes = [
   
   {
     path: "/profile",
-    beforeEnter: requireAuth(),
+    // beforeEnter: requireAuth(),
     name: "Profile",
     component: Profile,
     children: [
@@ -130,7 +130,7 @@ const routes = [
   },
   {
     path: "/follow",
-    beforeEnter: requireAuth(),
+    // beforeEnter: requireAuth(),
     name: "Follow",
     component: Follow,
     children: [
@@ -160,7 +160,7 @@ const routes = [
   // FeedWrite_csy
   {
     path: '/write',
-    beforeEnter: requireAuth(),
+    // beforeEnter: requireAuth(),
     name: 'Write',
     component: FeedWrite,
     children: [
