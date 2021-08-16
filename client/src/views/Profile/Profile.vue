@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- <div class="map-box">
+      <MyMap :visitedDatas="visitedDatas"/>
+    </div> -->
     <div>
     <h1>Profile</h1>
       <img src="집꿀벌2.png" alt="우선은 프로필 사진 들어갈 자리">
@@ -75,12 +78,17 @@ EDIT ON
 </template>
 
 <script>
+// import MyMap from '@/components/MyMap.vue'
+
 export default {
   data: function(){
     return{
       onLine: "false"
     }
-  }
+  },
+  // components: {
+  //   MyMap
+  // },
 }
 </script>
 
