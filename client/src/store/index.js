@@ -6,13 +6,18 @@ export default createStore({
     user: {},
     jwtAuthToken: localStorage.getItem('jwt-auth-token') || '',
     postData: {
-      content: '',
-      postPicName: '',
-      postPicSrc: '',
-      title: '',
-      updatedAt: '',
-      userId: ''
-    }
+      area: "",
+      content: "",
+      createdAt: "",
+      postId: 0,
+      postPicName: "",
+      postPicSrc: "",
+      style: "",
+      title: "",
+      updatedAt: "",
+      userId: 0
+    },
+    postPics: []
   },
   getters: {
     isLoggedIn({ jwtAuthToken }) {

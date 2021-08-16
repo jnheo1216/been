@@ -5,13 +5,15 @@
 
     <TestForm></TestForm>
 
-    <button @click="increase">완료</button>
+    <button @click="finish">완료</button>
 
   </div>
 </template>
 
 <script>
 import TestForm from "./TestForm";
+import axios from "axios"
+
 export default {
   name: "FeedWrite3",
   components: { TestForm,
@@ -37,11 +39,20 @@ export default {
         } 
         
     },
-    increase() {
+    finish() {
       this.percentage += 40;
       if (this.percentage > 100) {
         this.percentage = 100;
       }
+      this.$store.state.postData.userId = localStorage.getItem('userId')
+      console.log(this.$store.state.postData)
+      axios.post("http://127.0.0.1:8081/post", this.$store.state.postData)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },
   },
 
