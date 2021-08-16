@@ -20,7 +20,7 @@
   <!--   버튼 wirte2로 넘어가는 버튼 & 뒤로가기-->
   <div class="btns">
     <p class="el-icon-back backbtn" @click="$router.push({name: ''})"></p>
-    <button class="writebtn" @click="$router.push({name: 'FeedWrite2'})">
+    <button class="writebtn" @click="nextPage()">
       <img class="btnimg" src="@/assets/text-logo-resize.png" >
     </button>
   </div>
@@ -83,6 +83,15 @@ export default {
         return percentage !== 100 ? '1단계' : `${percentage}%`;
       }
       return percentage === 100 ? '비잉 완료' : `${percentage}%`;
+    },
+    nextPage()
+    {
+        console.log(this.region)
+        console.log(this.style)
+        this.$store.state.postData.content = '';
+        this.$router.push({name: 'FeedWrite2'});
+        
+
     }
   },
     // 데이터 확인
