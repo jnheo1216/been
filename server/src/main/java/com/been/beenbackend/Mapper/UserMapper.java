@@ -1,9 +1,12 @@
 package com.been.beenbackend.Mapper;
 
+import com.been.beenbackend.dto.PreferredArea;
+import com.been.beenbackend.dto.PreferredStyle;
 import com.been.beenbackend.dto.User;
 import com.been.beenbackend.dto.follow;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserMapper {
     List<User> list();
@@ -26,17 +29,17 @@ public interface UserMapper {
 
     void acceptFollow(int followedId, int followerId);
 
-    List<User> findUserByEmail(String email);
+    List<User> findUserByEmail(Map<String,Object> map);
 
-    List<User> findUserByNickname(String nickname);
+    List<User> findUserByNickname(Map<String,Object> map);
 
     void updatePic(User user);
 
-    List<User> showFollowing(int id);
+    List<User> showFollowing(int id, int start);
 
-    List<User> showFollower(int id);
+    List<User> showFollower(int id, int start);
 
-    List<follow> beforeFollowList(int id);
+    List<follow> beforeFollowList(int id, int start);
 
     int showFollowerCnt(int followerId);
 
@@ -45,5 +48,9 @@ public interface UserMapper {
     List<String> getPreferedArea(int userId);
 
     List<String> getPreferedStyle(int userId);
+
+    void makePreferredArea(PreferredArea preferredArea);
+
+    void makePreferredStyle(PreferredStyle preferredStyle);
 }
 

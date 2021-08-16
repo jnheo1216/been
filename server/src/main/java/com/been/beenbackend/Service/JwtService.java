@@ -28,7 +28,7 @@ public class JwtService {
     public String create(final User user) {
         log.trace("time: {}", expireMin);
         final JwtBuilder builder = Jwts.builder();
-        // JWT Token = Header + Payload + Signagure
+        // JWT Token = Header + Payload + Signature
         // Header 설정
         builder.setHeaderParam("typ", "JWT");// 토큰의 타입으로 고정 값
 

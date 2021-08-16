@@ -5,11 +5,12 @@ import com.been.beenbackend.dto.Post;
 import com.been.beenbackend.dto.PostPic;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PostService {
     List<Post> list();
 
-    List<Post> listByUser(int userId);
+    List<Post> listByUser(int userId, int page);
 
     int register(Post post);
 
@@ -25,7 +26,7 @@ public interface PostService {
 
     void removeLke(int postId, int userId);
 
-    List<Post> likePost(int userId);
+    List<Post> likePost(int userId, int page);
 
     int registerPic(PostPic postPic);
 
@@ -37,9 +38,9 @@ public interface PostService {
 
     Like getLikey(int postId, int userId);
 
-    List<Post> searchByTitle(String title);
+    List<Post> searchByTitle(Map<String,Object> map);
 
-    List<Post> showPreferedAreaPost(List<String> areas);
+    List<Post> showPreferedAreaPost(List<String> areas, int page);
 
-    List<Post> showPreferedStylePost(List<String> styles);
+    List<Post> showPreferedStylePost(List<String> styles, int page);
 }

@@ -49,9 +49,9 @@ public class PostController {
     }
 
     @ApiOperation(value="post 유저아이디로 받아오기(read)")
-    @GetMapping(value="/post/userId/{userid}")
-    public ResponseEntity<Map<String, Object>> listByUser(@PathVariable int userid) throws Exception {
-        List<Post> posts = postService.listByUser(userid);
+    @GetMapping(value="/post/userId/{userid}/{page}")
+    public ResponseEntity<Map<String, Object>> listByUser(@PathVariable int userid, @PathVariable int page) throws Exception {
+        List<Post> posts = postService.listByUser(userid,page);
         Map<String, Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
@@ -189,40 +189,45 @@ public class PostController {
     }
 
     @ApiOperation(value="좋아요를 누른 post 리스트 받아오기(read)")
-    @GetMapping(value="/post/like/{userId}")
-    public ResponseEntity<Map<String, Object>> showLikePost(@PathVariable int userId) throws Exception {
-        List<Post> posts = postService.likePost(userId);
+    @GetMapping(value="/post/getLikePost/{userId}/{page}")
+    public ResponseEntity<Map<String, Object>> showLikePost(@PathVariable int userId, @PathVariable int page) throws Exception {
+        List<Post> posts = postService.likePost(userId, page);
         Map<String, Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="post 제목으로 검색")
-    @GetMapping(value = "/post/searchByTitle/{title}")
-    public ResponseEntity<Map<String,Object>> searchByTitle(@PathVariable String title) throws Exception {
-        List<Post> posts = postService.searchByTitle(title);
+    @GetMapping(value = "/post/searchByTitle/{title}/{page}")
+    public ResponseEntity<Map<String,Object>> searchByTitle(@PathVariable String title, @PathVariable int page) throws Exception {
+        title = "%"+title+"%";
+        int start = 18 * (page-1);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("title",title);
+        map.put("start",start);
+        List<Post> posts = postService.searchByTitle(map);
         Map<String,Object> result = new HashMap<>();
         result.put("posts",posts);
         return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="post 선호지역으로 가져오기")
-    @GetMapping(value = "/post/preferedArea/{userId}")
-    public ResponseEntity<Map<String,Object>> showPreferedAreaPost(@PathVariable int userId) throws Exception {
+    @GetMapping(value = "/post/preferedArea/{userId}/{page}")
+    public ResponseEntity<Map<String,Object>> showPreferedAreaPost(@PathVariable int userId, @PathVariable int page) throws Exception {
         List<String> areas = userService.getPreferedArea(userId);
 
-        List<Post> posts = postService.showPreferedAreaPost(areas);
+        List<Post> posts = postService.showPreferedAreaPost(areas, page);
         Map<String,Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
     }
 
     @ApiOperation(value="post 선호스타일로 가져오기")
-    @GetMapping(value = "/post/preferedStyle/{userId}")
-    public ResponseEntity<Map<String,Object>> showPreferedStylePost(@PathVariable int userId) throws Exception {
+    @GetMapping(value = "/post/preferedStyle/{userId}/{page}")
+    public ResponseEntity<Map<String,Object>> showPreferedStylePost(@PathVariable int userId, @PathVariable int page) throws Exception {
         List<String> styles = userService.getPreferedStyle(userId);
 
-        List<Post> posts = postService.showPreferedStylePost(styles);
+        List<Post> posts = postService.showPreferedStylePost(styles, page);
         Map<String,Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
