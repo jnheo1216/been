@@ -12,6 +12,7 @@
 		select *
 		from post
 		where userId = #{userId}
+		ORDER BY createdAt DESC
 		limit 18
 		offset #{start};
 	</select>
@@ -47,6 +48,7 @@
 		select post.*
 		from post inner join follow on post.userId = follow.followedId
 		where follow.followerId = #{id} and follow.accepted = 1
+		ORDER BY post.createdAt DESC
 		limit 18
 		offset #{start};
 	</select>
@@ -75,6 +77,7 @@
 		select post.*
 		from post inner join likey on post.postId = likey.postId
 		where likey.userId = #{userId}
+		ORDER BY post.createdAt DESC
 		limit 18
 		offset #{start};
 	</select>
@@ -93,7 +96,8 @@
 	<!--사진 가져오기-->
 	<select id="getPostPic" parameterType="Integer" resultType="PostPic">
 		select * from post_pic
-		where postId = #{postId};
+		where postId = #{postId}
+		ORDER BY num asc ;
 	</select>
 
 	<!--사진 제거-->
@@ -103,18 +107,21 @@
 	</delete>
 
 	<select id ="searchByTitle" parameterType="Map" resultType="Post">
-		select * from post where title like #{title}
+		select * from post where title like #{title} ORDER BY createdAt DESC
 		limit 18
 		offset #{start};
 	</select>
 	
 	<select id="showPreferedAreaPost" parameterType="Map" resultType="Post">
-		select * from post where area regexp #{result} limit 18
+		select * from post where area regexp #{result}
+		ORDER BY createdAt DESC
+		limit 18
 		offset #{start};
 	</select>
 
 	<select id="showPreferedStylePost" parameterType="Map" resultType="Post">
 		select * from post where style regexp #{result}
+		ORDER BY createdAt DESC
 		limit 18
 		offset #{start};
 	</select>

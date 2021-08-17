@@ -140,11 +140,25 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(result,HttpStatus.OK);
     }
 
+    @ApiOperation(value="user 관심지역 삭제(delete)")
+    @PostMapping(value="/user/deletePreferredArea")
+    public ResponseEntity<Map<String, Object>> deletePreferredArea(@RequestBody PreferredArea preferredArea) throws Exception {
+        userService.deletePreferedArea(preferredArea);
+        return getPreferredArea(preferredArea.getUserId());
+    }
+
+    @ApiOperation(value="user 관심스타일 삭제(delete)")
+    @PostMapping(value="/user/deletePreferredStyle")
+    public ResponseEntity<Map<String, Object>> deletePreferredStyle(@RequestBody PreferredStyle preferredStyle) throws Exception {
+        userService.deletePreferedStyle(preferredStyle);
+        return getPreferredStyle(preferredStyle.getUserId());
+    }
+
     @ApiOperation(value="user 프로필 사진 넣기(update)")
     @PutMapping(value= "/user/profilePic/{email}")
     public ResponseEntity<Map<String, Object>> modify(@RequestPart MultipartFile file,@PathVariable String email) throws Exception {
         //회원 프로필 이미지 넣기
-        String fileName = "userProfile_"+email;
+        String fileName = "userProfile_"+email+".jpg";
         String imgPath = s3Service.uploadObject(file,fileName);
         User user = new User();
         user.setProfilePicSrc(imgPath);
@@ -213,9 +227,11 @@ public class UserController {
             System.out.println("포스트 찾는중...");
         }
         for( Post post : posts) {
-            List<PostPic> postPics = postService.getPostPic(post.getPostId());
-            for(int i = 0; i < postPics.size(); i++) {
-//                s3Service.deleteObject(postPics.get(i).getName());
+            if(post.getPostPicName() != "꿀벌썸네일.png") {
+                List<PostPic> postPics = postService.getPostPic(post.getPostId());
+                for(int i = 0; i < postPics.size(); i++) {
+                s3Service.deleteObject(postPics.get(i).getName());
+                }
             }
         }
 

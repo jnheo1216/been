@@ -37,7 +37,7 @@
 	
 	<update id="modify" parameterType="user">
 		update user
-		set password = #{password}, intro = #{intro}, nickname = #{nickname}, tier = #{tier}, followingCnt = #{followingCnt}, followerCnt = #{followerCnt},
+		set password = #{password}, intro = #{intro}, nickname = #{nickname}, tier = #{tier},
 		profilePicSrc = #{profilePicSrc}, profilePicName = #{profilePicName}, emailConfirmation = #{emailConfirmation}, status = #{status}
 		where id = #{id};
 	</update>
@@ -71,6 +71,7 @@
 		SELECT user.*
 		FROM user INNER JOIN follow ON follow.followerId=user.id
 		WHERE follow.followedId = #{id} AND follow.accepted=1
+		ORDER BY user.createdAt DESC
 		limit 20
 		offset #{start}
 	</select>
@@ -80,6 +81,7 @@
 		select user.*
 		from user inner join follow on follow.followedId = user.id
 		where follow.followerId = #{id} and follow.accepted=1
+		ORDER BY user.createdAt DESC
 		limit 20
 		offset #{start}
 	</select>
@@ -88,6 +90,7 @@
 	<select id="findUserByEmail" parameterType="Map" resultType="user">
 		select * from user
 		where email like #{email}
+		ORDER BY createdAt DESC
 		limit 20
 		offset #{start};
 	</select>
@@ -96,6 +99,7 @@
 	<select id="findUserByNickname" parameterType="Map" resultType="user">
 		select * from user
 		where nickname like #{nickname}
+		ORDER BY createdAt DESC
 		limit 20
 		offset #{start};
 	</select>
@@ -143,4 +147,14 @@
 		insert into preferred_style (userId, Style)
 		values (#{userId},#{Style});
 	</insert>
+
+	<delete id="deletePreferredArea" parameterType="PreferredArea">
+		delete from preferred_area
+		where userId = #{userId} and area = #{area} and longitude = #{longitude} and latitude = #{latitude};
+	</delete>
+
+	<delete id="deletePreferredStyle" parameterType="PreferredStyle">
+		delete from preferred_style
+		where userId = #{userId} and style = #{style};
+	</delete>
 </mapper>
