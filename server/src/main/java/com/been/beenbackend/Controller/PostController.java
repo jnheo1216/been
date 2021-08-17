@@ -122,6 +122,8 @@ public class PostController {
     @ApiOperation(value="post 수정하기(update) *수정하기도 호출 후 post 사진 넣기(update)로 사진을 다시 넣어줘야합니다")
     @PutMapping(value= "/post")
     public ResponseEntity<Map<String, Object>> modify(@RequestBody Post post) throws Exception {
+        post.setPostPicSrc("https://been.s3.ap-northeast-2.amazonaws.com/%EA%BF%80%EB%B2%8C%EC%8D%B8%EB%84%A4%EC%9D%BC.png");
+        post.setPostPicName("꿀벌썸네일.png");
         postService.modify(post);
         List<PostPic> postPics = postService.getPostPic(post.getPostId());
         for(int i = 0; i < postPics.size(); i++) {
