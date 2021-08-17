@@ -124,7 +124,7 @@ export default {
     //   this.$router.push({ name: 'Introduction' })}
     this.user = this.$store.state.user
     console.log(this.user)
-    axios.get('http://localhost:8081/post/preferedStyle/' + this.user.id)
+    axios.get('http://localhost:8081/post/preferedStyle/' + this.user.id + '/1')
       .then((res) => {
         this.recommended = res.data.posts
         if (this.recommended.length >= 4) {
