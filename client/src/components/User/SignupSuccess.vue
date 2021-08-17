@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <img src="@/assets/image-logo.png" alt="image-logo">
+    <img src="@/assets/image-logo-resize.png" alt="image-logo">
     <div class="char-box">
       <h2>회원가입 성공!</h2>
       <div class="char-box">
@@ -13,9 +13,38 @@
 </template>
 
 <script>
+import {join} from '@/api/user.js';
 
 export default {
   name: 'SignupSuccess',
+  data() {
+    return {
+      user:{
+        nickname: "",
+        email: "",
+        password: "",
+        intro: "",
+        name: "",
+      },
+    }
+  },
+  created() {
+    this.user.nickname = this.$route.params.nickname
+    this.user.name = this.$route.params.nickname
+    this.user.email = this.$route.params.email
+    this.user.password = this.$route.params.password
+    this.user.intro = this.$route.params.intro
+    join(
+      this.user,
+      (res)=>{
+        // console.log('되는지좀알려줘라')
+        console.log(res.data)
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
+  }
 }
 </script>
 

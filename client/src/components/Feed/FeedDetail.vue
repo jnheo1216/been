@@ -1,13 +1,5 @@
 <template>
   <div class="background">
-    <!-- <div>
-      <div class="hexagon hexa-right"></div>
-      <div class="hexagon hexa-left"></div>
-    </div>
-    <div>
-      {{ postId }}
-      {{ post }}
-    </div> -->
     
     <div class="to-profile" @click="toProfile">
       <el-row :gutter="10">
@@ -290,40 +282,6 @@ export default {
     text-align: center;
     background-color: #FFFAF4;
     margin:0 auto;
-  }
-  .hexagon {
-    width: 100px;
-    height: 55px;
-    background: pink;
-    position: relative;
-  }
-  .hexagon:before {
-    content: "";
-    position: absolute;
-    top: -25px;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-bottom: 25px solid pink;
-  }
-  .hexagon:after {
-    content: "";
-    position: absolute;
-    bottom: -25px;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-top: 25px solid pink;
-  }
-  .hexa-right {
-    float: right;
-  }
-  .hexa-left {
-    float: left;
   }
   .post-profile-image {
     margin: 10px;
