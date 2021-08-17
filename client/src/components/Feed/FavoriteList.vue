@@ -8,50 +8,13 @@
 
     <div class="curation">
       
-      <!-- 추천 게시물이 3건 이하인 경우 -->
-      <div v-if="favorite.length >= 3">
-        <h2 class="text">{{ favorite.length }}건의 추천 게시물이 있습니다.</h2>
-        <h3 class="text">{{ this.user.nickname }}님이 좋아하는 여행 스타일과 여행지역을 추가하시면 더 많은 추천 게시물을 보실 수 있습니다.</h3>
+      <h2 class="text">{{ favorite.length }}건의 추천 게시물이 있습니다.</h2>
+      <h3 class="text">{{ this.user.nickname }}님이 좋아하는 여행 스타일과 여행지역을 추가하시면 더 많은 추천 게시물을 보실 수 있습니다.</h3>
 
-        <div v-for="(post, index) in this.favorite"
-          :key="post.postId" @click="toDetail(post.postId)" class="my-4">
-          <h1>{{ post.postId }}</h1>
-          <!-- 첫번째 육각형 -->
-          <div v-if="index % 2 == 0" class="row justify-content-start mx-0">
-            <div class="wrap">
-              <div class="hex" @click="toDetail">
-                <div class="hex-inner">
-                  <div v-if="post.postPicSrc" class="content">
-                    <img :src="post.postPicSrc" class="hex-image">
-                  </div>
-                  <div v-else class="content" style="background: url('https://picsum.photos/200/300?grayscale)')">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 육각형 끝 -->
-          <div v-if="index % 2 == 1" class="row justify-contend-end mx-0">
-          <div class="wrap flex flex-row-reverse mx-0">
-              <div class="hex" @click="toDetail">
-                <div class="hex-inner">
-                  <div v-if="post.postPicSrc" class="content">
-                    <img :src="post.postPicSrc" class="hex-image">
-                  </div>
-                  <div v-else class="content" style="background: url('https://picsum.photos/200/301?grayscale)')">
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        </div>
-        <el-button plain @click="toSearch" class="my-4">더 많은 게시물 검색하기</el-button>
-      </div>
 
-      <!-- 추천 게시물이 3건 이상인 경우 -->
-      <div v-else>
-        <div v-for="(post) in this.favorite"
-            :key="post.postId" class="my-4">
+      <div v-if="this.favorite.length < 20">
+        <div v-for="(post, $index) in this.favorite"
+          :key="$index" class="my-4">
           
           <div class="grid grid-cols-12">
               <div class="wrap block">
@@ -64,7 +27,7 @@
                   </div>
                 </div>
                 
-                <div class="hex" @click="toDetail">
+                <div class="hex" @click="this.$router.push(`/feed/${post.postId}`)">
                   <div class="hex-inner">
                     <div v-if="post.postPicSrc" class="content">
                       <img :src="post.postPicSrc" class="hex-image">
@@ -76,15 +39,56 @@
                 <div class="hex" @click="toDetail">
                   <div class="hex-inner">
                     <div class="content" style="background: #DDD9D9">
-                      <h2>{{ post.region }}</h2>
+                      <h2>{{ post.area }}</h2>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div> 
         </div>
       </div>
-      
+      <!-- 추천 게시물이 20건 이상인 경우 -->
+      <div v-else>
+      <template>
+      <div v-for="(post, $index) in this.favorite"
+          :key="$index" class="my-4">
+        
+        <div class="grid grid-cols-12">
+            <div class="wrap block">
+
+              <div class="hex" @click="toDetail">
+                <div class="hex-inner">
+                  <div class="content" style="background: #F4DBDB">
+                    <h2>{{ post.title }}</h2>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="hex" @click="this.$router.push(`/feed/${post.postId}`)">
+                <div class="hex-inner">
+                  <div v-if="post.postPicSrc" class="content">
+                    <img :src="post.postPicSrc" class="hex-image">
+                  </div>
+                  <div v-else class="content" style="background: url('https://picsum.photos/200/300?grayscale)')"></div>
+                </div>
+              </div>
+
+              <div class="hex" @click="toDetail">
+                <div class="hex-inner">
+                  <div class="content" style="background: #DDD9D9">
+                    <h2>{{ post.area }}</h2>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div> 
+      </div>
+      </template>
+
+      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+      </div>
 
       <!-- 추천 게시물이 3건 이상인 경우 -->
       <!-- <div v-else>
@@ -179,39 +183,40 @@
 
 <script>
 import axios from 'axios'
+import {API_BASE_URL} from "@/config/index.js"
+import InfiniteLoading from 'vue-infinite-loading'
+
 export default {
   name: 'FavoriteList',
   data() {
     return {
       user: {},
-      favorite: []
+      favorite: [],
+      page: 1,
     }
+  },
+  components: {
+    InfiniteLoading,
   },
   created() {
     this.user = this.$store.state.user
     // if (!this.isLogin) {
     //   this.$router.push({ name: "Introduction" })
     // }
-    axios.get('http://localhost:8081/post/preferedStyle/' + this.user.id)
+    axios.get(API_BASE_URL + 'post/preferedStyle/' + this.user.id + `/${this.page}`)
       .then((res) => {
-        this.favorite.push(res.data.posts)
+        // this.favorite.push(res.data.posts)
+        Array.prototype.push.apply(this.favorite, res.data.posts)
       })
       .catch((err) => {
         console.log(err)
       }),
-    axios.get('http://localhost:8081/post/preferedArea/' + this.user.id)
+    axios.get(API_BASE_URL + 'post/preferedArea/' + this.user.id + `/${this.page}`)
       .then((res) => {
-        this.favorite.push(res.data.posts)
+        // this.favorite.push(res.data.posts)
+        Array.prototype.push.apply(this.favorite, res.data.posts)
         console.log(this.favorite)
-        if (this.favorite.length >= 3 && !this.favorite.length % 3 == 0) {
-          const len = this.favorite.length
-          if (len % 3 == 1) {
-            this.favorite = this.favorite.slice(0, len-1)
-          }
-          if (len % 3 == 2) {
-            this.favorite = this.favorite.slice(0, len-2)
-          }
-        }  
+        this.page += 1
       })
       .catch((err) => {
         console.log(err)
@@ -226,6 +231,20 @@ export default {
         name: "FeedDetail", 
         params: { feedNumber: postId }
         })
+    },
+    infiniteHandler($state) {
+      axios.get(API_BASE_URL + 'post/preferedArea/' + this.user.id + `/${this.page}`)
+        .then((res) => {
+          if (res.data.posts.length) {
+            Array.prototype.push.apply(this.favorite, res.data.posts)
+            console.log(this.favorite)
+            this.page += 1
+            $state.loaded();
+          } else {$state.complete()}
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     }
   }
 }
@@ -235,7 +254,6 @@ export default {
   .favoriteList {
     position: relative;
     width: 375px;
-    height: 812px;
     background-color: #fffaf4;
     margin: 0 auto;
     overflow-x: hidden;
