@@ -30,11 +30,11 @@
       <!-- 일치하는 검색 결과가 있을 때 -->
       <div class="found">
          <div v-for="(post, index) in this.results"
-          :key="post.postId" @click="toDetail(post.postId)">
+          :key="post.postId">
 
           <div v-if="index % 2 == 0" class="row justify-content-start mx-0">
             <div class="wrap">
-              <div class="hex" @click="toDetail">
+              <div class="hex" @click="this.$router.push(`/feed/${post.postId}`)">
                 <div class="hex-inner">
                   <div v-if="post.postPicSrc" class="content">
                     <img :src="post.postPicSrc" class="hex-image">
@@ -49,7 +49,7 @@
         <!-- 육각형 한개 끝 -->
           <div v-if="index % 2 == 1" class="row justify-contend-end mx-0">
           <div class="wrap flex flex-row-reverse mx-0">
-              <div class="hex" @click="toDetail">
+              <div class="hex" @click="this.$router.push(`/feed/${post.postId}`)">
                 <div class="hex-inner">
                   <div v-if="post.postPicSrc" class="content">
                     <img :src="post.postPicSrc" class="hex-image">
@@ -92,7 +92,7 @@ export default {
       searchPostTitle(
         postTitle,
         (res) => {
-          this.results.push(res.data.posts)
+          this.results = res.data.posts
           this.isSubmit = true
           console.log(this.results)
         },

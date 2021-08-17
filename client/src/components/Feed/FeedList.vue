@@ -106,6 +106,8 @@
 <script>
 import axios from 'axios'
 // import {ref} from 'vue'
+import {getFeedFollowPost} from '@/api/feed.js'
+import {API_BASE_URL} from "@/config/index.js"
 
 export default {
   name: 'FeedList',
@@ -124,7 +126,7 @@ export default {
     //   this.$router.push({ name: 'Introduction' })}
     this.user = this.$store.state.user
     console.log(this.user)
-    axios.get('http://localhost:8081/post/preferedStyle/' + this.user.id)
+    axios.get(API_BASE_URL + 'post/preferedStyle/' + this.user.id + '/1')
       .then((res) => {
         this.recommended = res.data.posts
         if (this.recommended.length >= 4) {
@@ -132,14 +134,18 @@ export default {
         }
         console.log(this.recommended)
       })
-
-    axios.get('http://localhost:8081/post/followPost/' + this.user.id)
-      .then((res) => {
-        this.feed = res.data.posts
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    getFeedFollowPost(
+      this.user.id,
+      (res2) => {this.feed = res2.data.posts},
+      (err2) => {console.log(err2)}
+    )
+    // axios.get('http://localhost:8081/post/followPost/' + this.user.id)
+    //   .then((res) => {
+    //     this.feed = res.data.posts
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
 
 
     // console.log(this.$store.state.isLogin)

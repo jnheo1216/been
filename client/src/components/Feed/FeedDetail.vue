@@ -85,17 +85,17 @@
       폼폼4?
     </div>
 
-    <div class="like-box-1">
-      <div v-if="isLike" @click="likeDown">좋아요취소</div>
-      <div v-else @click="likeUp">좋아요</div>
+    <div class="like-box-1" style="font-size: large; color: red;">
+      <div v-if="isLike" @click="likeDown"><i class="fas fa-heart"></i></div>
+      <div v-else @click="likeUp"><i class="far fa-heart"></i></div>
     </div>
 
     <div class="comment-form">
       <div v-if="comments.length < 1">댓글이 아직 없습니다.</div>
       <div v-else>
-        <div v-for="(comment, index) in comments" :key="comment.commentId">
-          <div>{{ index }}</div>
-          <div>{{ comment }}</div>
+        <div v-for="(comment) in comments" :key="comment.commentId">
+          <!-- <div>{{ index }}</div> -->
+          <div>{{ comment.comment }}</div>
         </div>
       </div>
       <div class="comment-input">
@@ -116,7 +116,7 @@
 
 <script>
 import axios from 'axios'
-import {getFeedDetail, postLike, postLikeDelete} from '@/api/feed.js'
+import {getFeedDetail, postLike, postLikeDelete, postIsLike} from '@/api/feed.js'
 import {writeComment} from '@/api/comment.js'
 import {API_BASE_URL} from "@/config/index.js";
 
@@ -132,9 +132,11 @@ export default {
       newComment: '',
       postUserNickname: '',
       postProfilePicSrc: '',
+      user: '',
     }
   },
   created() {
+    this.user = this.$store.state.user
     console.log('loading')
     const postId = this.$route.params.feedNumber
     getFeedDetail(
@@ -160,7 +162,20 @@ export default {
           })
           .catch(err3 => {
             console.error(err3)
-          })
+          })        
+        const like = {
+          postId: this.postId,
+          userId: this.user.id,
+        }
+        postIsLike(
+          like,
+          (res4) => {
+            if (res4.data.like) {
+              this.isLike = true
+            } else {this.isLike = false}
+          },
+          (err4) => {console.error(err4)}
+        )
       },
       (err) => {
         console.error(err)
@@ -199,7 +214,7 @@ export default {
       this.isLike = true
       const like = {
         postId: this.postId,
-        userId: localStorage.getItem('userId'),
+        userId: this.user.id
       }
       console.log(like)
       postLike(
@@ -223,7 +238,7 @@ export default {
       this.isLike = false
       const like = {
         postId: this.postId,
-        userId: localStorage.getItem('userId'),
+        userId: this.user.id,
       }
       console.log(like)
       postLikeDelete(
@@ -246,7 +261,7 @@ export default {
     commentWrite() {
       const new_comment = {
         postId: this.postId,
-        userId: localStorage.getItem('userId'),
+        userId: this.user.id,
         comment: this.newComment,
       }
       writeComment(

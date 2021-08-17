@@ -121,7 +121,8 @@ export default {
         this.User = this.$store.state.user
     },
     getUserPost(){
-        const id = this.$store.state.user.id
+        // const id = localStorage.getItem('userId')
+        // 여기서 동적 라우팅으로 id만 설정해주면 됨
         getFeedUserId(
             id,
             (res) => {
@@ -146,7 +147,7 @@ export default {
         // })
     },
     getUserFollower() {
-        const id = this.$store.state.user.id
+        const id = localStorage.getItem('userId')
         getFollower(
             id,
             (res) => {
@@ -170,7 +171,7 @@ export default {
         // })
     },
     getUserFollowing() {
-        const id = this.$store.state.user.id
+        const id = localStorage.getItem('userId')
         getFollowing(
             id,
             (res) => {
