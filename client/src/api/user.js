@@ -35,4 +35,17 @@ function getFollowWait(userId, success, fail){
     .then(success)
     .catch(fail);
 }
-export {login, join, getFollower, getFollowing, getFollowWait};
+function getArea(userInfo, success, fail){
+    instance
+    .post(`user/preferredArea`, JSON.stringify(userInfo))
+    .then(success)
+    .catch(fail);
+}
+function getStyle(userInfo, success, fail){
+    instance
+    .post(`user/preferredStyle`, JSON.stringify(userInfo))
+    .then(success)
+    .catch(fail);
+}
+
+export {login, join, getFollower, getFollowing, getFollowWait, getArea, getStyle};

@@ -134,7 +134,7 @@ export default {
           localStorage.setItem('userId', res.data.data['id'])
           this.$store.commit("setUserInfo",res.data.data)
           console.log(this.$store.state.user)
-          console.log(this.$store.state.isLogin)
+          console.log(this.$store.state.user['id'])
           this.$router.push("/feed");
         },
         (err) => {
