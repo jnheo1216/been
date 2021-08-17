@@ -55,4 +55,8 @@ public interface UserService {
     void makePreferredStyle(PreferredStyle preferredStyle);
 
     List<PreferredArea> getPreferedAreaAll(int userId);
+
+    void deletePreferedArea(PreferredArea preferredArea);
+
+    void deletePreferedStyle(PreferredStyle preferredStyle);
 }

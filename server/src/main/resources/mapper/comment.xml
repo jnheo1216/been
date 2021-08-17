@@ -17,7 +17,8 @@
 	<select id="listByPostId" parameterType="int" resultType="Comment">
 		select *
 		from comment
-		where postId = #{postId};
+		where postId = #{postId}
+		ORDER BY createdAt DESC;
 	</select>
 
 	
@@ -54,7 +55,7 @@
 
 	<!--좋아요 가져오기-->
 	<select id="getLikey" parameterType="int" resultType="LikeComment">
-		select comment.commentId, likey_comment.userId from likey_comment inner join comment on comment.commentId = likey_comment.commentId
+		select likey_comment.*  from likey_comment inner join comment on comment.commentId = likey_comment.commentId
 		where comment.postId = #{postId} and likey_comment.userId = #{userId};
 	</select>
 </mapper>
