@@ -24,8 +24,8 @@
 
 	
 	<insert id="register" parameterType="Post">
-		insert into post (userId, title, content, area, style)
-		values (#{userId}, #{title}, #{content}, #{area}, #{style});
+		insert into post (userId, title, content, area, style, formNumber)
+		values (#{userId}, #{title}, #{content}, #{area}, #{style}, #{formNumber});
 		<selectKey resultType="int" keyProperty="postId" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>

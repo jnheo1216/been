@@ -24,8 +24,8 @@
 
 	
 	<insert id="register" parameterType="Post">
-		insert into post (userId, title, content)
-		values (#{userId}, #{title}, #{content}, #{area}, #{style});
+		insert into post (userId, title, content, area, style, formNumber)
+		values (#{userId}, #{title}, #{content}, #{area}, #{style}, #{formNumber});
 		<selectKey resultType="int" keyProperty="postId" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -33,7 +33,7 @@
 	
 	<update id="modify" parameterType="Post">
 		update post
-		set title = #{title}, content = #{content}, area = #{area}, style = #{style}, updatedAt = current_timestamp(),likeCnt = #{likeCnt}, postPicSrc = #{postPicSrc}, postPicName=#{postPicName}
+		set title = #{title}, content = #{content}, area = #{area}, style = #{style}, updatedAt = current_timestamp(), postPicSrc = #{postPicSrc}, postPicName=#{postPicName}
 		where postId = #{postId};
 	</update>
 
