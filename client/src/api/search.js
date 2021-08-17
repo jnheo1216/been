@@ -16,7 +16,7 @@ function searchUserEmail(userEmail, success, fail){
 }
 function searchPostTitle(postTitle, success, fail){
     instance
-    .get(`post/searchByTitle/${postTitle}`)
+    .get(`post/searchByTitle/${postTitle}/1`)
     .then(success)
     .catch(fail);
 }
