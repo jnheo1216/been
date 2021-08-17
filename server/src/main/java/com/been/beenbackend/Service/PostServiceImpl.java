@@ -8,7 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -22,8 +24,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> listByUser(int userId) {
-        return sqlSession.getMapper(PostMapper.class).listByUser(userId);
+    public List<Post> listByUser(int userId, int page) {
+        int start = 18*(page-1);
+        return sqlSession.getMapper(PostMapper.class).listByUser(userId,start);
     }
 
     @Override
@@ -68,8 +71,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> likePost(int userId) {
-        return sqlSession.getMapper(PostMapper.class).likePost(userId);
+    public List<Post> likePost(int userId,int page) {
+        int start = (page-1) * 18;
+        return sqlSession.getMapper(PostMapper.class).likePost(userId, start);
     }
 
     @Override
@@ -98,13 +102,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> searchByTitle(String title) {
-        title = "%"+title+"%";
-        return sqlSession.getMapper(PostMapper.class).searchByTitle(title);
+    public List<Post> searchByTitle(Map<String,Object> map) {
+        return sqlSession.getMapper(PostMapper.class).searchByTitle(map);
     }
 
     @Override
-    public List<Post> showPreferedAreaPost(List<String> areas) {
+    public List<Post> showPreferedAreaPost(List<String> areas, int page) {
         StringBuilder areaList = new StringBuilder();
         for(String area:areas) {
 //            area = "%"+area+"%";
@@ -113,11 +116,15 @@ public class PostServiceImpl implements PostService {
         areaList.deleteCharAt(areaList.lastIndexOf("|"));
         String result = areaList.toString();
         System.out.println(result);
-        return sqlSession.getMapper(PostMapper.class).showPreferedAreaPost(result);
+        int start = (page-1) * 18;
+        Map<String, Object> map = new HashMap<>();
+        map.put("result",result);
+        map.put("start",start);
+        return sqlSession.getMapper(PostMapper.class).showPreferedAreaPost(map);
     }
 
     @Override
-    public List<Post> showPreferedStylePost(List<String> styles) {
+    public List<Post> showPreferedStylePost(List<String> styles, int page) {
         StringBuilder styleList = new StringBuilder();
         for(String style:styles) {
 //            area = "%"+area+"%";
@@ -127,6 +134,10 @@ public class PostServiceImpl implements PostService {
         styleList.deleteCharAt(styleList.lastIndexOf("|"));
         String result = styleList.toString();
         System.out.println(result);
-        return sqlSession.getMapper(PostMapper.class).showPreferedStylePost(result);
+        int start = (page-1) * 18;
+        Map<String, Object> map = new HashMap<>();
+        map.put("result",result);
+        map.put("start",start);
+        return sqlSession.getMapper(PostMapper.class).showPreferedStylePost(map);
     }
 }

@@ -61,22 +61,6 @@ public class User {
         this.tier = tier;
     }
 
-    public int getFollowerCnt() {
-        return followerCnt;
-    }
-
-    public void setFollowerCnt(int followerCnt) {
-        this.followerCnt = followerCnt;
-    }
-
-    public int getFollowingCnt() {
-        return followingCnt;
-    }
-
-    public void setFollowingCnt(int followingCnt) {
-        this.followingCnt = followingCnt;
-    }
-
     public String getCreatedAt() {
         return createdAt;
     }
@@ -89,8 +73,6 @@ public class User {
     private String nickname;
     private String name;
     private int tier;
-    private int followerCnt;
-    private int followingCnt;
     private String createdAt;
     private String profilePicSrc;
     private String profilePicName;

@@ -8,10 +8,12 @@
 		from post;
 	</select>
 
-	<select id="listByUser" resultType="post">
+	<select id="listByUser" parameterType = "int" resultType="post">
 		select *
 		from post
-		where userId = #{userId};
+		where userId = #{userId}
+		limit 18
+		offset #{start};
 	</select>
 	
 	<select id="listOne" parameterType="int" resultType="post">
@@ -44,13 +46,16 @@
 	<select id="showFollowPost" parameterType="int" resultType="post">
 		select post.*
 		from post inner join follow on post.userId = follow.followedId
-		where follow.followerId = #{id} and follow.accepted = 1;
+		where follow.followerId = #{id} and follow.accepted = 1
+		limit 18
+		offset #{start};
 	</select>
 
 	<!--좋아요 추가-->
 	<insert id="makeLike" parameterType="int">
 		insert into likey (postId,userId)
 		values (#{postId}, #{userId})
+
 	</insert>
 
 	<!--좋아요 제거-->
@@ -69,7 +74,9 @@
 	<select id="likePost" parameterType="int" resultType="post">
 		select post.*
 		from post inner join likey on post.postId = likey.postId
-		where likey.userId = #{id}
+		where likey.userId = #{userId}
+		limit 18
+		offset #{start};
 	</select>
 
 	<!--게시물 좋아요 개수-->
@@ -95,15 +102,20 @@
 		where postId = #{postId};
 	</delete>
 
-	<select id ="searchByTitle" parameterType="String" resultType="Post">
-		select * from post where title like #{title};
+	<select id ="searchByTitle" parameterType="Map" resultType="Post">
+		select * from post where title like #{title}
+		limit 18
+		offset #{start};
 	</select>
 	
-	<select id="showPreferedAreaPost" parameterType="String" resultType="Post">
-		select * from post where area regexp #{areas}
+	<select id="showPreferedAreaPost" parameterType="Map" resultType="Post">
+		select * from post where area regexp #{result} limit 18
+		offset #{start};
 	</select>
 
-	<select id="showPreferedStylePost" parameterType="String" resultType="Post">
-		select * from post where style regexp #{styles}
+	<select id="showPreferedStylePost" parameterType="Map" resultType="Post">
+		select * from post where style regexp #{result}
+		limit 18
+		offset #{start};
 	</select>
 </mapper>

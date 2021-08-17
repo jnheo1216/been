@@ -68,29 +68,36 @@
 
 	<!-- 나를 팔로우한 사람들 보기-->
 	<select id="showFollower" parameterType="Integer" resultType="user">
-		SELECT id, password, email, intro, nickname, name, tier, followerCnt, followingCnt, createdAt, profilePicSrc, profilePicName, emailConfirmation ,status
+		SELECT user.*
 		FROM user INNER JOIN follow ON follow.followerId=user.id
 		WHERE follow.followedId = #{id} AND follow.accepted=1
-
+		limit 20
+		offset #{start}
 	</select>
 
 	<!-- 내가 팔로우중인 사람들 보기-->
 	<select id="showFollowing" parameterType="Integer" resultType="user">
-		select id, password, email, intro, nickname, name, tier, followerCnt, followingCnt, createdAt, profilePicSrc, profilePicName, emailConfirmation, status
+		select user.*
 		from user inner join follow on follow.followedId = user.id
 		where follow.followerId = #{id} and follow.accepted=1
+		limit 20
+		offset #{start}
 	</select>
 
 	<!--이메일로 검색-->
-	<select id="findUserByEmail" parameterType="String" resultType="user">
+	<select id="findUserByEmail" parameterType="Map" resultType="user">
 		select * from user
-		where email like #{email};
+		where email like #{email}
+		limit 20
+		offset #{start};
 	</select>
 
 	<!--닉네임으로 검색-->
-	<select id="findUserByNickname" parameterType="String" resultType="user">
+	<select id="findUserByNickname" parameterType="Map" resultType="user">
 		select * from user
-		where nickname like #{nickname};
+		where nickname like #{nickname}
+		limit 20
+		offset #{start};
 	</select>
 
 	<update id="updatePic" parameterType="user">
@@ -101,7 +108,10 @@
 
 	<select id="beforeFollowList" parameterType="int" resultType="follow">
 		select * from follow
-		where followedId = #{id} and accepted = 0;
+		where followedId = #{id} and accepted = 0
+		limit 20
+		offset #{start}
+		;
 	</select>
 
 	<select id="showFollowerCnt" parameterType="int" resultType="int">
@@ -119,4 +129,14 @@
 	<select id="getPreferedStyle" parameterType="int" resultType="String">
 		select style from preferred_style where userId = #{userId};
 	</select>
+
+	<insert id="makePreferredArea" parameterType="PreferredArea">
+		insert into preferred_area (userId, area)
+		values (#{userId},#{area});
+	</insert>
+
+	<insert id="makePreferredStyle" parameterType="PreferredStyle">
+		insert into preferred_style (userId, Style)
+		values (#{userId},#{Style});
+	</insert>
 </mapper>
