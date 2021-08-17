@@ -1,6 +1,8 @@
 <template>
-  <div class="background">
-    <img src="@/assets/image-logo-resize.png" alt="image-logo">
+  <div class="background">    
+    <div class="logo">
+      <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
+    </div>
     <div class="char-box">
       <h2>회원가입 성공!</h2>
       <div class="char-box">
@@ -13,37 +15,57 @@
 </template>
 
 <script>
-import {join} from '@/api/user.js';
+import {getArea, getStyle} from '@/api/user.js';
+import {getUserInfoEmail} from '@/api/profile.js';
 
 export default {
   name: 'SignupSuccess',
   data() {
     return {
-      user:{
-        nickname: "",
-        email: "",
-        password: "",
-        intro: "",
-        name: "",
-      },
+      preferedStyle: "",
+      preferedArea: "",
+      email: "",
     }
   },
   created() {
-    this.user.nickname = this.$route.params.nickname
-    this.user.name = this.$route.params.nickname
-    this.user.email = this.$route.params.email
-    this.user.password = this.$route.params.password
-    this.user.intro = this.$route.params.intro
-    join(
-      this.user,
-      (res)=>{
-        // console.log('되는지좀알려줘라')
+    this.preferedStyle = this.$route.params.preferedStyle
+    this.preferedArea = this.$route.params.preferedArea
+    this.email = this.$route.params.email
+    // join(
+    //   this.user,
+    //   (res)=>{
+    //     // console.log('되는지좀알려줘라')
+    //     console.log(res.data)
+    //   },
+    //   (err)=>{
+    //     console.error(err);
+    //   }
+    // )
+    getUserInfoEmail(
+      this.email,
+      (res) => {
+        console.log(this.email)
         console.log(res.data)
+        console.log(res.data.users[0].id)
+        const userId = res.data.users[0].id
+        const infoArea = {'area': this.preferedArea, 'userId': userId}
+        const infoStyle = {'style': this.preferedStyle, 'userId': userId}
+        getArea(
+          infoArea,
+          (res2) => {console.log(res2)},
+          (err2) => {console.error(err2)}
+        )
+        getStyle(
+          infoStyle,
+          (res3) => {console.log(res3)},
+          (err3) => {console.error(err3)}
+        )
       },
-      (err)=>{
-        console.error(err);
+      (err) => {
+        console.error(err)
       }
     )
+
   }
 }
 </script>
@@ -59,6 +81,9 @@ export default {
   .char-box {
     text-align: center;
     margin: 10px;
+  }
+  .logo > img {
+    width: 100%;
   }
 
 </style>
