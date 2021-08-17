@@ -8,9 +8,9 @@
       <el-input @keydown="keyDowntoPeopleSearch" placeholder="꿀벌 찾기" v-model="people_input"></el-input>
     </div>
 
-    <div class="type-search">
+    <!-- <div class="type-search">
       <el-input @click="clicktoTypeSearch" placeholder="여행 정보 찾기" suffix-icon="el-icon-arrow-down" v-model="type_input"></el-input>
-    </div>
+    </div> -->
 
     <div class="article-search">
       <el-input @keydown="keyDowntoArticleSearch" placeholder="게시물 찾기" suffix-icon="el-icon-search" v-model="article_input"></el-input>
