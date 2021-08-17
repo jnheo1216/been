@@ -52,5 +52,7 @@ public interface UserMapper {
     void makePreferredArea(PreferredArea preferredArea);
 
     void makePreferredStyle(PreferredStyle preferredStyle);
+
+    List<PreferredArea> getPreferedAreaAll(int userId);
 }
 
