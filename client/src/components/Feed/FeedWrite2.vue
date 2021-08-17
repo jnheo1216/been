@@ -6,16 +6,16 @@
 
     <div class="main-container">
         <div class="room-deal-information-container">
-            <div class="room-deal-information-title">사진 등록</div>
+            <!-- <div class="room-deal-information-title">사진 등록</div> -->
             <div class="room-file-upload-wrapper">
                 <div v-if="!files.length" class="room-file-upload-example-container">
                     <div class="room-file-upload-example">
-                        <div class="room-file-image-example-wrapper">이미지</div>
+                        <!-- <div class="room-file-image-example-wrapper">이미지</div> -->
                       
                         <div class="room-file-notice-item room-file-upload-button">
                             <div class="image-box">
                      
-                                <label for="file">일반 사진 등록</label>
+                                <!-- <label for="file">일반 사진 등록</label> -->
                                 <input type="file" id="file" ref="files" @change="imageUpload" multiple />
                             </div>
                         </div>
@@ -24,10 +24,13 @@
                 <div v-else class="file-preview-content-container">
                     <div class="file-preview-container">
                         <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper">
-                            <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
-                                x
+                          <div class='row'>
+
+                            <img :src="file.preview" style="width:150px;height:150px;"/>
+                            <div class="file-close-button col-6" @click="fileDeleteButton" :name="file.number">
+                                삭제
                             </div>
-                            <img :src="file.preview" style="width:80px;height:80px;"/>
+                          </div>
                         </div>
                         <div class="file-preview-wrapper-upload">
                             <div class="image-box">
@@ -46,7 +49,8 @@
     <textarea class='textinput' placeholder="여행기록을 남겨주세요" v-model="message"></textarea>
     <div class="btns">
       <p class="el-icon-back backbtn" @click="$router.push({name: 'FeedWrite1'})"></p>
-      <button class="writebtn" @click="$router.push({name: 'FeedWrite3'})">
+      <!-- <button class="writebtn" @click="$router.push({name: 'FeedWrite3'})"> -->
+      <button class="writebtn" @click="nextPage()">
         <img class="btnimg" src="@/assets/text-logo-resize.png" >
       </button>
     </div>
@@ -90,69 +94,75 @@ export default {
     //   console.log(this.imageList)
     // },
     imageUpload() {
-                        console.log(this.$refs.files.files);
+      console.log(this.$refs.files.files);
 
-                        // this.files = [...this.files, this.$refs.files.files];
-                        //하나의 배열로 넣기
-                        let num = -1;
-                        for (let i = 0; i < this.$refs.files.files.length; i++) {
-                            this.files = [
-                                ...this.files,
-                                //이미지 업로드
-                                {
-                                    //실제 파일
-                                    file: this.$refs.files.files[i],
-                                    //이미지 프리뷰
-                                    preview: URL.createObjectURL(this.$refs.files.files[i]),
-                                    //삭제및 관리를 위한 number
-                                    number: i
-                                }
-                            ];
-                            num = i;
-                            //이미지 업로드용 프리뷰
-                            // this.filesPreview = [
-                            //   ...this.filesPreview,
-                            //   { file: URL.createObjectURL(this.$refs.files.files[i]), number: i }
-                            // ];
-                        }
-                        this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
-                        console.log(this.files);
-                        // console.log(this.filesPreview);
-                    },
+      // this.files = [...this.files, this.$refs.files.files];
+      //하나의 배열로 넣기
+      let num = -1;
+      for (let i = 0; i < this.$refs.files.files.length; i++) {
+        this.files = [
+        ...this.files,
+        //이미지 업로드
+        {
+        //실제 파일
+        file: this.$refs.files.files[i],
+        //이미지 프리뷰
+        preview: URL.createObjectURL(this.$refs.files.files[i]),
+        //삭제및 관리를 위한 number
+        number: i
+        }
+      ];
+      num = i;
+      //이미지 업로드용 프리뷰
+      // this.filesPreview = [
+      //   ...this.filesPreview,
+      //   { file: URL.createObjectURL(this.$refs.files.files[i]), number: i }
+      // ];
+      }
+      this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
+      // console.log(this.files);
+      // console.log(this.filesPreview);
+    },
 
-                    imageAddUpload() {
-                        console.log(this.$refs.files.files);
+    imageAddUpload() {
+      // console.log(this.$refs.files.files);
 
-                        // this.files = [...this.files, this.$refs.files.files];
-                        //하나의 배열로 넣기c
-                        let num = -1;
-                        for (let i = 0; i < this.$refs.files.files.length; i++) {
-                            console.log(this.uploadImageIndex);
-                            this.files = [
-                                ...this.files,
-                                //이미지 업로드
-                                {
-                                    //실제 파일
-                                    file: this.$refs.files.files[i],
-                                    //이미지 프리뷰
-                                    preview: URL.createObjectURL(this.$refs.files.files[i]),
-                                    //삭제및 관리를 위한 number
-                                    number: i + this.uploadImageIndex
-                                }
-                            ];
-                            num = i;
-                        }
-                        this.uploadImageIndex = this.uploadImageIndex + num + 1;
+      // this.files = [...this.files, this.$refs.files.files];
+      //하나의 배열로 넣기c
+      let num = -1;
+      for (let i = 0; i < this.$refs.files.files.length; i++) {
+        console.log(this.uploadImageIndex);
+        this.files = [
+        ...this.files,
+        //이미지 업로드
+        {
+        //실제 파일
+        file: this.$refs.files.files[i],
+        //이미지 프리뷰
+        preview: URL.createObjectURL(this.$refs.files.files[i]),
+        //삭제및 관리를 위한 number
+        number: i + this.uploadImageIndex
+        }
+        ];
+      num = i;
+        }
+    this.uploadImageIndex = this.uploadImageIndex + num + 1;
+    console.log('사진')
+    console.log(this.files);
+    // console.log(this.filesPreview);
+  },
+  fileDeleteButton(e) {
+    const name = e.target.getAttribute('name');
+    this.files = this.files.filter(data => data.number !== Number(name));
+    console.log(this.files);
+    },
+  nextPage() {
+      // console.log('암온더넥스트레블')
+      this.$store.state.postData.content = this.message
+      this.$router.push({name: 'FeedWrite3'})
 
-                        console.log(this.files);
-                        // console.log(this.filesPreview);
-                    },
-                    fileDeleteButton(e) {
-                        const name = e.target.getAttribute('name');
-                        this.files = this.files.filter(data => data.number !== Number(name));
-                        // console.log(this.files);
-                    },
-                }
+  }
+  }
 }
 
 </script>
@@ -202,4 +212,5 @@ export default {
   resize: none;
   margin-bottom: 20px;
 }
+
 </style>

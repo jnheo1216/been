@@ -2,6 +2,11 @@
 <div class="back">
   <img src="@/assets/image-logo.png" alt="logobee" width="120">
   <el-progress class="align-vertical" :percentage="percentage" :color="customColors" :format="format"></el-progress>
+  <div class='title'>
+    <label for="title" >포스트 제목을 입력해주세요</label>
+    <br>
+    <input type="textinput" id="title" placeholder="제목을 입력해주세요" v-model="title">
+  </div>
   <h3 class="head"> 지역과 여행 스타일을 선택해주세요</h3>
     <div class="block">
       <el-cascader v-model="region" size="medium" placeholder="여행 지역"  change-on-select="false"
@@ -40,6 +45,7 @@ export default {
     return {
       showModal: false,
       percentage: 20,
+      title: '',
       region: '',
       style: [],
       customColors: [
@@ -86,9 +92,11 @@ export default {
     },
     nextPage()
     {
-        console.log(this.region)
-        console.log(this.style)
-        this.$store.state.postData.content = '';
+        // console.log(this.region[0])
+        // console.log(this.style[0][0])
+        this.$store.state.postData.title = this.title
+        this.$store.state.postData.area = this.region[0]
+        this.$store.state.postData.style = this.style[0][0]
         this.$router.push({name: 'FeedWrite2'});
         
 

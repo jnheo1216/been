@@ -1,21 +1,21 @@
 <template>
   <p class="siteTitle">Form</p>
   <main>
-    <div class="card">
-      <div class="inner inner1">
+    <div class="card" @click="chooseCard(1)">
+      <div class="inner inner1" >
         <h2 class="title">지역 :꿀벌은 꽃이 있는 곳 </h2>
         <p class="subtitle">여행 스타일: 친구, 힐링</p>
       </div>
     </div>
 
-    <div class="card card2">
+    <div class="card card2" @click="chooseCard(2)">
       <div class="inner inner2">
         <h2 class="title">지역 :꿀벌은 꽃이 있는 곳 </h2>
         <p class="subtitle">여행 스타일: 친구, 힐링</p>
       </div>
     </div>
 
-    <div class="card card3">
+    <div class="card card3" @click="chooseCard(3)">
       <div class="inner inner3">
         <h2 class="title">지역 :꿀벌은 꽃이 있는 곳 </h2>
         <p class="subtitle">여행 스타일: 친구, 힐링</p>
@@ -29,7 +29,23 @@
 
 <script>
 export default {
-  name: "TestForm"
+  name: "TestForm",
+  // data() {
+  //   return {
+  //     cards: [
+  //                { 'title': '지역 :꿀벌은 꽃이 있는 곳', 'subtitle': '여행 스타일: 친구, 힐링',},
+  //                { 'title': '', 'subtitle': '',},
+  //                { 'title': '', 'subtitle': '',},
+  //             ],
+  //   }
+  // }
+  methods: {
+    chooseCard(num){
+      // this.$store.state.postData.cardNum = num
+      // console.log(this.$store.state.postData.cardNum)
+      num
+    }
+  }
 }
 </script>
 
