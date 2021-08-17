@@ -11,6 +11,15 @@ public class Post {
     private String postPicName;
     private String area;
     private String style;
+    private int formNumber;
+
+    public int getFormNumber() {
+        return formNumber;
+    }
+
+    public void setFormNumber(int formNumber) {
+        this.formNumber = formNumber;
+    }
 
     public String getPostPicSrc() {
         return postPicSrc;
