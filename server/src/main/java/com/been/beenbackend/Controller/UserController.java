@@ -122,6 +122,24 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(result,HttpStatus.OK);
     }
 
+    @ApiOperation(value="user 관심지역 받기(create)")
+    @GetMapping(value="/user/preferredArea/{userId}")
+    public ResponseEntity<Map<String, Object>> getPreferredArea(@PathVariable int userId) throws Exception {
+        List<PreferredArea> areas = userService.getPreferedAreaAll(userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("areas", areas);
+        return new ResponseEntity<Map<String, Object>>(result,HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user 관심스타일 받기(create)")
+    @GetMapping(value="/user/preferredStyle/{userId}")
+    public ResponseEntity<Map<String, Object>> getPreferredStyle(@PathVariable int userId) throws Exception {
+        List<String> styles = userService.getPreferedStyle(userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("areas", styles);
+        return new ResponseEntity<Map<String, Object>>(result,HttpStatus.OK);
+    }
+
     @ApiOperation(value="user 프로필 사진 넣기(update)")
     @PutMapping(value= "/user/profilePic/{email}")
     public ResponseEntity<Map<String, Object>> modify(@RequestPart MultipartFile file,@PathVariable String email) throws Exception {
@@ -332,4 +350,6 @@ public class UserController {
         result.put("beforeFollowList",beforeFollowList);
         return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
     }
+
+
 }
