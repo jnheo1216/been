@@ -4,13 +4,13 @@ const instance = createInstance();
 
 function searchUserNickname(userNickname, success, fail){
     instance
-    .get(`user/findNickname/${userNickname}`)
+    .get(`user/findNickname/${userNickname}/1`)
     .then(success)
     .catch(fail);
 }
 function searchUserEmail(userEmail, success, fail){
     instance
-    .get(`user/findEmail/${userEmail}`)
+    .get(`user/findEmail/${userEmail}/1`)
     .then(success)
     .catch(fail);
 }

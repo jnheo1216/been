@@ -19,13 +19,13 @@ function join(user, success, fail){
 }
 function getFollower(userId, success, fail){
     instance
-    .get(`user/showFollower/${userId}`)
+    .get(`user/showFollower/${userId}/1`)
     .then(success)
     .catch(fail);
 }
 function getFollowing(userId, success, fail){
     instance
-    .get(`user/showFollowing/${userId}`)
+    .get(`user/showFollowing/${userId}/1`)
     .then(success)
     .catch(fail);
 }
