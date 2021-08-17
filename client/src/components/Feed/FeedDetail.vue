@@ -85,9 +85,9 @@
       폼폼4?
     </div>
 
-    <div class="like-box-1">
-      <div v-if="isLike" @click="likeDown"><i class="fas fa-heart"></i>좋아요취소</div>
-      <div v-else @click="likeUp"><i class="far fa-heart"></i>좋아요</div>
+    <div class="like-box-1" style="font-size: large; color: red;">
+      <div v-if="isLike" @click="likeDown"><i class="fas fa-heart"></i></div>
+      <div v-else @click="likeUp"><i class="far fa-heart"></i></div>
     </div>
 
     <div class="comment-form">

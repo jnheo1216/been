@@ -50,6 +50,8 @@
       </div>
       <!-- 추천 게시물이 20건 이상인 경우 -->
       <div v-else>
+      <header>
+      </header>
       <template>
       <div v-for="(post, $index) in this.favorite"
           :key="$index" class="my-4">
