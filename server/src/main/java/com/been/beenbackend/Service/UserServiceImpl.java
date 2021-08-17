@@ -152,5 +152,10 @@ public class UserServiceImpl implements UserService {
         sqlSession.getMapper(UserMapper.class).makePreferredStyle(preferredStyle);
     }
 
+    @Override
+    public List<PreferredArea> getPreferedAreaAll(int userId) {
+        return sqlSession.getMapper(UserMapper.class).getPreferedAreaAll(userId);
+    }
+
 
 }

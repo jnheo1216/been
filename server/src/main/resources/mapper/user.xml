@@ -126,13 +126,17 @@
 		select area from preferred_area where userId = #{userId};
 	</select>
 
+	<select id="getPreferedAreaAll" parameterType="int" resultType="PreferredArea">
+		select * from preferred_area where userId = #{userId};
+	</select>
+
 	<select id="getPreferedStyle" parameterType="int" resultType="String">
 		select style from preferred_style where userId = #{userId};
 	</select>
 
 	<insert id="makePreferredArea" parameterType="PreferredArea">
-		insert into preferred_area (userId, area)
-		values (#{userId},#{area});
+		insert into preferred_area (userId, area, longitude, latitude)
+		values (#{userId},#{area},#{longitude}, #{latitude});
 	</insert>
 
 	<insert id="makePreferredStyle" parameterType="PreferredStyle">
