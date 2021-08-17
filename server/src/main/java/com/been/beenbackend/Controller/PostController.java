@@ -49,9 +49,9 @@ public class PostController {
     }
 
     @ApiOperation(value="post 유저아이디로 받아오기(read)")
-    @GetMapping(value="/post/userId/{userid}")
-    public ResponseEntity<Map<String, Object>> listByUser(@PathVariable int userid) throws Exception {
-        List<Post> posts = postService.listByUser(userid);
+    @GetMapping(value="/post/userId/{userid}/{page}")
+    public ResponseEntity<Map<String, Object>> listByUser(@PathVariable int userid, @PathVariable int page) throws Exception {
+        List<Post> posts = postService.listByUser(userid,page);
         Map<String, Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
@@ -85,7 +85,7 @@ public class PostController {
     @PostMapping(value= "/post/postPic/{postId}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<Map<String, Object>> modify(@RequestPart List<MultipartFile> files, @RequestPart MultipartFile thumbnail, @PathVariable int postId) throws Exception {
         //썸네일 사진 넣기
-        String fileName = "postThumbnail_"+postId;
+        String fileName = "postThumbnail_"+postId+".jpg";
         String imgPath = s3Service.uploadObject(thumbnail,fileName);
         PostPic postPic = new PostPic();
         postPic.setSrc(imgPath);
@@ -93,13 +93,14 @@ public class PostController {
         postPic.setName(fileName);
         postPic.setPostId(postId);
         postPic.setNum(0);
+        postService.registerPic(postPic);
         Post post = postService.listOne(postId);
         post.setPostPicName(postPic.getName());
         post.setPostPicSrc(imgPath);
         postService.modify(post);
         //각각의 사진 넣기
         for(int i = 0; i < files.size(); i++){
-            fileName = "postPic_"+postId+Integer.toString(i+1);
+            fileName = "postPic_"+postId+Integer.toString(i+1)+".jpg";
             imgPath = s3Service.uploadObject(files.get(i),fileName);
             postPic = new PostPic();
             postPic.setSrc(imgPath);
@@ -133,12 +134,15 @@ public class PostController {
     @ApiOperation(value="post 삭제하기(delete)") // 수정 요망
     @DeleteMapping(value = "/post/{postId}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int postId) throws Exception {
-        List<PostPic> postPics = postService.getPostPic(postId);
-        for(int i = 0; i < postPics.size(); i++) {
-            s3Service.deleteObject(postPics.get(i).getName());
+        Post post = postService.listOne(postId);
+        if(post.getPostPicName() != "꿀벌썸네일.png") {
+            List<PostPic> postPics = postService.getPostPic(postId);
+            for(int i = 0; i < postPics.size(); i++) {
+                s3Service.deleteObject(postPics.get(i).getName());
+            }
         }
         postService.delete(postId);
-        postService.deletePic(postId);
+//        postService.deletePic(postId);
         return list();
     }
 
@@ -189,40 +193,45 @@ public class PostController {
     }
 
     @ApiOperation(value="좋아요를 누른 post 리스트 받아오기(read)")
-    @GetMapping(value="/post/like/{userId}")
-    public ResponseEntity<Map<String, Object>> showLikePost(@PathVariable int userId) throws Exception {
-        List<Post> posts = postService.likePost(userId);
+    @GetMapping(value="/post/getLikePost/{userId}/{page}")
+    public ResponseEntity<Map<String, Object>> showLikePost(@PathVariable int userId, @PathVariable int page) throws Exception {
+        List<Post> posts = postService.likePost(userId, page);
         Map<String, Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="post 제목으로 검색")
-    @GetMapping(value = "/post/searchByTitle/{title}")
-    public ResponseEntity<Map<String,Object>> searchByTitle(@PathVariable String title) throws Exception {
-        List<Post> posts = postService.searchByTitle(title);
+    @GetMapping(value = "/post/searchByTitle/{title}/{page}")
+    public ResponseEntity<Map<String,Object>> searchByTitle(@PathVariable String title, @PathVariable int page) throws Exception {
+        title = "%"+title+"%";
+        int start = 18 * (page-1);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("title",title);
+        map.put("start",start);
+        List<Post> posts = postService.searchByTitle(map);
         Map<String,Object> result = new HashMap<>();
         result.put("posts",posts);
         return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="post 선호지역으로 가져오기")
-    @GetMapping(value = "/post/preferedArea/{userId}")
-    public ResponseEntity<Map<String,Object>> showPreferedAreaPost(@PathVariable int userId) throws Exception {
+    @GetMapping(value = "/post/preferedArea/{userId}/{page}")
+    public ResponseEntity<Map<String,Object>> showPreferedAreaPost(@PathVariable int userId, @PathVariable int page) throws Exception {
         List<String> areas = userService.getPreferedArea(userId);
 
-        List<Post> posts = postService.showPreferedAreaPost(areas);
+        List<Post> posts = postService.showPreferedAreaPost(areas, page);
         Map<String,Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
     }
 
     @ApiOperation(value="post 선호스타일로 가져오기")
-    @GetMapping(value = "/post/preferedStyle/{userId}")
-    public ResponseEntity<Map<String,Object>> showPreferedStylePost(@PathVariable int userId) throws Exception {
+    @GetMapping(value = "/post/preferedStyle/{userId}/{page}")
+    public ResponseEntity<Map<String,Object>> showPreferedStylePost(@PathVariable int userId, @PathVariable int page) throws Exception {
         List<String> styles = userService.getPreferedStyle(userId);
 
-        List<Post> posts = postService.showPreferedStylePost(styles);
+        List<Post> posts = postService.showPreferedStylePost(styles, page);
         Map<String,Object> result = new HashMap<>();
         result.put("posts", posts);
         return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
