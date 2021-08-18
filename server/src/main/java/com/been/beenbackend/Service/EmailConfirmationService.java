@@ -29,7 +29,7 @@ public class EmailConfirmationService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);
         mailMessage.setSubject("Been 회원가입 이메일 인증");
-        mailMessage.setText("링크를 눌러 회원가입을 완료하십시오. http://localhost:8081/user/confirmEmail?id="+userId);
+        mailMessage.setText("링크를 눌러 회원가입을 완료하십시오. http://i5b301.p.ssafy.io:8081/user/confirmEmail?id="+userId);
         emailSenderService.sendEmail(mailMessage);
 
 //        return emailConfirmationToken.getId();
