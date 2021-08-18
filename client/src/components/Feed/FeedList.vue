@@ -18,7 +18,7 @@
               <img @click="toDetail(post.postId)" :src="post.postPicSrc" class="recommended-image medium" alt="">
             </el-carousel-item>
           </el-carousel>
-          <el-button plain @click="toFavorite">추천 게시물 더 보기</el-button>
+          <!-- <el-button plain @click="toFavorite">추천 게시물 더 보기</el-button> -->
 
   
       <div class="map-box">
@@ -30,6 +30,9 @@
         </div>
       </div>
 
+      <div class="post-button">
+        <el-button type="warning" icon="el-icon-edit" circle @click="this.$router.push(`/write`)"></el-button>
+      </div>
 
           <!-- 팔로잉이 없는 경우 -->
         <div v-if="this.user.followingCnt == 0">
@@ -371,5 +374,10 @@ export default {
   width: 320px;
   margin: 0 auto;
 }
-
+.post-button {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+}
 </style>
