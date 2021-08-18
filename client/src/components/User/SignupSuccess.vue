@@ -48,7 +48,7 @@ export default {
         console.log(res.data)
         console.log(res.data.users[0].id)
         const userId = res.data.users[0].id
-        const infoArea = {'area': this.preferedArea, 'userId': userId}
+        const infoArea = {'area': this.preferedArea, 'latitude': 128, 'longitude': 36, 'userId': userId}
         const infoStyle = {'style': this.preferedStyle, 'userId': userId}
         getArea(
           infoArea,
