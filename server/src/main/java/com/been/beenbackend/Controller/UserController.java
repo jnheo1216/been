@@ -95,10 +95,10 @@ public class UserController {
             emailConfirmationService.createEmailConfirmation(id,user.getEmail());
 
             //잘 들어갔는지 확인용
-            List<User> users =userService.list();
-            Map<String, Object> result = new HashMap<>();
-            result.put("users", users);
-            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+//            List<User> users =userService.list();
+//            Map<String, Object> result = new HashMap<>();
+//            result.put("users", users);
+            return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
         } else
             return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -167,7 +167,7 @@ public class UserController {
         user.setProfilePicName(fileName);
         user.setEmail(email);
         userService.updatePic(user);
-        return list();
+        return new ResponseEntity<Map<String,Object>>(HttpStatus.OK);
     }
 
     @ApiOperation(value="user 이메일 인증(update)")
@@ -238,7 +238,7 @@ public class UserController {
 
         //유저 db에서 삭제. cacscde로 fk로 연결된 것 전부다 삭제
         userService.delete(user.getId());
-        return list();
+        return new ResponseEntity<Map<String,Object>>(HttpStatus.OK);
     }
 
     @ApiOperation(value="user email로 찾기(read)")
@@ -318,10 +318,10 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> register(@RequestBody User user) throws Exception {
         int cnt = userService.register(user);
         if(cnt != 0) {
-            List<User> users =userService.list();
-            Map<String, Object> result = new HashMap<>();
-            result.put("users", users);
-            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+//            List<User> users =userService.list();
+//            Map<String, Object> result = new HashMap<>();
+//            result.put("users", users);
+            return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
         } else
             return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -331,14 +331,14 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> modify(@RequestBody User user) throws Exception {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.modify(user);
-        return list();
+        return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
     }
 
     @ApiOperation(value="user 삭제하기(delete)")
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int id) throws Exception {
         userService.delete(id);
-        return list();
+        return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
     }
 
     @ApiOperation(value="user 팔로우(create)")

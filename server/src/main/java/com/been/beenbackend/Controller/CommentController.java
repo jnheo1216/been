@@ -62,14 +62,14 @@ public class CommentController {
     @PutMapping(value= "/comment")
     public ResponseEntity<Map<String, Object>> modify(@RequestBody Comment comment) throws Exception {
         commentService.modify(comment);
-        return list();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @ApiOperation(value="comment 삭제하기(delete)")
     @DeleteMapping(value = "/comment/{commentId}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int commentId) throws Exception {
         commentService.delete(commentId);
-        return list();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @ApiOperation(value="comment 좋아요 등록(create)")
@@ -86,7 +86,7 @@ public class CommentController {
     @DeleteMapping(value = "/comment/like")
     public ResponseEntity<Map<String, Object>> delete(@RequestBody LikeComment likeComment) throws Exception {
         commentService.deleteLike(likeComment.getCommentId(), likeComment.getUserId());
-        return list();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @ApiOperation(value="comment 좋아요 개수(read)")

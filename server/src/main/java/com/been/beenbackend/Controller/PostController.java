@@ -116,7 +116,7 @@ public class PostController {
 //                postService.modify(post);
 //            }
         }
-        return list();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @ApiOperation(value="post 수정하기(update) *수정하기도 호출 후 post 사진 넣기(update)로 사진을 다시 넣어줘야합니다")
@@ -130,7 +130,7 @@ public class PostController {
             s3Service.deleteObject(postPics.get(i).getName());
         }
         postService.deletePic(post.getPostId());
-        return list();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @ApiOperation(value="post 삭제하기(delete)") // 수정 요망
@@ -145,7 +145,7 @@ public class PostController {
         }
         postService.delete(postId);
 //        postService.deletePic(postId);
-        return list();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @ApiOperation(value="팔로우한 유저의 post 리스트 받아오기(read)")
@@ -173,7 +173,7 @@ public class PostController {
         System.out.println(postId);
         System.out.println(userId);
         postService.removeLke(postId, userId);
-        return list();
+        return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
     }
 
     @ApiOperation(value="post 좋아요 개수(read)")
