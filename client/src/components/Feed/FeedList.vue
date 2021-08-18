@@ -23,7 +23,7 @@
   
       <div class="map-box">
         <div>
-          <MyMap :visitedDatas="[[127, 37]]"/>
+          <MyMap :visitedDatas="usersArea"/>
         </div>
         <div>
           <button @click="this.$router.push(`/mymapadd`)">흔적남기기!</button>
@@ -113,6 +113,7 @@ import axios from 'axios'
 // import {ref} from 'vue'
 import {getFeedFollowPost} from '@/api/feed.js'
 import {API_BASE_URL} from "@/config/index.js"
+import {getUsersArea} from '@/api/user.js'
 
 export default {
   name: 'FeedList',
@@ -123,7 +124,8 @@ export default {
       tour: 1,
       user: {},
       feed: [],
-      recommended: []
+      recommended: [],
+      usersArea: []
     }
   },
   components: {
@@ -142,30 +144,25 @@ export default {
         }
         console.log(this.recommended)
       })
+    getUsersArea(
+      this.user.id,
+      (res3) => {
+        // console.log(res3.data.areas)
+        const areas = res3.data.areas
+        for (var i in areas) {
+          // console.log([Number(areas[i]['latitude']), Number(areas[i]['longitude'])])
+          this.usersArea.push([Number(areas[i]['latitude']), Number(areas[i]['longitude'])])
+        }
+        console.log(this.usersArea)
+        console.log(this.usersArea.length)
+      },
+      (err3) => {console.error(err3)}
+    )
     getFeedFollowPost(
       this.user.id,
       (res2) => {this.feed = res2.data.posts},
-      (err2) => {console.log(err2)}
+      (err2) => {console.error(err2)}
     )
-    // axios.get('http://localhost:8081/post/followPost/' + this.user.id)
-    //   .then((res) => {
-    //     this.feed = res.data.posts
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-
-
-    // console.log(this.$store.state.isLogin)
-    // axios.get('http://localhost:8081/post')
-    //   .then(res => {
-    //     // console.log(res)
-    //     this.feeds = res.data.posts
-    //   })
-    //   .catch(err => {
-    //     console.error(err)
-    //   })
-    
   },
   methods: {
     toDetail: function (postId) {
