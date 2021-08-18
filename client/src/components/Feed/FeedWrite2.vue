@@ -159,6 +159,8 @@ export default {
   nextPage() {
       // console.log('암온더넥스트레블')
       this.$store.state.postData.content = this.message
+      this.$store.state.files = this.files
+      console.log(this.$store.state.files)
       this.$router.push({name: 'FeedWrite3'})
 
   }

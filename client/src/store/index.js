@@ -9,6 +9,7 @@ export default createStore({
       area: "",
       content: "",
       createdAt: "",
+      formNumber: 0,
       postId: 0,
       postPicName: "",
       postPicSrc: "",

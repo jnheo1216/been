@@ -1,13 +1,17 @@
 package com.been.beenbackend.Service;
 
 import com.been.beenbackend.Mapper.UserMapper;
+import com.been.beenbackend.dto.PreferredArea;
+import com.been.beenbackend.dto.PreferredStyle;
 import com.been.beenbackend.dto.User;
 import com.been.beenbackend.dto.follow;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -72,17 +76,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUserByEmail(String email) {
+    public List<User> findUserByEmail(String email, int page) {
         email = "%"+email+"%";
+        int start = (page-1) * 18;
+        Map<String, Object> map = new HashMap<>();
+        map.put("email",email);
+        map.put("start",start);
         System.out.println(email);
-        return sqlSession.getMapper(UserMapper.class).findUserByEmail(email);
+        return sqlSession.getMapper(UserMapper.class).findUserByEmail(map);
     }
 
     @Override
-    public List<User> findUserByNickname(String nickname) {
+    public List<User> findUserByNickname(String nickname, int page) {
         nickname = "%"+nickname+"%";
+        int start = (page-1) * 18;
+        Map<String, Object> map = new HashMap<>();
+        map.put("nickname",nickname);
+        map.put("start",start);
         System.out.println(nickname);
-        return sqlSession.getMapper(UserMapper.class).findUserByNickname(nickname);
+        return sqlSession.getMapper(UserMapper.class).findUserByNickname(map);
     }
 
     @Override
@@ -91,18 +103,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> showFollowing(int id) {
-        return sqlSession.getMapper(UserMapper.class).showFollowing(id);
+    public List<User> showFollowing(int id, int page) {
+        int start = 18 * (page-1);
+        return sqlSession.getMapper(UserMapper.class).showFollowing(id, start);
     }
 
     @Override
-    public List<User> showFollower(int id) {
-        return sqlSession.getMapper(UserMapper.class).showFollower(id);
+    public List<User> showFollower(int id, int page) {
+        int start = 18 * (page-1);
+        return sqlSession.getMapper(UserMapper.class).showFollower(id, start);
     }
 
     @Override
-    public List<follow> beforeFollowList(int id) {
-        return sqlSession.getMapper(UserMapper.class).beforeFollowList(id);
+    public List<follow> beforeFollowList(int id, int page) {
+        int start = 18 * (page -1);
+        return sqlSession.getMapper(UserMapper.class).beforeFollowList(id, start);
     }
 
     @Override
@@ -123,6 +138,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<String> getPreferedStyle(int userId) {
         return sqlSession.getMapper(UserMapper.class).getPreferedStyle(userId);
+    }
+
+    @Override
+    public void makePreferredArea(PreferredArea preferredArea) {
+        preferredArea.setArea(preferredArea.getArea().trim());
+        sqlSession.getMapper(UserMapper.class).makePreferredArea(preferredArea);
+    }
+
+    @Override
+    public void makePreferredStyle(PreferredStyle preferredStyle) {
+        preferredStyle.setStyle(preferredStyle.getStyle().trim());
+        sqlSession.getMapper(UserMapper.class).makePreferredStyle(preferredStyle);
+    }
+
+    @Override
+    public List<PreferredArea> getPreferedAreaAll(int userId) {
+        return sqlSession.getMapper(UserMapper.class).getPreferedAreaAll(userId);
     }
 
 

@@ -1,10 +1,7 @@
 package com.been.beenbackend.Controller;
 
 import com.been.beenbackend.Service.*;
-import com.been.beenbackend.dto.Post;
-import com.been.beenbackend.dto.PostPic;
-import com.been.beenbackend.dto.User;
-import com.been.beenbackend.dto.follow;
+import com.been.beenbackend.dto.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +76,12 @@ public class UserController {
     @PostMapping(value="/user")
     public ResponseEntity<Map<String, Object>> signUp(@RequestBody User user) throws Exception {
 
+        //이메일 중복 조회
+        User exist = userService.list(user.getEmail());
+        if(exist != null) {
+            return new ResponseEntity<Map<String,Object>>(HttpStatus.valueOf("이메일 중복"));
+        }
+
         //비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -96,6 +100,44 @@ public class UserController {
             return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
         } else
             return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @ApiOperation(value="user 관심지역 넣기(create)")
+    @PostMapping(value="/user/preferredArea")
+    public ResponseEntity<Map<String, Object>> makePreferredArea(@RequestBody PreferredArea preferredArea) throws Exception {
+        userService.makePreferredArea(preferredArea);
+        List<String> areas = userService.getPreferedArea(preferredArea.getUserId());
+        Map<String, Object> result = new HashMap<>();
+        result.put("areas", areas);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user 관심스타일 넣기(create)")
+    @PostMapping(value="/user/preferredStyle")
+    public ResponseEntity<Map<String, Object>> makePreferredStyle(@RequestBody PreferredStyle preferredStyle) throws Exception {
+        userService.makePreferredStyle(preferredStyle);
+        List<String> styles = userService.getPreferedStyle(preferredStyle.getUserId());
+        Map<String, Object> result = new HashMap<>();
+        result.put("styles", styles);
+        return new ResponseEntity<Map<String, Object>>(result,HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user 관심지역 받기(create)")
+    @GetMapping(value="/user/preferredArea/{userId}")
+    public ResponseEntity<Map<String, Object>> getPreferredArea(@PathVariable int userId) throws Exception {
+        List<PreferredArea> areas = userService.getPreferedAreaAll(userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("areas", areas);
+        return new ResponseEntity<Map<String, Object>>(result,HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user 관심스타일 받기(create)")
+    @GetMapping(value="/user/preferredStyle/{userId}")
+    public ResponseEntity<Map<String, Object>> getPreferredStyle(@PathVariable int userId) throws Exception {
+        List<String> styles = userService.getPreferedStyle(userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("areas", styles);
+        return new ResponseEntity<Map<String, Object>>(result,HttpStatus.OK);
     }
 
     @ApiOperation(value="user 프로필 사진 넣기(update)")
@@ -161,11 +203,19 @@ public class UserController {
             s3Service.deleteObject(fileName);
         }
         //포스트 사진 삭제
-        List<Post> posts = postService.listByUser(user.getId());
+        List<Post> posts = new ArrayList<>();
+        int cnt = 1;
+        List<Post> pagePost = postService.listByUser(user.getId(),cnt++);
+        posts.addAll(pagePost);
+        while(pagePost.size() != 0) {
+            pagePost = postService.listByUser(user.getId(),cnt++);
+            posts.addAll(pagePost);
+            System.out.println("포스트 찾는중...");
+        }
         for( Post post : posts) {
             List<PostPic> postPics = postService.getPostPic(post.getPostId());
             for(int i = 0; i < postPics.size(); i++) {
-                s3Service.deleteObject(postPics.get(i).getName());
+//                s3Service.deleteObject(postPics.get(i).getName());
             }
         }
 
@@ -175,36 +225,36 @@ public class UserController {
     }
 
     @ApiOperation(value="user email로 찾기(read)")
-    @GetMapping(value="/user/findEmail/{email}")
-    public ResponseEntity<Map<String, Object>> findUserByEmail(@PathVariable String email) throws Exception {
-        List<User> users = userService.findUserByEmail(email);
+    @GetMapping(value="/user/findEmail/{email}/{page}")
+    public ResponseEntity<Map<String, Object>> findUserByEmail(@PathVariable String email, @PathVariable int page) throws Exception {
+        List<User> users = userService.findUserByEmail(email, page);
         Map<String, Object> result = new HashMap<>();
         result.put("users", users);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="user nickname으로 찾기(read)")
-    @GetMapping(value="/user/findNickname/{nickname}")
-    public ResponseEntity<Map<String, Object>> findUserByNickname(@PathVariable String nickname) throws Exception {
-        List<User> users = userService.findUserByNickname(nickname);
+    @GetMapping(value="/user/findNickname/{nickname}/{page}")
+    public ResponseEntity<Map<String, Object>> findUserByNickname(@PathVariable String nickname, @PathVariable int page) throws Exception {
+        List<User> users = userService.findUserByNickname(nickname, page);
         Map<String, Object> result = new HashMap<>();
         result.put("users", users);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="user 팔로워 표시(read)")
-    @GetMapping(value="/user/showFollower/{id}")
-    public ResponseEntity<Map<String, Object>> showFollower(@PathVariable int id) throws Exception {
-        List<User> users = userService.showFollower(id);
+    @GetMapping(value="/user/showFollower/{id}/{page}")
+    public ResponseEntity<Map<String, Object>> showFollower(@PathVariable int id, @PathVariable int page) throws Exception {
+        List<User> users = userService.showFollower(id, page);
         Map<String, Object> result = new HashMap<>();
         result.put("users", users);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value="user가 팔로우하는 유저 표시(read)")
-    @GetMapping(value="/user/showFollowing/{id}")
-    public ResponseEntity<Map<String, Object>> showFollowing(@PathVariable int id) throws Exception {
-        List<User> users = userService.showFollowing(id);
+    @GetMapping(value="/user/showFollowing/{id}/{page}")
+    public ResponseEntity<Map<String, Object>> showFollowing(@PathVariable int id, @PathVariable int page) throws Exception {
+        List<User> users = userService.showFollowing(id, page);
         Map<String, Object> result = new HashMap<>();
         result.put("users", users);
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
@@ -293,11 +343,13 @@ public class UserController {
     }
 
     @ApiOperation(value="user 팔로우 대기 리스트(read)")
-    @PutMapping(value = "/user/beforeFollowList/{id}")
-    public ResponseEntity<Map<String,Object>> beforeFollowList(@PathVariable("id") int id) throws Exception {
-        List<follow> beforeFollowList = userService.beforeFollowList(id);
+    @PutMapping(value = "/user/beforeFollowList/{id}/{page}")
+    public ResponseEntity<Map<String,Object>> beforeFollowList(@PathVariable("id") int id, @PathVariable int page) throws Exception {
+        List<follow> beforeFollowList = userService.beforeFollowList(id, page);
         Map<String,Object> result = new HashMap<>();
         result.put("beforeFollowList",beforeFollowList);
         return new ResponseEntity<Map<String,Object>>(result,HttpStatus.OK);
     }
+
+
 }
