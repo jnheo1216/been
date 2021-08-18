@@ -43,6 +43,7 @@ public class UserController {
     @ApiOperation(value="user 로그인")
     @PostMapping("/user/signin")
     public ResponseEntity<Map<String, Object>> signIn(@RequestBody User user, HttpServletResponse res) {
+        //RequestBody도 map으로 받을 수 있네
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
