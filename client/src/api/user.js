@@ -47,5 +47,11 @@ function getStyle(userInfo, success, fail){
     .then(success)
     .catch(fail);
 }
+function getUsersArea(userId, success, fail){
+    instance
+    .get(`user/preferredArea/${userId}`)
+    .then(success)
+    .catch(fail);
+}
 
-export {login, join, getFollower, getFollowing, getFollowWait, getArea, getStyle};
+export {login, join, getFollower, getFollowing, getFollowWait, getArea, getStyle, getUsersArea};

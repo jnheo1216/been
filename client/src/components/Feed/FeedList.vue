@@ -18,18 +18,21 @@
               <img @click="toDetail(post.postId)" :src="post.postPicSrc" class="recommended-image medium" alt="">
             </el-carousel-item>
           </el-carousel>
-          <el-button plain @click="toFavorite">추천 게시물 더 보기</el-button>
+          <!-- <el-button plain @click="toFavorite">추천 게시물 더 보기</el-button> -->
 
   
       <div class="map-box">
         <div>
-          <MyMap :visitedDatas="[[127, 37]]"/>
+          <MyMap :visitedDatas="usersArea"/>
         </div>
         <div>
           <button @click="this.$router.push(`/mymapadd`)">흔적남기기!</button>
         </div>
       </div>
 
+      <div class="post-button">
+        <el-button type="warning" icon="el-icon-edit" circle @click="this.$router.push(`/write`)"></el-button>
+      </div>
 
           <!-- 팔로잉이 없는 경우 -->
         <div v-if="this.user.followingCnt == 0">
@@ -110,6 +113,7 @@ import axios from 'axios'
 // import {ref} from 'vue'
 import {getFeedFollowPost} from '@/api/feed.js'
 import {API_BASE_URL} from "@/config/index.js"
+import {getUsersArea} from '@/api/user.js'
 
 export default {
   name: 'FeedList',
@@ -120,7 +124,8 @@ export default {
       tour: 1,
       user: {},
       feed: [],
-      recommended: []
+      recommended: [],
+      usersArea: []
     }
   },
   components: {
@@ -139,30 +144,25 @@ export default {
         }
         console.log(this.recommended)
       })
+    getUsersArea(
+      this.user.id,
+      (res3) => {
+        // console.log(res3.data.areas)
+        const areas = res3.data.areas
+        for (var i in areas) {
+          // console.log([Number(areas[i]['latitude']), Number(areas[i]['longitude'])])
+          this.usersArea.push([Number(areas[i]['latitude']), Number(areas[i]['longitude'])])
+        }
+        console.log(this.usersArea)
+        console.log(this.usersArea.length)
+      },
+      (err3) => {console.error(err3)}
+    )
     getFeedFollowPost(
       this.user.id,
       (res2) => {this.feed = res2.data.posts},
-      (err2) => {console.log(err2)}
+      (err2) => {console.error(err2)}
     )
-    // axios.get('http://localhost:8081/post/followPost/' + this.user.id)
-    //   .then((res) => {
-    //     this.feed = res.data.posts
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-
-
-    // console.log(this.$store.state.isLogin)
-    // axios.get('http://localhost:8081/post')
-    //   .then(res => {
-    //     // console.log(res)
-    //     this.feeds = res.data.posts
-    //   })
-    //   .catch(err => {
-    //     console.error(err)
-    //   })
-    
   },
   methods: {
     toDetail: function (postId) {
@@ -371,5 +371,10 @@ export default {
   width: 320px;
   margin: 0 auto;
 }
-
+.post-button {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+}
 </style>
