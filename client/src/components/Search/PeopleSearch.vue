@@ -25,11 +25,13 @@
       <div class="peoplefound" v-if="users.length">
         <h2 class="text">일치하는 꿀벌 : {{ users.length }}벌</h2>
         <ul class="my-3">
-          <li @click="toUserProfile" v-for="(user, userId) in users"
+          <li v-for="(user, userId) in users"
           :key="userId" class="text-dark">
-            <img :src="user.profilePicSrc" alt="" class="profile-image"><h3 class="small-text">{{ user.nickname }}</h3>
-            <h4>{{ user.intro }}</h4>
-            <hr>
+            <div @click="toUserProfile(user.id)">
+              <img :src="user.profilePicSrc" alt="" class="profile-image"><h3 class="small-text">{{ user.nickname }}</h3>
+              <h4>{{ user.intro }}</h4>
+              <hr>
+            </div>
           </li> 
         </ul>
         <el-button @click="backToSearchmain" type="info" icon="el-icon-back" circle></el-button>

@@ -9,5 +9,11 @@ function getUserInfo(userId, success, fail){
     .then(success)
     .catch(fail);
 }
+function getUserInfoEmail(userEmail, success, fail){
+    instance
+    .get(`user/findEmail/${userEmail}/1`)
+    .then(success)
+    .catch(fail);
+}
 
-export {getUserInfo};
+export {getUserInfo, getUserInfoEmail};

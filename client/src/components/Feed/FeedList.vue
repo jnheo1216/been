@@ -2,13 +2,6 @@
   <suspense>
     <template #default>
       <div class="FeedList">
-        
-        <!-- <div v-for="(feed, index) in feeds" :key="feed.postId">
-          <div>{{ index }}</div>
-          <div>{{ feed }}</div>
-          <div v-if="index % 2">홀</div>
-          <div v-else>짝</div>
-        </div> -->
 
         <div class="logo">
           <img alt="BEEN LOGO" src="@/assets/image-logo.png">
@@ -28,7 +21,15 @@
           <el-button plain @click="toFavorite">추천 게시물 더 보기</el-button>
 
   
-        
+      <div class="map-box">
+        <div>
+          <MyMap :visitedDatas="[[127, 37]]"/>
+        </div>
+        <div>
+          <button @click="this.$router.push(`/mymapadd`)">흔적남기기!</button>
+        </div>
+      </div>
+
 
           <!-- 팔로잉이 없는 경우 -->
         <div v-if="this.user.followingCnt == 0">
@@ -104,8 +105,11 @@
 </template>
 
 <script>
+import MyMap from '@/components/MyMaps/MyMap.vue'
 import axios from 'axios'
 // import {ref} from 'vue'
+import {getFeedFollowPost} from '@/api/feed.js'
+import {API_BASE_URL} from "@/config/index.js"
 
 export default {
   name: 'FeedList',
@@ -119,12 +123,15 @@ export default {
       recommended: []
     }
   },
+  components: {
+    MyMap
+  },
   created() {
     // if (!this.isLogin) {
     //   this.$router.push({ name: 'Introduction' })}
     this.user = this.$store.state.user
     console.log(this.user)
-    axios.get('http://localhost:8081/post/preferedStyle/' + this.user.id)
+    axios.get(API_BASE_URL + 'post/preferedStyle/' + this.user.id + '/1')
       .then((res) => {
         this.recommended = res.data.posts
         if (this.recommended.length >= 4) {
@@ -132,14 +139,18 @@ export default {
         }
         console.log(this.recommended)
       })
-
-    axios.get('http://localhost:8081/post/followPost/' + this.user.id)
-      .then((res) => {
-        this.feed = res.data.posts
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    getFeedFollowPost(
+      this.user.id,
+      (res2) => {this.feed = res2.data.posts},
+      (err2) => {console.log(err2)}
+    )
+    // axios.get('http://localhost:8081/post/followPost/' + this.user.id)
+    //   .then((res) => {
+    //     this.feed = res.data.posts
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
 
 
     // console.log(this.$store.state.isLogin)
@@ -355,6 +366,10 @@ export default {
 
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
+}
+.map-box {
+  width: 320px;
+  margin: 0 auto;
 }
 
 </style>

@@ -56,5 +56,11 @@ function postLikeDelete(userpostInfo, success, fail){
     .then(success)
     .catch(fail);
 }
+function postIsLike(userpostInfo, success, fail){
+    instance
+    .get(`post/like/${userpostInfo.postId}/{userId}?userId=${userpostInfo.userId}`)
+    .then(success)
+    .catch(fail);
+}
 
-export {getFeedAll, postFeed, getFeedDetail, getFeedFollowPost, getFeedUserId, getFeedLike, getFeedLikeCnt, postLike, postLikeDelete};
+export {getFeedAll, postFeed, getFeedDetail, getFeedFollowPost, getFeedUserId, getFeedLike, getFeedLikeCnt, postLike, postLikeDelete, postIsLike};

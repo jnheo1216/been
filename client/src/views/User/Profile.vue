@@ -121,7 +121,7 @@ export default {
         this.User = this.$store.state.user
     },
     getUserPost(){
-        const id = localStorage.getItem('userId')
+        const id = this.$store.state.user.id
         getFeedUserId(
             id,
             (res) => {
@@ -146,7 +146,7 @@ export default {
         // })
     },
     getUserFollower() {
-        const id = localStorage.getItem('userId')
+        const id = this.$store.state.user.id
         getFollower(
             id,
             (res) => {
@@ -170,7 +170,7 @@ export default {
         // })
     },
     getUserFollowing() {
-        const id = localStorage.getItem('userId')
+        const id = this.$store.state.user.id
         getFollowing(
             id,
             (res) => {

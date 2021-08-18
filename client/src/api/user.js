@@ -19,13 +19,13 @@ function join(user, success, fail){
 }
 function getFollower(userId, success, fail){
     instance
-    .get(`user/showFollower/${userId}`)
+    .get(`user/showFollower/${userId}/1`)
     .then(success)
     .catch(fail);
 }
 function getFollowing(userId, success, fail){
     instance
-    .get(`user/showFollowing/${userId}`)
+    .get(`user/showFollowing/${userId}/1`)
     .then(success)
     .catch(fail);
 }
@@ -35,4 +35,17 @@ function getFollowWait(userId, success, fail){
     .then(success)
     .catch(fail);
 }
-export {login, join, getFollower, getFollowing, getFollowWait};
+function getArea(userInfo, success, fail){
+    instance
+    .post(`user/preferredArea`, JSON.stringify(userInfo))
+    .then(success)
+    .catch(fail);
+}
+function getStyle(userInfo, success, fail){
+    instance
+    .post(`user/preferredStyle`, JSON.stringify(userInfo))
+    .then(success)
+    .catch(fail);
+}
+
+export {login, join, getFollower, getFollowing, getFollowWait, getArea, getStyle};
