@@ -13,10 +13,10 @@
 
         <div v-for="visitedData in visitedDatas" :key="visitedData">
             <ol-overlay :position="visitedData">
-                <template v-slot="slotProps">
+                <template v-slot="">
                     <div class="overlay-content">
                         My Point<br>
-                        Position: {{ slotProps.position }}
+                        <!-- Position: {{ slotProps.position }} -->
                     </div>
                 </template>
             </ol-overlay>

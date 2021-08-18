@@ -41,9 +41,9 @@ export default {
   // }
   methods: {
     chooseCard(num){
-      // this.$store.state.postData.cardNum = num
+      this.$store.state.postData.formNumber = num
       // console.log(this.$store.state.postData.cardNum)
-      num
+      // num
     }
   }
 }
