@@ -40,7 +40,7 @@
         <span class="login-input-box"><el-checkbox v-model="checked"></el-checkbox>로그인 상태 유지</span>
       </div>
       <div @click="onSubmit" class="login-button">
-        <img style="max-height: 100%;" src="@/assets/text-logo-resize.png" alt="logo">
+        <img style="max-height: 100%; margin: 0 auto;" src="@/assets/text-logo-resize.png" alt="logo">
       </div>
     </form>
 
@@ -49,7 +49,7 @@
     </div> -->
     
     <div>
-      <router-link to="/feed" class="link-info">둘러보기</router-link> | 
+      <router-link to="/introduction" class="link-info">Been이란?</router-link> | 
       <router-link to="/signup" class="link-info">회원가입</router-link>
     </div>
   </div>
