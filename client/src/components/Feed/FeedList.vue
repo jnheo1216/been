@@ -2,13 +2,6 @@
   <suspense>
     <template #default>
       <div class="FeedList">
-        
-        <!-- <div v-for="(feed, index) in feeds" :key="feed.postId">
-          <div>{{ index }}</div>
-          <div>{{ feed }}</div>
-          <div v-if="index % 2">홀</div>
-          <div v-else>짝</div>
-        </div> -->
 
         <div class="logo">
           <img alt="BEEN LOGO" src="@/assets/image-logo.png">
@@ -28,7 +21,15 @@
           <el-button plain @click="toFavorite">추천 게시물 더 보기</el-button>
 
   
-        
+      <div class="map-box">
+        <div>
+          <MyMap :visitedDatas="[[127, 37]]"/>
+        </div>
+        <div>
+          <button @click="this.$router.push(`/mymapadd`)">흔적남기기!</button>
+        </div>
+      </div>
+
 
           <!-- 팔로잉이 없는 경우 -->
         <div v-if="this.user.followingCnt == 0">
@@ -104,6 +105,7 @@
 </template>
 
 <script>
+import MyMap from '@/components/MyMaps/MyMap.vue'
 import axios from 'axios'
 // import {ref} from 'vue'
 import {getFeedFollowPost} from '@/api/feed.js'
@@ -120,6 +122,9 @@ export default {
       feed: [],
       recommended: []
     }
+  },
+  components: {
+    MyMap
   },
   created() {
     // if (!this.isLogin) {
@@ -361,6 +366,10 @@ export default {
 
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
+}
+.map-box {
+  width: 320px;
+  margin: 0 auto;
 }
 
 </style>
