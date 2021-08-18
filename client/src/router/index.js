@@ -8,6 +8,7 @@ import Profile from '@/views/User/Profile.vue'
 import Follow from '@/views/User/Follow.vue'
 import NotFound from '@/components/NotFound/NotFound.vue'
 import Introduction from '@/views/Introduction/Introduction.vue'
+import MyPositionAdd from '@/components/MyMaps/MyPositionAdd.vue'
 // import { mapGetters } from 'vuex'
 
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/introduction',
     name: 'Introduction',
     component: Introduction
+  },
+  {
+    path: '/mymapadd',
+    name: 'MyPositionAdd',
+    component: MyPositionAdd
   },
   {
     path: '/signup',
