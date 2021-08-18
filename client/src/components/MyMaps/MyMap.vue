@@ -24,7 +24,7 @@
         
         
     </ol-map>
-    <div>center : {{ center }}, zoom : {{ zoom }} </div>
+    <!-- <div>center : {{ center }}, zoom : {{ zoom }} </div> -->
 
   </div>
 </template>
@@ -35,9 +35,9 @@ import {ref} from 'vue'
 export default {
   name: 'MyMap',
   data() {
-    const center = ref([40, 40])
+    const center = ref([127, 37])
     const projection = ref('EPSG:4326')
-    const zoom = ref(4)
+    const zoom = ref(8)
     const rotation = ref(0)
     return {
         center,
