@@ -27,9 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .anyRequest().authenticated().and();
-        http.formLogin().disable()
+                .anyRequest().permitAll().and()
+                .formLogin().disable()
                 .headers().frameOptions().disable();
+//        http.formLogin().disable()
+//                .headers().frameOptions().disable();
     }
 
     @Bean
