@@ -5,7 +5,8 @@
 
     <TestForm></TestForm>
 
-    <button @click="finish">완료</button>
+    <button style="font-size: 200%" @click="finish" type="button" class="btn btn-success">Bee~n</button>
+
 
   </div>
 </template>
@@ -97,7 +98,7 @@ export default {
 .back {
   background-color: #ffe8c4;
   width: 375px;
-  height: 812px;
+  height: 880px;
   text-align: center;
   margin: 0 auto;
 }
