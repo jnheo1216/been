@@ -52,7 +52,7 @@
 
 			<div class="gallery-item" tabindex="0" v-for="(post,idx) in this.postList" :key='idx'>
 
-				<img :src="post.postPicSrc" alt="">
+				<img :src="post.postPicSrc" alt="" style="max-width:375px; max-height:375px;">
 
 				<div class="gallery-item-type">
 
