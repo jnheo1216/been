@@ -107,9 +107,6 @@ export default {
   margin: 0 auto;
 }
 
-.text {
-  font-family: 'Nanum Pen Script', cursive;
-}
 
   .friend-search {
     margin: 50px;
