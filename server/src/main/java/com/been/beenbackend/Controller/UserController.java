@@ -228,7 +228,7 @@ public class UserController {
             System.out.println("포스트 찾는중...");
         }
         for( Post post : posts) {
-            if(post.getPostPicName() != "꿀벌썸네일.png") {
+            if(post.getPostPicName().equals("꿀벌썸네일.png")) {
                 List<PostPic> postPics = postService.getPostPic(post.getPostId());
                 for(int i = 0; i < postPics.size(); i++) {
                 s3Service.deleteObject(postPics.get(i).getName());

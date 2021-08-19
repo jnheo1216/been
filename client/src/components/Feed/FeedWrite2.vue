@@ -75,6 +75,7 @@ export default {
       ],
       message: this.placeholder,
       files: [],
+      realfiles:[],
       filesPreview: [],
       uploadImageIndex: 0
     };
@@ -99,6 +100,7 @@ export default {
       // this.files = [...this.files, this.$refs.files.files];
       //하나의 배열로 넣기
       let num = -1;
+      this.realfiles = this.$refs.files.files
       for (let i = 0; i < this.$refs.files.files.length; i++) {
         this.files = [
         ...this.files,
@@ -109,7 +111,7 @@ export default {
         //이미지 프리뷰
         preview: URL.createObjectURL(this.$refs.files.files[i]),
         //삭제및 관리를 위한 number
-        number: i
+        number: i,
         }
       ];
       num = i;
@@ -119,6 +121,7 @@ export default {
       //   { file: URL.createObjectURL(this.$refs.files.files[i]), number: i }
       // ];
       }
+      console.log(typeof(this.$refs.files.files[0]))
       this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
       // console.log(this.files);
       // console.log(this.filesPreview);
@@ -130,6 +133,7 @@ export default {
       // this.files = [...this.files, this.$refs.files.files];
       //하나의 배열로 넣기c
       let num = -1;
+      this.realfiles = this.$refs.files.files
       for (let i = 0; i < this.$refs.files.files.length; i++) {
         console.log(this.uploadImageIndex);
         this.files = [
@@ -159,7 +163,8 @@ export default {
   nextPage() {
       // console.log('암온더넥스트레블')
       this.$store.state.postData.content = this.message
-      this.$store.state.files = this.files
+      // this.$store.state.files = this.files
+      this.$store.state.files = this.realfiles
       console.log(this.$store.state.files)
       this.$router.push({name: 'FeedWrite3'})
 

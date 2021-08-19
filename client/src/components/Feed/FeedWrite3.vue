@@ -57,14 +57,25 @@ export default {
         console.log(res)
         // 포트스 id를 작성해주고
         this.imgData.postId = res.data.postId
-        this.imgData.files = this.$store.state.files
-        this.imgData.thumbnail = this.$store.state.files[0]
-        console.log('이미지 데이터')
-        console.log(this.imgData)
-        return axios.post("http://localhost:8081/post/postPic/"+this.imgData.postId,this.imgData,{
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    }
+        // this.imgData.files = this.$store.state.files
+        // this.imgData.thumbnail = this.$store.state.files[0]
+        // console.log('썸네일타입')
+        // console.log(typeof(this.$store.state.files[0]))
+        const formData = new FormData()
+        formData.append('thumbnail',this.$store.state.files[0])
+        // const fileList = new FileList();
+        for(var i = 0; i < this.$store.state.files.length; i++) {
+          formData.append('files',this.$store.state.files[i])
+        }
+        // formData.append('files',this.$store.state.files)
+        // console.log('이미지 데이터')
+        // console.log(this.imgData)
+        // console.log(formData.get('thumbnail'))
+        // console.log(formData.get('files'))
+        return axios.post("http://localhost:8081/post/postPic/"+this.imgData.postId,formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
 })
       })
       .then(res => {
