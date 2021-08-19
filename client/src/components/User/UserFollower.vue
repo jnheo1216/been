@@ -1,10 +1,14 @@
 <template>
   <div class="background">
+    
+    <div class="logo">
+      <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
+    </div>
 
     <table v-if="followerUsers.length > 0" style="width: 375px;">
       <thead>
         <tr>
-          <th>profile</th><th>email</th><th>nickname</th><th>tier</th><th>follower</th>
+          <th>profile</th><th>email</th><th>nickname</th><th>tier</th>
         </tr>
       </thead>
       <tbody>
@@ -13,7 +17,6 @@
           <td>{{ followerUser.email }}</td>
           <td>{{ followerUser.nickname }}</td>
           <td>{{ followerUser.tier }}</td>
-          <td>{{ followerUser.followerCnt }}</td>
         </tr>
       </tbody>
     </table>
@@ -57,7 +60,7 @@ export default {
   },
   methods: {
     goProfile(id) {
-      this.$router.push(`/profile/${id}`)
+      this.$router.push(`/userprofile/${id}`)
     }
   }
 }
@@ -72,4 +75,12 @@ export default {
     margin:0 auto;
   }
 
+  .logo {
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 200px;
+  }
+  .logo > img {
+    width: 100%;
+  }
 </style>

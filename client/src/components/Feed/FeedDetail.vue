@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div v-else-if="formNumber === 0">
+    <div v-else>
       <div class="backimg" v-bind:style="{backgroundImage:'url('+this.post.postPicSrc+')'}">
           <el-container>
             <el-header></el-header>
@@ -81,9 +81,6 @@
       </div>
     </div>
 
-    <div v-else>
-      폼폼4?
-    </div>
 
     <div class="like-box-1" style="font-size: large; color: red;">
       <div v-if="isLike" @click="likeDown"><i class="fas fa-heart"></i></div>

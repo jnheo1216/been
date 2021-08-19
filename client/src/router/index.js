@@ -10,6 +10,7 @@ import NotFound from '@/components/NotFound/NotFound.vue'
 import Introduction from '@/views/Introduction/Introduction.vue'
 import MyPositionAdd from '@/components/MyMaps/MyPositionAdd.vue'
 import UserProfile from '@/views/User/UserProfile.vue'
+import ProfileEdit from '@/views/User/ProfileEdit.vue'
 // import { mapGetters } from 'vuex'
 
 
@@ -192,6 +193,11 @@ const routes = [
     path: '/userprofile/:userId',
     name: 'UserProfile2',
     component: UserProfile
+  },
+  {
+    path: '/userprofile/edit/:userId',
+    name: 'ProfileEdit',
+    component: ProfileEdit
   }
 ]
 

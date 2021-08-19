@@ -39,7 +39,7 @@
           <img src="@/assets/lost-bee.png" alt="길 잃은 꿀벌" class="lost-img">
           <h2 class="text">아직 동료 꿀벌이 없습니다.</h2><br>
           <h3 class="text">꿀바르고 새로운 소식을 받아보세요.</h3>
-          <el-button plain>동료 찾으러 가기</el-button>
+          <!-- <el-button plain>동료 찾으러 가기</el-button> -->
         </div>
 
       <!-- 팔로잉이 있는 경우 -->

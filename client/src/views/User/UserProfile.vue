@@ -13,7 +13,7 @@
 
 			<div class="profile-user-settings">
 
-				<h1 class="profile-user-name">{{this.User.id}}</h1>
+				<h1 class="profile-user-name">{{this.User.nickname}}</h1>
 
 				<button class="btn profile-edit-btn">Edit Profile</button>
 
@@ -33,7 +33,8 @@
 
 			<div class="profile-bio">
 
-				<p><span class="profile-real-name">{{this.User.nickname}}</span> {{this.User.intro}}</p>
+				<p><span class="profile-real-name">{{this.User.email}}</span><br> {{this.User.intro}}</p>
+                
 
 			</div>
 
@@ -85,6 +86,7 @@
 import axios from 'axios'
 // import {getFeedUserId} from '@/api/feed.js'
 // import {getFollower, getFollowing} from '@/api/user.js'
+import {API_BASE_URL} from "@/config/index.js"
 
 
 export default {
@@ -119,6 +121,15 @@ export default {
         console.log('프로필임')
         // console.log(this.$store.state.user)
         this.User.id = this.$route.params.userId
+        axios.get(API_BASE_URL + "post/user/"+this.User.id)
+        // axios.get('http://localhost:8081/user/{id}?id='+this.User.id)
+        .then(res => {
+            this.User = res.data.user
+            console.log(this.User)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     },
     getUserPost(){
         // const id = localStorage.getItem('userId')
@@ -135,7 +146,7 @@ export default {
         //         console.log(err)
         //     }
         // )
-        axios.get("http://127.0.0.1:8081/post/userId/"+this.User.id+'/1')
+        axios.get(API_BASE_URL + "post/userId/"+this.User.id+'/1')
         .then(res => {
             var postCnt = res.data.posts.length
             this.postCnt = postCnt
@@ -159,7 +170,7 @@ export default {
         //         console.log(err)
         //     }
         // )
-        axios.get("http://127.0.0.1:8081/user/showFollower/"+this.User.id+'/1')
+        axios.get(API_BASE_URL + "user/showFollower/"+this.User.id+'/1')
         .then(res => {
             // console.log(res)
             var FollowerCnt = res.data.users.length;
@@ -183,7 +194,7 @@ export default {
         //         console.log(err)
         //     }
         // )
-        axios.get("http://127.0.0.1:8081/user/showFollowing/"+this.User.id+'/1')
+        axios.get(API_BASE_URL + "user/showFollowing/"+this.User.id+'/1')
         .then(res => {
             // console.log(res)
             var FollowingCnt = res.data.users.length;

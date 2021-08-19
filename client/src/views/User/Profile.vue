@@ -11,13 +11,13 @@
 
 			</div>
 
+				<h1 class="profile-user-name">{{this.User.nickname}}</h1>
 			<div class="profile-user-settings">
 
-				<h1 class="profile-user-name">{{this.User.id}}</h1>
 
-				<button class="btn profile-edit-btn">Edit Profile</button>
+				<button class="btn profile-edit-btn" @click="editUserProfile(this.User.id)">Edit Profile</button>
 
-				<button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+				<button class="btn profile-settings-btn" aria-label="profile settings"  @click="editUserProfile(this.User.id)"><i class="fas fa-cog" aria-hidden="true"></i></button>
 
 			</div>
 
@@ -25,15 +25,16 @@
 
 				<ul>
 					<li><span class="profile-stat-count">{{this.postCnt}}</span> posts</li>
-					<li><span class="profile-stat-count" @click="this.alertFollower()">{{this.User.followerCnt}}</span> followers</li>
-					<li><span class="profile-stat-count">{{this.User.followingCnt}}</span> following</li>
+					<li><span class="profile-stat-count" @click="this.$router.push(`/follow/follower/${User.id}`)">{{this.User.followerCnt}}</span> followers</li>
+					<li><span class="profile-stat-count" @click="this.$router.push(`/follow/following/${User.id}`)">{{this.User.followingCnt}}</span> following</li>
+					<li><span class="profile-stat-count" @click="this.$router.push(`/follow/followwait/${User.id}`)">대기중</span> waiting</li>
 				</ul>
 
 			</div>
 
 			<div class="profile-bio">
 
-				<p><span class="profile-real-name">{{this.User.nickname}}</span> {{this.User.intro}}</p>
+				<p><span class="profile-real-name">{{this.User.email}}</span><br> {{this.User.intro}}</p>
 
 			</div>
 
@@ -193,6 +194,9 @@ export default {
         //     console.log(err)
         // })
     },
+    editUserProfile(userId) {
+        this.$router.push("/userprofile/edit/"+userId)
+    }
   },
   created() {
     this.getUserProfile()

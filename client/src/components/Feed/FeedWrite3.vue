@@ -5,7 +5,8 @@
 
     <TestForm></TestForm>
 
-    <button @click="finish">완료</button>
+    <button style="font-size: 200%" @click="finish" type="button" class="btn btn-success">Bee~n</button>
+
 
   </div>
 </template>
@@ -13,6 +14,7 @@
 <script>
 import TestForm from "./TestForm";
 import axios from "axios"
+import {API_BASE_URL} from "@/config/index.js"
 
 export default {
   name: "FeedWrite3",
@@ -52,7 +54,7 @@ export default {
       this.$store.state.postData.userId = localStorage.getItem('userId')
       console.log(this.$store.state.postData)
       // 우선 포스트를 만들고
-      axios.post("http://127.0.0.1:8081/post", this.$store.state.postData)
+      axios.post(API_BASE_URL + "post", this.$store.state.postData)
       .then(res => {
         console.log(res)
         // 포트스 id를 작성해주고
@@ -72,7 +74,7 @@ export default {
         // console.log(this.imgData)
         // console.log(formData.get('thumbnail'))
         // console.log(formData.get('files'))
-        return axios.post("http://localhost:8081/post/postPic/"+this.imgData.postId,formData,{
+        return axios.post(API_BASE_URL + "post/postPic/"+this.imgData.postId,formData,{
         headers: {
           'Content-Type': 'multipart/form-data',
         }
@@ -96,7 +98,8 @@ export default {
 .back {
   background-color: #ffe8c4;
   width: 375px;
-  height: 812px;
+  height: 880px;
   text-align: center;
+  margin: 0 auto;
 }
 </style>

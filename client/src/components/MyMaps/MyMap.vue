@@ -37,7 +37,7 @@ export default {
   data() {
     const center = ref([127, 37])
     const projection = ref('EPSG:4326')
-    const zoom = ref(8)
+    const zoom = ref(6)
     const rotation = ref(0)
     return {
         center,
