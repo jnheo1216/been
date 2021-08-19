@@ -50,7 +50,7 @@
 		<div class="gallery">
 
 
-			<div class="gallery-item" tabindex="0" v-for="(post,idx) in this.postList" :key='idx'>
+			<div class="gallery-item" tabindex="0" v-for="(post,idx) in this.postList" :key='idx' @click="this.$router.push(`/feed/${post.postId}`)">
 
 				<img :src="post.postPicSrc" alt="" style="max-width:375px; max-height:375px;">
 
