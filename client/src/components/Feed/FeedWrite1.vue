@@ -90,8 +90,8 @@ export default {
         // console.log(this.region[0])
         // console.log(this.style[0][0])
         this.$store.state.postData.title = this.title
-        this.$store.state.postData.area = this.region[0]
-        this.$store.state.postData.style = this.style[0][0]
+        this.$store.state.postData.area = this.region
+        this.$store.state.postData.style = this.style
         this.$router.push({name: 'FeedWrite2'});
         
 
