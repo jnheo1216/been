@@ -11,6 +11,7 @@ import Introduction from '@/views/Introduction/Introduction.vue'
 import MyPositionAdd from '@/components/MyMaps/MyPositionAdd.vue'
 import UserProfile from '@/views/User/UserProfile.vue'
 import ProfileEdit from '@/views/User/ProfileEdit.vue'
+import ChangePassword from '@/views/User/ChangePassword.vue'
 // import { mapGetters } from 'vuex'
 
 
@@ -198,7 +199,12 @@ const routes = [
     path: '/userprofile/edit/:userId',
     name: 'ProfileEdit',
     component: ProfileEdit
-  }
+  },
+  {
+    path: '/changepassword',
+    name: 'ChangePassword',
+    component: ChangePassword
+  },
 ]
 
 const router = createRouter({

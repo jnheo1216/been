@@ -39,8 +39,8 @@
         <input type="text" placeholder="자기소개" id="intro" v-model="User.intro">
 
 			</div>
-      <label for="password">비밀번호 수정:</label>
-      <input type="password" placeholder="비밀번호 수정" id="password" v-model="User.password">
+      
+      <button @click="this.$router.push('/changepassword')">비밀번호 수정하기</button>
 
       <button @click="submitEdit">수정완료</button>
 
@@ -63,6 +63,7 @@ export default {
       console.log(this.User)
     },
     submitEdit(){
+      this.User.emailConfirmation = 1
       axios.put(API_BASE_URL + "user",this.User)
       .then(res => {
         console.log(res)
