@@ -81,9 +81,54 @@ public class PostController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+//    @ApiOperation(value="post 등록, 수정 후 사진 넣기(update), *thumbnail 필수! thumbnail이 없으면 db에 있는 기본값으로 만들어주세요! 사진 용량 제한도 있습니다")
+//    @PostMapping(value= "/post/postPic/{postId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+//    public ResponseEntity<Map<String, Object>> modify(@RequestPart List<MultipartFile> files, @RequestPart MultipartFile thumbnail, @PathVariable int postId) throws Exception {
+//
+//        //썸네일 사진 넣기
+//        String fileName = "postThumbnail_"+postId+".jpg";
+//        String imgPath = s3Service.uploadObject(thumbnail,fileName);
+//        PostPic postPic = new PostPic();
+//        postPic.setSrc(imgPath);
+////        postPic.setName(thumbnail.getOriginalFilename());
+//        postPic.setName(fileName);
+//        postPic.setPostId(postId);
+//        postPic.setNum(0);
+//        postService.registerPic(postPic);
+//        Post post = postService.listOne(postId);
+//        post.setPostPicName(postPic.getName());
+//        post.setPostPicSrc(imgPath);
+//        postService.modify(post);
+//        //각각의 사진 넣기
+//        for(int i = 0; i < files.size(); i++){
+//            fileName = "postPic_"+postId+Integer.toString(i+1)+".jpg";
+//            imgPath = s3Service.uploadObject(files.get(i),fileName);
+//            postPic = new PostPic();
+//            postPic.setSrc(imgPath);
+////            postPic.setName(files.get(i).getOriginalFilename());
+//            postPic.setName(fileName);
+//            postPic.setPostId(postId);
+//            postPic.setNum(i+1);
+//            postService.registerPic(postPic);
+////            if(i == 0) { //썸네일 사진 post에 넣어주기
+////                Post post = postService.listOne(postId);
+////                post.setPostPicName(postPic.getName());
+////                post.setPostPicSrc(imgPath);
+////                postService.modify(post);
+////            }
+//        }
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
+
     @ApiOperation(value="post 등록, 수정 후 사진 넣기(update), *thumbnail 필수! thumbnail이 없으면 db에 있는 기본값으로 만들어주세요! 사진 용량 제한도 있습니다")
-    @PostMapping(value= "/post/postPic/{postId}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Map<String, Object>> modify(@RequestPart List<MultipartFile> files, @RequestPart MultipartFile thumbnail, @PathVariable int postId) throws Exception {
+    @PostMapping(value= "/post/postPic/{postId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Map<String, Object>> modify(@RequestPart MultipartFile[] files, @RequestPart MultipartFile thumbnail, @PathVariable int postId) throws Exception {
+
+        if(thumbnail != null) System.out.println("썸네일 받기 완료");
+        else return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        if(thumbnail != null) System.out.println("사진들 받기 완료");
+        else return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
         //썸네일 사진 넣기
         String fileName = "postThumbnail_"+postId+".jpg";
         String imgPath = s3Service.uploadObject(thumbnail,fileName);
@@ -99,9 +144,9 @@ public class PostController {
         post.setPostPicSrc(imgPath);
         postService.modify(post);
         //각각의 사진 넣기
-        for(int i = 0; i < files.size(); i++){
+        for(int i = 0; i < files.length; i++){
             fileName = "postPic_"+postId+Integer.toString(i+1)+".jpg";
-            imgPath = s3Service.uploadObject(files.get(i),fileName);
+            imgPath = s3Service.uploadObject(files[i],fileName);
             postPic = new PostPic();
             postPic.setSrc(imgPath);
 //            postPic.setName(files.get(i).getOriginalFilename());
