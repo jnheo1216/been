@@ -12,7 +12,7 @@
       <h3 class="text">{{ this.user.nickname }}님이 좋아하는 여행 스타일과 여행지역을 추가하시면 더 많은 추천 게시물을 보실 수 있습니다.</h3>
 
 
-      <div v-if="this.favorite.length < 20">
+      <div>
         <div v-for="(post, $index) in this.favorite"
           :key="$index" class="my-4">
           
