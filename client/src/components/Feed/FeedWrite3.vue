@@ -98,5 +98,6 @@ export default {
   width: 375px;
   height: 812px;
   text-align: center;
+  margin: 0 auto;
 }
 </style>
