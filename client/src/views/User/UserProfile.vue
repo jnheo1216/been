@@ -53,7 +53,7 @@
 
 			<div class="gallery-item" tabindex="0" v-for="(post,idx) in this.postList" :key='idx'>
 
-				<img :src="post.postPicSrc" alt="">
+				<img :src="post.postPicSrc" alt="" style="max-width:375px; max-height:375px;">
 
 				<div class="gallery-item-type">
 
@@ -418,8 +418,8 @@ img {
     margin: 1rem;
     color: #fff;
     cursor: pointer;
-    /* width: 0.3em;
-    height: 0.3em; */
+    max-width: 375px;
+    max-height: 375px;
 }
 
 .gallery-item:hover .gallery-item-info,
