@@ -104,7 +104,7 @@
           placeholder="소감을 남겨주세요"
           size="small"
           @keyup.enter="commentWrite"></el-input>
-        <button @click="commentWrite">작성</button>
+        <button style="font-size: 200%" class="btn btn-success" @click="commentWrite">Bee~n</button>
       </div>
     </div>
 
@@ -315,6 +315,7 @@ export default {
     margin: 10px;
     background-color: lightgray;
     border-radius: 10px;
+    opacity:0.5;
   }
   .comment-form {
     margin: 10px;

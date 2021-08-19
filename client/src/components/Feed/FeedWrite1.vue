@@ -60,7 +60,7 @@ export default {
       percentage: 20,
       title: '',
       region: '',
-      style: [],
+      style: '',
       customColors: [
         {color: '#5cb87a', percentage: 60},
         {color: '#1989fa', percentage: 80},

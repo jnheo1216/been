@@ -22,7 +22,7 @@ function getFeedDetail(postId, success, fail){
 }
 function getFeedUserId(userId, success, fail){
     instance
-    .get(`post/userId/${userId}`)
+    .get(`post/userId/${userId}/1`)
     .then(success)
     .catch(fail);
 }
