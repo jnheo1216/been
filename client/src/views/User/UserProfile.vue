@@ -85,6 +85,7 @@
 import axios from 'axios'
 // import {getFeedUserId} from '@/api/feed.js'
 // import {getFollower, getFollowing} from '@/api/user.js'
+import {API_BASE_URL} from "@/config/index.js"
 
 
 export default {
@@ -135,7 +136,7 @@ export default {
         //         console.log(err)
         //     }
         // )
-        axios.get("http://127.0.0.1:8081/post/userId/"+this.User.id+'/1')
+        axios.get(API_BASE_URL + "post/userId/"+this.User.id+'/1')
         .then(res => {
             var postCnt = res.data.posts.length
             this.postCnt = postCnt
@@ -159,7 +160,7 @@ export default {
         //         console.log(err)
         //     }
         // )
-        axios.get("http://127.0.0.1:8081/user/showFollower/"+this.User.id+'/1')
+        axios.get(API_BASE_URL + "user/showFollower/"+this.User.id+'/1')
         .then(res => {
             // console.log(res)
             var FollowerCnt = res.data.users.length;
@@ -183,7 +184,7 @@ export default {
         //         console.log(err)
         //     }
         // )
-        axios.get("http://127.0.0.1:8081/user/showFollowing/"+this.User.id+'/1')
+        axios.get(API_BASE_URL + "user/showFollowing/"+this.User.id+'/1')
         .then(res => {
             // console.log(res)
             var FollowingCnt = res.data.users.length;
