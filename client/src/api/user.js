@@ -31,7 +31,7 @@ function getFollowing(userId, success, fail){
 }
 function getFollowWait(userId, success, fail){
     instance
-    .put(`user/beforeFollowList/${userId}`, JSON.stringify(userId))
+    .put(`user/beforeFollowList/${userId}/1`, JSON.stringify(userId))
     .then(success)
     .catch(fail);
 }

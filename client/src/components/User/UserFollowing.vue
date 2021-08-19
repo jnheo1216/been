@@ -4,7 +4,7 @@
     <table v-if="followingUsers.length > 0" style="width: 375px;">
       <thead>
         <tr>
-          <th>profile</th><th>email</th><th>nickname</th><th>tier</th><th>follower</th>
+          <th>profile</th><th>email</th><th>nickname</th><th>tier</th>
         </tr>
       </thead>
       <tbody>
@@ -13,7 +13,6 @@
           <td>{{ followingUser.email }}</td>
           <td>{{ followingUser.nickname }}</td>
           <td>{{ followingUser.tier }}</td>
-          <td>{{ followingUser.followerCnt }}</td>
         </tr>
       </tbody>
     </table>
@@ -57,7 +56,7 @@ export default {
   },
   methods: {
     goProfile(id) {
-      this.$router.push(`/profile/${id}`)
+      this.$router.push(`/userprofile/${id}`)
     }
   }
 }

@@ -6,16 +6,15 @@
     <table v-if="followUserWaits.length > 0" style="width: 375px;">
       <thead>
         <tr>
-          <th>profile</th><th>email</th><th>nickname</th><th>tier</th><th>follower</th>
+          <th>profile</th><th>email</th><th>nickname</th><th>tier</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="followUserWait in followUserWaits" :key="followUserWait.id">
           <td><div style="width: 50px;"><img style="max-width: 100%;" :src="followUserWait.profilePicSrc" alt="프로필이미지"></div></td>
-          <td>{{ followUserWait.email }}</td>
+          <td @click="followOK(followUserWait.id)">{{ followUserWait.email }}</td>
           <td>{{ followUserWait.nickname }}</td>
           <td>{{ followUserWait.tier }}</td>
-          <td>{{ followUserWait.followerCnt }}</td>
         </tr>
       </tbody>
     </table>
@@ -28,6 +27,8 @@
 <script>
 // import axios from 'axios'
 import {getFollowWait} from '@/api/user.js'
+import axios from 'axios'
+import {API_BASE_URL} from '@/config/index.js'
 
 export default {
   name: 'UserFollowWait',
@@ -52,6 +53,23 @@ export default {
     //       console.error(err)
     //   })
   },
+  methods: {
+    followOK(userId) {
+      myId = localStorage.getItem('userId')
+      axios.put(API_BASE_URL + `user/${userId}/${myId}`)
+        .then((res) => {
+          console.log(res)
+          
+          for(let i = 0; i < followUserWaits.length; i++) {
+            if(followUserWaits[i]['id'] === userId){
+              followUserWaits.splice(i, 1);
+              i--;
+            }
+          }
+        })
+        .catch((err) => {console.log(err)})
+    }
+  }
 }
 </script>
 
