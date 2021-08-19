@@ -19,7 +19,7 @@
           <div class="grid grid-cols-12">
               <div class="wrap block">
 
-                <div class="hex" @click="toDetail">
+                <div class="hex2" @click="toDetail">
                   <div class="hex-inner">
                     <div class="content" style="background: #F4DBDB">
                       <h2>{{ post.title }}</h2>
@@ -36,7 +36,7 @@
                   </div>
                 </div>
 
-                <div class="hex" @click="toDetail">
+                <div class="hex2" @click="toDetail">
                   <div class="hex-inner">
                     <div class="content" style="background: #DDD9D9">
                       <h2>{{ post.area }}</h2>
@@ -62,7 +62,7 @@
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
                   <div class="content" style="background: #F4DBDB">
-                    <h2>{{ post.title }}</h2>
+                    {{ post.title }}
                   </div>
                 </div>
               </div>
@@ -79,7 +79,7 @@
               <div class="hex" @click="toDetail">
                 <div class="hex-inner">
                   <div class="content" style="background: #DDD9D9">
-                    <h2>{{ post.area }}</h2>
+                    {{ post.area }}
                   </div>
                 </div>
               </div>
@@ -311,6 +311,30 @@ export default {
 }
 
 .hex::after {
+  content: '';
+  display: block;
+  padding-bottom: 80%;
+}
+
+.hex2 {
+  width: 15%;
+  margin-bottom: 1.8%;
+  position: relative;
+  visibility: hidden;
+  border: 2px solid red;
+  box-shadow: 5px 5px 5px 5px;
+  vertical-align: middle;
+}
+
+.hex2:hover {
+  bottom: 3px;
+}
+
+.hex2:nth-of-type(7n+5) {
+  margin: 12.5%;
+}
+
+.hex2::after {
   content: '';
   display: block;
   padding-bottom: 80%;

@@ -15,7 +15,7 @@
             <ol-overlay :position="visitedData">
                 <template v-slot="">
                     <div class="overlay-content">
-                        My Point<br>
+                        *<i class="fab fa-forumbee"></i>*<br>
                         <!-- Position: {{ slotProps.position }} -->
                     </div>
                 </template>
