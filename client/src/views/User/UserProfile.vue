@@ -38,6 +38,7 @@
 
 			</div>
 
+            <div class="follow-btn" @click="followUser()">꿀 바르기</div>
 		</div>
 		<!-- End of profile section -->
 
@@ -52,7 +53,7 @@
 
 			<div class="gallery-item" tabindex="0" v-for="(post,idx) in this.postList" :key='idx'>
 
-				<img :src="post.postPicSrc" alt="">
+				<img :src="post.postPicSrc" alt="" style="max-width:375px; max-height:375px;">
 
 				<div class="gallery-item-type">
 
@@ -113,7 +114,7 @@ export default {
         PostList: [],
         FollowerList: [],
         FollowingList: [],
-        
+        alreadyFollowing: false
     }
   },
   methods: {
@@ -205,11 +206,42 @@ export default {
             console.log(err)
         })
     },
+    getAlreadyFollowing() {
+        console.log("이미 팔로우")
+        axios.get(API_BASE_URL+`user/showFollowing/${this.$store.state.user.id}/1`)
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    },
+    followUser(){
+        // var data = {
+        //     followedId = "",
+        //     followerId = ""
+        // }
+        var followedId = this.$route.params.userId
+        var followerId = this.$store.state.user.id
+        // data.followedId = this.$route.params.userId
+        // data.followerId = this.$store.state.user.id
+
+        axios.post(API_BASE_URL+`user/${followedId}/${followerId}`)
+        .then(res => {
+            console.log("성공")
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(this.$store.state.user)
+            console.log(err)
+        })
+    }
   },
   created() {
     this.getUserProfile()
     this.getUserPost()
     this.getUserFollower()
+    this.getAlreadyFollowing()
     this.getUserFollowing()
   }
 }
@@ -386,8 +418,8 @@ img {
     margin: 1rem;
     color: #fff;
     cursor: pointer;
-    /* width: 0.3em;
-    height: 0.3em; */
+    max-width: 375px;
+    max-height: 375px;
 }
 
 .gallery-item:hover .gallery-item-info,

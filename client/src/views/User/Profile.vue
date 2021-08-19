@@ -378,8 +378,8 @@ img {
     margin: 1rem;
     color: #fff;
     cursor: pointer;
-    /* width: 0.3em;
-    height: 0.3em; */
+    max-width: 375px;
+    max-height: 375px;
 }
 
 .gallery-item:hover .gallery-item-info,
