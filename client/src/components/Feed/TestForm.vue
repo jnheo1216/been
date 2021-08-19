@@ -112,7 +112,6 @@ main {
 
 .title {
   font-size: 16px;
-  color: black;
   text-align: center;
   font-weight: 700;
   color: #181818;

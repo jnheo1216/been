@@ -171,7 +171,7 @@ body {
 }
 .hex {
   width: 20vw;
-  height: calc(20vw*1.7430);
+  height: calc(20vw * 1.7430);
   margin: .2vw;
   position: relative;
   overflow: hidden !important;
