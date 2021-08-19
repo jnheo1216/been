@@ -123,7 +123,7 @@ public class PostController {
     @ApiOperation(value="post 등록, 수정 후 사진 넣기(update), *thumbnail 필수! thumbnail이 없으면 db에 있는 기본값으로 만들어주세요! 사진 용량 제한도 있습니다")
     @PostMapping(value= "/post/postPic/{postId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<Map<String, Object>> modify(@RequestPart List<MultipartFile> files, @RequestPart MultipartFile thumbnail, @PathVariable int postId) throws Exception {
-            System.out.println("데이터 받음");
+//            System.out.println("데이터 받음");
 //        if(thumbnail != null) System.out.println("썸네일 받기 완료");
 //        else return new ResponseEntity(HttpStatus.BAD_REQUEST);
 //        if(files != null) System.out.println("사진들 받기 완료");
@@ -197,7 +197,7 @@ public class PostController {
     @DeleteMapping(value = "/post/{postId}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable int postId) throws Exception {
         Post post = postService.listOne(postId);
-        if(post.getPostPicName().equals("꿀벌썸네일.png")) {
+        if(!post.getPostPicName().equals("꿀벌썸네일.png")) {
             List<PostPic> postPics = postService.getPostPic(postId);
             for(int i = 0; i < postPics.size(); i++) {
                 s3Service.deleteObject(postPics.get(i).getName());
