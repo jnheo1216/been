@@ -13,7 +13,7 @@
 
 			<div class="profile-user-settings">
 
-				<h1 class="profile-user-name">{{this.User.id}}</h1>
+				<h1 class="profile-user-name">{{this.User.nickname}}</h1>
 
 				<button class="btn profile-edit-btn">Edit Profile</button>
 
@@ -33,7 +33,8 @@
 
 			<div class="profile-bio">
 
-				<p><span class="profile-real-name">{{this.User.nickname}}</span> {{this.User.intro}}</p>
+				<p><span class="profile-real-name">{{this.User.email}}</span><br> {{this.User.intro}}</p>
+                
 
 			</div>
 
@@ -120,6 +121,15 @@ export default {
         console.log('프로필임')
         // console.log(this.$store.state.user)
         this.User.id = this.$route.params.userId
+        axios.get(API_BASE_URL + "post/user/"+this.User.id)
+        // axios.get('http://localhost:8081/user/{id}?id='+this.User.id)
+        .then(res => {
+            this.User = res.data.user
+            console.log(this.User)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     },
     getUserPost(){
         // const id = localStorage.getItem('userId')
