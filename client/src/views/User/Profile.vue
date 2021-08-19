@@ -54,13 +54,13 @@
 
 				<img :src="post.postPicSrc" alt="" style="max-width:375px; max-height:375px;">
 
-				<div class="gallery-item-type">
+				<div @click="this.$router.push(`/feed/${post.postId}`)" class="gallery-item-type">
 
 					<span class="visually-hidden">Video</span><i class="fas fa-video" aria-hidden="true"></i>
 
 				</div>
 
-				<div class="gallery-item-info">
+				<div @click="this.$router.push(`/feed/${post.postId}`)" class="gallery-item-info">
 
 					<ul>
 						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.likeCnt}}</li>

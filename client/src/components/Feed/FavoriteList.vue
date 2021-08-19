@@ -49,48 +49,6 @@
         </div>
       </div>
       <!-- 추천 게시물이 20건 이상인 경우 -->
-      <div v-else>
-      <header>
-      </header>
-      <template>
-      <div v-for="(post, $index) in this.favorite"
-          :key="$index" class="my-4">
-        
-        <div class="grid grid-cols-12">
-            <div class="wrap block">
-
-              <div class="hex" @click="toDetail">
-                <div class="hex-inner">
-                  <div class="content" style="background: #F4DBDB">
-                    {{ post.title }}
-                  </div>
-                </div>
-              </div>
-              
-              <div class="hex" @click="this.$router.push(`/feed/${post.postId}`)">
-                <div class="hex-inner">
-                  <div v-if="post.postPicSrc" class="content">
-                    <img :src="post.postPicSrc" class="hex-image">
-                  </div>
-                  <div v-else class="content" style="background: url('https://picsum.photos/200/300?grayscale)')"></div>
-                </div>
-              </div>
-
-              <div class="hex" @click="toDetail">
-                <div class="hex-inner">
-                  <div class="content" style="background: #DDD9D9">
-                    {{ post.area }}
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div> 
-      </div>
-      </template>
-
-      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-      </div>
 
       <!-- 추천 게시물이 3건 이상인 경우 -->
       <!-- <div v-else>
@@ -186,7 +144,6 @@
 <script>
 import axios from 'axios'
 import {API_BASE_URL} from "@/config/index.js"
-import InfiniteLoading from 'vue-infinite-loading'
 
 export default {
   name: 'FavoriteList',
@@ -196,9 +153,6 @@ export default {
       favorite: [],
       page: 1,
     }
-  },
-  components: {
-    InfiniteLoading,
   },
   created() {
     this.user = this.$store.state.user
@@ -234,20 +188,6 @@ export default {
         params: { feedNumber: postId }
         })
     },
-    infiniteHandler($state) {
-      axios.get(API_BASE_URL + 'post/preferedArea/' + this.user.id + `/${this.page}`)
-        .then((res) => {
-          if (res.data.posts.length) {
-            Array.prototype.push.apply(this.favorite, res.data.posts)
-            console.log(this.favorite)
-            this.page += 1
-            $state.loaded();
-          } else {$state.complete()}
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-    }
   }
 }
 </script>
