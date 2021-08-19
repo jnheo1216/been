@@ -34,15 +34,15 @@
 
             </ol-map>
 
-            <div>
+            <!-- <div>
                 center : {{currentCenter}} zoom : {{currentZoom}} resolution :
                 {{currentResolution}} rotation : {{currentRotation}}
+            </div> -->
+            <div>
+                <el-input style="padding: 20px" placeholder="당신이 원하는 곳" v-model="area"></el-input>
             </div>
             <div>
-                <el-input placeholder="당신이 원하는 곳" v-model="area"></el-input>
-            </div>
-            <div>
-                <button @click="marking">마크</button>
+                <button style="font-size:150%; padding: 10px" type="button" class="btn btn-outline-warning" @click="marking">마크</button>
             </div>
         </div>
 
@@ -126,5 +126,7 @@ export default {
   .overlay-content {
     background-color: deeppink;
     color: aliceblue;
+    border-radius: 10%;
+    font-size: 150%;
   }
 </style>

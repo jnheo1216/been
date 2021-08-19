@@ -92,7 +92,7 @@ export default ({
     //   })
    },
    toUserProfile: function(userId) {
-     this.$router.push({name: "UserProfile", params: {userId: userId}})
+     this.$router.push({name: "UserProfile2", params: {userId: userId}})
    },
   backToSearchmain: function () {
     this.$router.push({ name: "SearchMain" })

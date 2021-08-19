@@ -26,7 +26,7 @@
           <MyMap :visitedDatas="usersArea"/>
         </div>
         <div>
-          <button @click="this.$router.push(`/mymapadd`)">흔적남기기!</button>
+          <button style="font-size:150%; padding: 10px" type="button" class="btn btn-outline-warning" @click="this.$router.push(`/mymapadd`)">흔적남기기!</button>
         </div>
       </div>
 
