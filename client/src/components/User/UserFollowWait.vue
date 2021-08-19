@@ -59,14 +59,14 @@ export default {
   },
   methods: {
     followOK(userId) {
-      myId = localStorage.getItem('userId')
+      const myId = localStorage.getItem('userId')
       axios.put(API_BASE_URL + `user/${userId}/${myId}`)
         .then((res) => {
           console.log(res)
           
-          for(let i = 0; i < followUserWaits.length; i++) {
-            if(followUserWaits[i]['id'] === userId){
-              followUserWaits.splice(i, 1);
+          for(let i = 0; i < this.followUserWaits.length; i++) {
+            if(this.followUserWaits[i]['id'] === userId){
+              this.followUserWaits.splice(i, 1);
               i--;
             }
           }
