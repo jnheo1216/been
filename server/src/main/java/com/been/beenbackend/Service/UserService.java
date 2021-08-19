@@ -59,4 +59,6 @@ public interface UserService {
     void deletePreferedArea(PreferredArea preferredArea);
 
     void deletePreferedStyle(PreferredStyle preferredStyle);
+
+    void modifyPassword(User user);
 }

@@ -37,8 +37,14 @@
 	
 	<update id="modify" parameterType="user">
 		update user
-		set password = #{password}, intro = #{intro}, nickname = #{nickname}, tier = #{tier},
-		profilePicSrc = #{profilePicSrc}, profilePicName = #{profilePicName}, emailConfirmation = #{emailConfirmation}, status = #{status}
+		set intro = #{intro}, nickname = #{nickname}, tier = #{tier},
+		emailConfirmation = #{emailConfirmation}, status = #{status}
+		where id = #{id};
+	</update>
+
+	<update id="modifyPassword" parameterType="user">
+		update user
+		set password = #{password}
 		where id = #{id};
 	</update>
 

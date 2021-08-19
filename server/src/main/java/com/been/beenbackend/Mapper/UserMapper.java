@@ -58,5 +58,7 @@ public interface UserMapper {
     void deletePreferredArea(PreferredArea preferredArea);
 
     void deletePreferredStyle(PreferredStyle preferredStyle);
+
+    void modifyPassword(User user);
 }
 
