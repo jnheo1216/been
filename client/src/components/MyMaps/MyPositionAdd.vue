@@ -44,6 +44,12 @@
             <div>
                 <button style="font-size:150%; padding: 10px" type="button" class="btn btn-outline-warning" @click="marking">마크</button>
             </div>
+            <div>
+                <el-input style="padding: 20px" placeholder="당신의 성향을 알려주세요" v-model="style"></el-input>
+            </div>
+            <div>
+                <button style="font-size:150%; padding: 10px" type="button" class="btn btn-outline-warning" @click="markingstyle">나의 스타일</button>
+            </div>
         </div>
 
     </template>
@@ -56,7 +62,7 @@
 
 <script>
 import { ref } from "vue";
-import {getArea} from "@/api/user.js"
+import {getArea, getStyle} from "@/api/user.js"
 
 export default {
   name: 'MyPositionAdd',
@@ -77,6 +83,7 @@ export default {
       wido: '',
       kyungdo: '',
       area: '',
+      style: '',
     };
   },
   methods: {
@@ -109,6 +116,20 @@ export default {
         this.$router.push({
             name: "Feed"
         })
+    },
+    markingstyle() {
+      const infostyle = {
+        style: this.style,
+        userId: this.$store.state.user.id
+      }
+      getStyle(
+        infostyle,
+        (res) => {console.log(res)},
+        (err) => {console.error(err)}
+      )
+      this.$router.push({
+          name: "Feed"
+      })
     }
   },
 }
