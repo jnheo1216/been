@@ -1,6 +1,10 @@
 <template>
   <div class="background">
     
+    <div class="logo">
+      <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
+    </div>
+
     <table v-if="followingUsers.length > 0" style="width: 375px;">
       <thead>
         <tr>
@@ -71,4 +75,12 @@ export default {
     margin:0 auto;
   }
 
+  .logo {
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 200px;
+  }
+  .logo > img {
+    width: 100%;
+  }
 </style>

@@ -1,7 +1,11 @@
 <template>
   <div class="background">
+    
+    <div class="logo">
+      <img alt="BEEN LOGO" class="logo-img" src="@/assets/image-logo-resize.png">
+    </div>
+
     <div> wait </div>
-    <div> {{ followUserWaits }} </div>
 
     <table v-if="followUserWaits.length > 0" style="width: 375px;">
       <thead>
@@ -82,4 +86,12 @@ export default {
     margin:0 auto;
   }
 
+  .logo {
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 200px;
+  }
+  .logo > img {
+    width: 100%;
+  }
 </style>
