@@ -285,7 +285,7 @@ export default {
     },
     toProfile() {
       const userId = this.post.userId
-      this.$router.push({ name: 'UserProfile', params: { userId: userId }})
+      this.$router.push({ name: 'UserProfile2', params: { userId: userId }})
     }
   }
 }
