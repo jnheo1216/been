@@ -26,7 +26,7 @@
           <MyMap :visitedDatas="usersArea"/>
         </div>
         <div>
-          <button @click="this.$router.push(`/mymapadd`)">흔적남기기!</button>
+          <button style="font-size:150%; padding: 10px" type="button" class="btn btn-outline-warning" @click="this.$router.push(`/mymapadd`)">흔적남기기!</button>
         </div>
       </div>
 
@@ -314,11 +314,10 @@ export default {
 .FeedList {
   position: relative;
   width: 375px;
-  height: 812px;
+  height: 880px;
   background-color: #fffaf4;
   margin: 0 auto;
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .logo {
@@ -368,7 +367,7 @@ export default {
   background-color: #d3dce6;
 }
 .map-box {
-  width: 320px;
+  width: 375px;
   margin: 0 auto;
 }
 .post-button {

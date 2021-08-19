@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div v-else-if="formNumber === 3">
+    <div v-else-if="formNumber === 0">
       <div class="backimg" v-bind:style="{backgroundImage:'url('+this.post.postPicSrc+')'}">
           <el-container>
             <el-header></el-header>
@@ -126,7 +126,7 @@ export default {
     return {
       postId: '',
       post: {},
-      formNumber: 2,
+      formNumber: 1,
       isLike: false,
       comments: [],
       newComment: '',
@@ -145,6 +145,7 @@ export default {
         console.log(res)
         this.postId = res.data.post.postId
         this.post = res.data.post
+        this.formNumber = res.data.post.formNumber
         const id = res.data.post.userId
         axios.get(API_BASE_URL + `user/{id}?id=${id}`)
           .then(res2 => {
@@ -285,7 +286,7 @@ export default {
     },
     toProfile() {
       const userId = this.post.userId
-      this.$router.push({ name: 'UserProfile', params: { userId: userId }})
+      this.$router.push({ name: 'UserProfile2', params: { userId: userId }})
     }
   }
 }

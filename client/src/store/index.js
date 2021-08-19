@@ -18,7 +18,7 @@ export default createStore({
       updatedAt: "",
       userId: 0
     },
-    postPics: []
+    files: []
   },
   getters: {
     isLoggedIn({ jwtAuthToken }) {
