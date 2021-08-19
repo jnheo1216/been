@@ -82,13 +82,13 @@
 </template>
 
 <script>
-// import axios from 'axios'
-import {getFeedUserId} from '@/api/feed.js'
-import {getFollower, getFollowing} from '@/api/user.js'
+import axios from 'axios'
+// import {getFeedUserId} from '@/api/feed.js'
+// import {getFollower, getFollowing} from '@/api/user.js'
 
 
 export default {
-  name: 'Profile',
+  name: 'UserProfile',
   data() {
       return {
           User: {
@@ -118,81 +118,81 @@ export default {
     getUserProfile() {
         console.log('프로필임')
         // console.log(this.$store.state.user)
-        this.User = this.$store.state.user
+        this.User.id = this.$route.params.userId
     },
     getUserPost(){
         // const id = localStorage.getItem('userId')
         // 여기서 동적 라우팅으로 id만 설정해주면 됨
-        getFeedUserId(
-            id,
-            (res) => {
-                var postCnt = res.data.posts.length
-                this.postCnt = postCnt
-                this.postList = res.data.posts
-                console.log(res.data.posts)
-            },
-            (err) => {
-                console.log(err)
-            }
-        )
-        // axios.get("http://127.0.0.1:8081/post/userId/"+this.User.id)
-        // .then(res => {
-        //     var postCnt = res.data.posts.length
-        //     this.postCnt = postCnt
-        //     this.postList = res.data.posts
-        //     console.log(res.data.posts)
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
+        // getFeedUserId(
+        //     id,
+        //     (res) => {
+        //         var postCnt = res.data.posts.length
+        //         this.postCnt = postCnt
+        //         this.postList = res.data.posts
+        //         console.log(res.data.posts)
+        //     },
+        //     (err) => {
+        //         console.log(err)
+        //     }
+        // )
+        axios.get("http://127.0.0.1:8081/post/userId/"+this.User.id+'/1')
+        .then(res => {
+            var postCnt = res.data.posts.length
+            this.postCnt = postCnt
+            this.postList = res.data.posts
+            console.log(res.data.posts)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     },
     getUserFollower() {
-        const id = localStorage.getItem('userId')
-        getFollower(
-            id,
-            (res) => {
-                var FollowerCnt = res.data.users.length;
-                this.User.followerCnt = FollowerCnt;
-                this.FollowerList = res.data.users
-            },
-            (err) => {
-                console.log(err)
-            }
-        )
-        // axios.get("http://127.0.0.1:8081/user/showFollower/"+this.User.id)
-        // .then(res => {
-        //     // console.log(res)
-        //     var FollowerCnt = res.data.users.length;
-        //     this.User.followerCnt = FollowerCnt;
-        //     this.FollowerList = res.data.users
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
+        // const id = localStorage.getItem('userId')
+        // getFollower(
+        //     id,
+        //     (res) => {
+        //         var FollowerCnt = res.data.users.length;
+        //         this.User.followerCnt = FollowerCnt;
+        //         this.FollowerList = res.data.users
+        //     },
+        //     (err) => {
+        //         console.log(err)
+        //     }
+        // )
+        axios.get("http://127.0.0.1:8081/user/showFollower/"+this.User.id+'/1')
+        .then(res => {
+            // console.log(res)
+            var FollowerCnt = res.data.users.length;
+            this.User.followerCnt = FollowerCnt;
+            this.FollowerList = res.data.users
+        })
+        .catch(err => {
+            console.log(err)
+        })
     },
     getUserFollowing() {
-        const id = localStorage.getItem('userId')
-        getFollowing(
-            id,
-            (res) => {
-                var FollowingCnt = res.data.users.length;
-                this.User.followingCnt = FollowingCnt;
-                this.FollowingList = res.data.users
-            },
-            (err) => {
-                console.log(err)
-            }
-        )
-        // axios.get("http://127.0.0.1:8081/user/showFollowing/"+this.User.id)
-        // .then(res => {
-        //     // console.log(res)
-        //     var FollowingCnt = res.data.users.length;
-        //     this.User.followingCnt = FollowingCnt;
-        //     this.FollowingList = res.data.users
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
+        // const id = localStorage.getItem('userId')
+        // getFollowing(
+        //     id,
+        //     (res) => {
+        //         var FollowingCnt = res.data.users.length;
+        //         this.User.followingCnt = FollowingCnt;
+        //         this.FollowingList = res.data.users
+        //     },
+        //     (err) => {
+        //         console.log(err)
+        //     }
+        // )
+        axios.get("http://127.0.0.1:8081/user/showFollowing/"+this.User.id+'/1')
+        .then(res => {
+            // console.log(res)
+            var FollowingCnt = res.data.users.length;
+            this.User.followingCnt = FollowingCnt;
+            this.FollowingList = res.data.users
+        })
+        .catch(err => {
+            console.log(err)
+        })
     },
   },
   created() {

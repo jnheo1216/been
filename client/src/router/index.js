@@ -9,6 +9,7 @@ import Follow from '@/views/User/Follow.vue'
 import NotFound from '@/components/NotFound/NotFound.vue'
 import Introduction from '@/views/Introduction/Introduction.vue'
 import MyPositionAdd from '@/components/MyMaps/MyPositionAdd.vue'
+import UserProfile from '@/views/User/UserProfile.vue'
 // import { mapGetters } from 'vuex'
 
 
@@ -187,6 +188,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/userprofile/:userId',
+    name: 'UserProfile2',
+    component: UserProfile
+  }
 ]
 
 const router = createRouter({
