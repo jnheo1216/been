@@ -204,7 +204,7 @@ public class UserController {
         //임시 비밀번호 저장
         String encodedPassword = passwordEncoder.encode(temporaryPassword);
         user.setPassword(encodedPassword);
-        userService.modify(user);
+        userService.modifyPassword(user);
         return "이메일을 확인해주세요";
     }
 
@@ -326,11 +326,19 @@ public class UserController {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value="user 수정하기(update)")
+    @ApiOperation(value="user 수정하기(update): id,intro,nickname,emailConfirmation = 1 필요")
     @PutMapping(value= "/user")
     public ResponseEntity<Map<String, Object>> modify(@RequestBody User user) throws Exception {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.modify(user);
+        return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
+    }
+
+    @ApiOperation(value="user 비밀번호 수정하기(update): id와 password 필요")
+    @PutMapping(value= "/user/password")
+    public ResponseEntity<Map<String, Object>> modifyPassword(@RequestBody User user) throws Exception {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userService.modifyPassword(user);
         return new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
     }
 

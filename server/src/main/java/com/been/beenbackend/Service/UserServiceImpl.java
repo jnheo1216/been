@@ -167,5 +167,10 @@ public class UserServiceImpl implements UserService {
         sqlSession.getMapper(UserMapper.class).deletePreferredStyle(preferredStyle);
     }
 
+    @Override
+    public void modifyPassword(User user) {
+        sqlSession.getMapper(UserMapper.class).modifyPassword(user);
+    }
+
 
 }
