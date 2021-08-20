@@ -1,8 +1,8 @@
 
 
-![image-20210820095049912](README.assets/image-20210820095049912.png)
 
-<center><h4>여행 경험 공유 SNS</h4></center>
+
+<center><h2>여행 경험 공유 SNS Bee~n</h2></center>
 
 ![image-20210729235008628](README.assets/image-20210729235008628.png)
 
