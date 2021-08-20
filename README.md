@@ -123,40 +123,7 @@
 
 <br>
 
-### 6. 규칙
-
-#### commit 
-
-- [FE, BE]날짜_작성한폴더/작성,수정한 부분  간략한수정사항
-  - ex) [FE]0819_src/views/Login.vue 회원가입route 수정
-
-#### branch
-
-- develop/Frontend(Backend)/기능명
-
-<br>
-
-### 7. 프로젝트 설계
-
-- #### ERD
-
-![image-20210729234821460](README.assets/image-20210729234821460.png)
-
-<br>
-
-- #### storyline
-
-![image-20210729234902366](README.assets/image-20210729234902366.png)
-
-<br>
-
-- #### WireFrame
-
-![image-20210729234924420](README.assets/image-20210729234924420.png)
-
-<br>
-
-### 8. 주요기능 미리보기
+### 6. 주요기능 미리보기
 
 - #### 회원가입
 
@@ -214,5 +181,59 @@
 
 내 흔적 남기기로 선호 여행 지역, 스타일을 추가할 수 있습니다. 사용자의 선호 여행 지역, 선호 스타일에 따라 알맞는 피드를 큐레이션 페이지에서 추천받을 수 있습니다.
 
+<br>
 
+### 7. 규칙
 
+#### commit 
+
+- [FE, BE]날짜_작성한폴더/작성,수정한 부분  간략한수정사항
+  - ex) [FE]0819_src/views/Login.vue 회원가입route 수정
+
+#### branch
+
+- develop/Frontend(Backend)/기능명
+
+<br>
+
+### 8. 프로젝트 설계
+
+- #### ERD
+
+![image-20210729234821460](README.assets/image-20210729234821460.png)
+
+<br>
+
+- #### storyline
+
+![image-20210729234902366](README.assets/image-20210729234902366.png)
+
+<br>
+
+- #### WireFrame
+
+![image-20210729234924420](README.assets/image-20210729234924420.png)
+
+<br>
+
+- #### API
+
+![image-20210820120114175](README.assets/image-20210820120114175.png)
+
+<br>
+
+![image-20210820120149923](README.assets/image-20210820120149923.png)
+
+<br>
+
+![image-20210820120255846](README.assets/image-20210820120255846.png)
+
+<br>
+
+<br>
+
+<br>
+
+비이이~~~~~~~잉
+
+![image-20210820120255846](README.assets/image-20210820095049912.png)
